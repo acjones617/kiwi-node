@@ -9,6 +9,15 @@ angular.module('kiwi', [])
     });
   };
 
+  $scope.searchHandler = function() {
+    kiwiService.getKiwis($scope.email).then(function(result, status, headers, config, statusText) {
+      // debugger;
+      $scope.kiwis = result.data;
+    });
+  };
+
+
+
   $scope.email = 'dokko1230@gmail.com';
 
   init();

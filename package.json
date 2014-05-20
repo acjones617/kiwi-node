@@ -16,6 +16,10 @@
     "underscore": "~1.6.0",
     "request": "~2.36.0",
     "phantomjs": "~1.9.7-5",
-    "firebase": "~1.0.15-3"
+    "firebase": "~1.0.15-3",
+    "phantom": "~0.6.1",
+    "q": "~1.0.1",
+    "cheerio": "~0.16.0",
+    "jquery": "~2.1.1"
   }
 }

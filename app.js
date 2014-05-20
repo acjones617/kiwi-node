@@ -10,26 +10,26 @@ var partials = require('express-partials');
 
 var handler = require('./lib/request-handler');
 
-var routes = require('./routes');
-var users = require('./routes/user');
-
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-
-app.use(favicon());
-app.use(logger('dev'));
+app.configure(function() {
+    app.set('views', path.join(__dirname, 'views'));
+    app.set('view engine', 'ejs');
+    app.use(favicon());
+    app.use(partials());
+    app.use(express.bodyParser());
+    app.use(express.static(path.join(__dirname, 'public')));
+    app.use(cookieParser());
+});
 app.use(bodyParser.json());
-app.use(partials());
 app.use(bodyParser.urlencoded());
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(app.router);
 
 app.get('/', handler.renderIndex);
-app.get('/users', users.list);
+app.get('/kiwis/:email', handler.getKiwis);
+
+// app.get('/user/')
 
 
 module.exports = app;

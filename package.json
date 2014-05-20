@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "body-parser": "~1.0.0",
+    "chai": "^1.9.1",
     "cheerio": "~0.16.0",
     "cookie-parser": "~1.0.1",
     "debug": "~0.7.4",
@@ -15,7 +16,9 @@
     "jade": "~1.3.0",
     "jquery": "~2.1.1",
     "jsdom": "^0.10.5",
+    "mocha": "^1.19.0",
     "morgan": "~1.0.0",
+    "nodemailer": "^0.6.5",
     "phantom": "~0.6.1",
     "phantomjs": "~1.9.7-5",
     "q": "~1.0.1",

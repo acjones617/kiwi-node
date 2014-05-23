@@ -1,7 +1,57 @@
+/**
+ * BASE
+ */
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: 'Lato', sans-serif;
+  color: #38251C;
+}
+
+a {
+  color: #38251C;
+}
+
+.nav > li > a:hover {
+  background-color: #DEE7B1;
+  color: #38251C;
+}
+
+.table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th {
+background-color: #DEE7B1;
+}
+
+/**
+ * LAYOUT
+ */
+
 /* Space out content a bit */
 body {
   padding-top: 20px;
   padding-bottom: 20px;
+}
+
+.kiwis {
+  background-color: #eee;
+  margin-bottom: 20px;
+}
+
+.kiwis > h4,
+.kiwis > p {
+  /*margin-left: -10px;*/
+  margin-bottom: 0;
+}
+
+.kiwis > p {
+  margin-bottom: 10px;
+}
+
+.main-right {
+  margin-top: 0px;
+  margin-bottom: 27px;
+  float: right;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -16,6 +66,8 @@ body {
 .header {
   border-bottom: 1px solid #e5e5e5;
 }
+
+
 /* Make the masthead heading the same height as the navigation */
 .header h3 {
   margin-top: 0;

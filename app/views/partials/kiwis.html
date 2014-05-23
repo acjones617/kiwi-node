@@ -1,0 +1,23 @@
+<div ng-include="'partials/navbar'"></div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <h1>Login</h1>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Text</th>
+          <th>url</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="kiwi in kiwis">
+          <td>{{ kiwi.title }}</td>
+          <td>{{ kiwi.text }}</td>
+          <td>{{ kiwi.url }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

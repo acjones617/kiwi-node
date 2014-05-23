@@ -1,23 +1,40 @@
 <div ng-include="'partials/navbar'"></div>
 
+<h1>My Kiwis</h1>
 <div class="row">
-  <div class="col-sm-12">
-    <h1>Login</h1>
+  <div class="col-sm-12" ng-repeat="kiwi in kiwis">
+    
+    <h4>{{kiwi.title}}</h4>
+    
+    <p>{{kiwi.url}}</p>
+    
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>Title</th>
-          <th>Text</th>
-          <th>url</th>
+          <th>Time</th>
+          <th>Value</th>
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="kiwi in kiwis">
-          <td>{{ kiwi.title }}</td>
-          <td>{{ kiwi.text }}</td>
-          <td>{{ kiwi.url }}</td>
+        <tr ng-repeat="pair in kiwi.values">
+          <td>{{ pair.time }}</td>
+          <td>{{ pair.value }}</td>
         </tr>
       </tbody>
     </table>
+    
+    <nvd3-line-chart
+      data="exampleData"
+      width="600"
+      height="350"
+      showXAxis="true"
+      showYAxis="true"
+      interactive="true"
+      tooltipcontent="true"
+      showlegend="true"
+      xAxisTickFormat="xAxisTickFormatFunc()"
+      yAxisTickFormat="yAxisTickFormatFunc()">
+    </nvd3-line-chart>
+
   </div>
 </div>

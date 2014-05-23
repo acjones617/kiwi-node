@@ -4,7 +4,8 @@ angular.module('kiwiNode2App', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
-  'ngRoute'
+  'ngRoute',
+  'nvd3ChartDirectives'
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider

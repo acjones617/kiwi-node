@@ -10,11 +10,17 @@
     "angular-resource": ">=1.2.*",
     "angular-cookies": ">=1.2.*",
     "angular-sanitize": ">=1.2.*",
-    "angular-route": ">=1.2.*"
+    "angular-route": ">=1.2.*",
+    "d3": "~3.4.8",
+    "nvd3": "~1.1.15-beta",
+    "angularjs-nvd3-directives": "~0.0.7"
   },
   "devDependencies": {
     "angular-mocks": ">=1.2.*",
     "angular-scenario": ">=1.2.*"
   },
-  "testPath": "test/client/spec"  
+  "testPath": "test/client/spec",
+  "resolutions": {
+    "d3": "~3.4.1"
+  }
 }

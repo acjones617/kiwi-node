@@ -5,7 +5,7 @@ angular.module('kiwiNode2App')
     
     $scope.xAxisTickFormatFunc = function(d) {
       return function(d){
-        return d3.time.format('%b %d')(new Date(d));
+        return d3.time.format('%Y-%m-%d')(new Date(d));
       };
     };
 
@@ -42,15 +42,19 @@ angular.module('kiwiNode2App')
       
       // loop through because a user can have multiple items being tracked
       for (var i = 0; i < data.length; i++) {
-        data[i].graphData = {
-          key: 'series' + i, // TODO: revisit this series naming
+        data[i].graphData = [{
+          key: data[i].title, // TODO: will prob need to shorten if too long
           values: [] 
-        };
-        // console.log(JSON.stringify(data[i]));
+        }];
         for (var j = 0; j < data[i].values.length; j++) {
-          data[i].graphData.values.push([data[i].values[j].time, data[i].values[j].value]);
+          // TODO: need to change if stored dateformat changes
+          // or if crawled more than once a day
+          var dateParts = data[i].values[j].time.split('-');
+          var x = new Date(dateParts[0], dateParts[1]-1, dateParts[2]).getTime();
+          // console.log(new Date(x));
+          var y = data[i].values[j].value;
+          data[i].graphData[0].values.push([x, y]);
         }
-        console.log(data[i].graphData);
       }
       $scope.kiwis = data;
     })

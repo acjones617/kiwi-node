@@ -41,8 +41,8 @@ ValueParser.prototype.parse = function() {
   var original = this.original;
   var origLength = this.origLength;
   _.each(this.rest, function(item) {
-    var diff = Diff.diff(item, original);
-    debugger;
+    // var diff = Diff.diff(item, original);
+    
     res.push(item.substr(0, origLength));
   });
   return res;

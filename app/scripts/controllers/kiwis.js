@@ -46,15 +46,19 @@ angular.module('kiwiNode2App')
           key: data[i].title, // TODO: will prob need to shorten if too long
           values: [] 
         }];
-        for (var j = 0; j < data[i].values.length; j++) {
+        _.each(data[i].values, function(item, key) {
           // TODO: need to change if stored dateformat changes
           // or if crawled more than once a day
-          var dateParts = data[i].values[j].time.split('-');
+          if(item.date === undefined) {
+            debugger;
+          }
+          var dateParts = item.date.split('-');
           var x = new Date(dateParts[0], dateParts[1]-1, dateParts[2]).getTime();
-          // console.log(new Date(x));
-          var y = data[i].values[j].value;
+          var y = item.value;
+          // debugger;
           data[i].graphData[0].values.push([x, y]);
-        }
+
+        });
       }
       $scope.kiwis = data;
     })

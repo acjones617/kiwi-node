@@ -1,10 +1,3 @@
-if(require) {
-  var _ = require('underscore');
-}
-if(!Utils) {
-  var Utils = {};
-}
-
 /**
  * Compares the original value to the rest of the values and 
  * processes is what is to be a valid format for the rest of the
@@ -12,7 +5,7 @@ if(!Utils) {
  * @param {[string]} original [the original value]
  * @param {[array]} rest  [the rest of the values]
  */
-Utils.ValueParser = function(original, rest) {
+var ValueParser = function(original, rest) {
   this.initialize = function() {
     this.original = original;
     this.rest = rest;
@@ -25,7 +18,7 @@ Utils.ValueParser = function(original, rest) {
 /**
  * Algorithm for setting the format for the rest of the values
  */
-Utils.ValueParser.prototype.setFormat = function() {
+ValueParser.prototype.setFormat = function() {
   _.each(this.rest, function(item) {
 
   });
@@ -35,7 +28,7 @@ Utils.ValueParser.prototype.setFormat = function() {
  * Gets the regex derived from setFormat
  * @return {[regex]}
  */
-Utils.ValueParser.prototype.getFormula = function() {
+ValueParser.prototype.getFormula = function() {
 
 };
 
@@ -43,15 +36,14 @@ Utils.ValueParser.prototype.getFormula = function() {
  * Parses the rest of the values and returns the formatted values
  * @return {[array]} [the reformatted array]
  */
-Utils.ValueParser.prototype.parse = function() {
+ValueParser.prototype.parse = function() {
   var res = [];
+  var original = this.original;
   var origLength = this.origLength;
   _.each(this.rest, function(item) {
+    var diff = Diff.diff(item, original);
+    debugger;
     res.push(item.substr(0, origLength));
   });
   return res;
 };
-
-if(module.exports !== undefined) {
-  module.exports = Utils.ValueParser;
-}

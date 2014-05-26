@@ -49,4 +49,12 @@ describe('value parser', function () {
     expect(parser.parse()).to.eql(["7,235,750,012"]);
   });
 
+  it('parses even when original values are corrupt', function() {
+    var original = "\n          24,234\n        ";
+    var rest = ["\n          24,234\n        "];
+    var parser = new ValueParser(original, rest);
+    expect(parser.parse()).to.eql(["24,234"]);
+
+  });
+
 });

@@ -15,7 +15,7 @@ angular.module('kiwiNode2App')
       };
     };
 
-    $scope.exampleData = [{
+    var exampleData = [{
       'key': 'Test 1',
       'values': [ 
         [ 1025409600000, 0] ,
@@ -31,6 +31,11 @@ angular.module('kiwiNode2App')
         [ 1051675200000, 0.44227126150934],
         [ 1054353600000, 7.2481659343222]]
     }];
+    // $scope.kiwis = exampleData; 
+
+    $scope.kiwis = [{
+      graphData: exampleData
+    }]
 
     //TODO: revisit the url
     $http({
@@ -46,6 +51,7 @@ angular.module('kiwiNode2App')
           key: data[i].title, // TODO: will prob need to shorten if too long
           values: [] 
         }];
+        console.log(data[0].graphData)
         _.each(data[i].values, function(item, key) {
           // TODO: need to change if stored dateformat changes
           // or if crawled more than once a day

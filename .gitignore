@@ -1,3 +1,4 @@
+.DS_Store
 node_modules
 public
 .tmp
@@ -6,3 +7,5 @@ app/bower_components
 heroku
 /views
 dist
+
+test/client/spec/utils/bower_components

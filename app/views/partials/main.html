@@ -1,5 +1,7 @@
-<div ng-include="'partials/navbar'"></div>
-
+<div class='.container-fluid'>
+  <div class='row'>
+    <div ng-include="'partials/navbar'"></div>
+  </div>
 <!-- <div class="jumbotron">
   <h1>'Allo, world <span ng-show="currentUser">{{ currentUser.name }}</span>!</h1>
   <p class="lead">
@@ -10,26 +12,29 @@
 </div> -->
 
 <!--  -->
-<div ng-controller="CarouselDemoCtrl">
-  <div style="height: 305px">
-    <carousel interval="5000">
-      <slide ng-repeat="slide in slides" active="slide.active">
-        <img ng-src="{{slide.image}}" style="margin:auto;">
-        <div class="carousel-caption">
-          <h4>Slide {{$index}}</h4>
-          <p>{{slide.text}}</p>
-        </div>
-      </slide>
-    </carousel>
+  <div class='row'>
+    <div ng-controller="CarouselDemoCtrl">
+      <div style="height: 305px">
+        <carousel interval="5000">
+          <slide ng-repeat="slide in slides" active="slide.active">
+            <img ng-src="{{slide.image}}" style="margin:auto;">
+            <div class="carousel-caption">
+              <h4>Slide {{$index}}</h4>
+              <p>{{slide.text}}</p>
+            </div>
+          </slide>
+        </carousel>
+      </div>
+      <div class="row">
+      </div>
+    </div>
   </div>
-  <div class="row">
-  </div>
-</div>
-<!--  -->
-<!-- <div class="row marketing">
-  <div ng-repeat="thing in awesomeThings">
-      <h4>{{thing.name}}</h4>
-      <p>{{thing.info}}</p>
-  </div>
-</div> -->
+  <!--  -->
+  <!-- <div class="row marketing">
+    <div ng-repeat="thing in awesomeThings">
+        <h4>{{thing.name}}</h4>
+        <p>{{thing.info}}</p>
+    </div>
+  </div> -->
 
+</div>

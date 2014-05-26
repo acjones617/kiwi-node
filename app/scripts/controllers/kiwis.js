@@ -49,13 +49,12 @@ angular.module('kiwiNode2App')
         _.each(data[i].values, function(item, key) {
           // TODO: need to change if stored dateformat changes
           // or if crawled more than once a day
-          if(item.date === undefined) {
-            debugger;
-          }
           var dateParts = item.date.split('-');
           var x = new Date(dateParts[0], dateParts[1]-1, dateParts[2]).getTime();
-          var y = item.value;
-          // debugger;
+          var y = item.value.replace(/[^\d.-]/g, '');
+          if(data[i].title === "Bitcoin Charts") {
+            debugger;
+          }
           data[i].graphData[0].values.push([x, y]);
 
         });

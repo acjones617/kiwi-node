@@ -61,3 +61,5 @@ angular.module('kiwiNode2App', [
       }
     });
   });
+
+var Utils = {};

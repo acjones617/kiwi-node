@@ -15,4 +15,11 @@ describe('value parser', function () {
     var parser = new ValueParser(original, rest);
     expect(parser.parse()).to.eql(["$585.64", "$585.66", "$586.03"]);
   });
+
+  it('parses when the number of digits on the value has changed', function () {
+    var original = "$585.64";
+    var rest = ["$5850.64", "$5850.66", "$5860.03"];
+    var parser = new ValueParser(original, rest);
+    expect(parser.parse()).to.eql(["$5850.64", "$5850.66", "$5860.03"]);
+  });
 });

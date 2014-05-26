@@ -1,3 +1,6 @@
+if(require) {
+  var _ = require('underscore');
+}
 if(!Utils) {
   var Utils = {};
 }
@@ -14,7 +17,7 @@ Utils.ValueParser = function(original, rest) {
     this.original = original;
     this.rest = rest;
     this.forumla = null;
-    this.originalLength = original.length;
+    this.origLength = original.length;
   };
   this.initialize();
 };
@@ -42,8 +45,9 @@ Utils.ValueParser.prototype.getFormula = function() {
  */
 Utils.ValueParser.prototype.parse = function() {
   var res = [];
+  var origLength = this.origLength;
   _.each(this.rest, function(item) {
-    res.push(item.substr(0, this.originalLength));
+    res.push(item.substr(0, origLength));
   });
   return res;
 };

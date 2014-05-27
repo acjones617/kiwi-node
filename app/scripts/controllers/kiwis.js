@@ -33,29 +33,22 @@ angular.module('kiwiNode2App')
         // Get the value part only
         var plucked = _.pluck(data[i].values, 'value');
         var original = plucked.shift();
-        // if values are non empty
-        // if(!_.contains(plucked, '')) {
 
-          // Clean up the values
-          var parser = new ValueParser(original, plucked);
-          var parsedValues = parser.parseAll();
-          var count = 0;
-          _.each(data[i].values, function(item, key) {
-            item.value = parsedValues[count++];
-            // TODO: need to change if stored dateformat changes
-            // or if crawled more than once a day
-            // debugger;
-
+        // Clean up the values
+        var parser = new ValueParser(original, plucked);
+        var parsedValues = parser.parseAll();
+        var count = 0;
+        _.each(data[i].values, function(item, key) {
+          item.value = parsedValues[count++];
+          if(item.value) {
             var dateParts = item.date.split('-');
             var x = new Date(dateParts[0], dateParts[1]-1, dateParts[2]).getTime();
-            if(item.value) {
-              var y = item.value.replace(/[^\d.-]/g, '');
-              data[i].graphData[0].values.push([x, y]);
-            }
+            var y = item.value.replace(/[^\d.-]/g, '');
+            data[i].graphData[0].values.push([x, y]);
+          }
 
-          });
+        });
 
-        // }
       }
       $scope.kiwis = angularData;
     })

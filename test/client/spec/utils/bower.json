@@ -5,7 +5,8 @@
     "chai": "~1.8.0",
     "mocha": "~1.14.0",
     "underscore": "~1.6.0",
-    "jquery": "~2.1.1"
+    "jquery": "~2.1.1",
+    "underscore.string": "~2.3.3"
   },
   "devDependencies": {}
 }

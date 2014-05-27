@@ -1,8 +1,3 @@
-var _ = require('underscore');
-var expect = require('chai').expect;
-var Utils = {};
-var ValueParser = require('../../../../app/scripts/lib/ValueParser');
-
 describe('value parser', function () {
   it('exists', function () {
     expect(ValueParser).to.exist;

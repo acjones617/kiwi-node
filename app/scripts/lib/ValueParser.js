@@ -24,7 +24,9 @@ ValueParser.prototype._cleanNumber = function(item) {
   //     currency = null;
   //   }
   // }
-  return matches[0];
+  if(matches !== null) {
+    return matches[0];
+  }
 };
 
 ValueParser.prototype._matchLength = function(item) {
@@ -73,6 +75,9 @@ ValueParser.prototype.parse = function() {
 
     // var currency = that._getCurrency();
     var parsed = that._cleanNumber(item);
+    if(!parsed){
+      throw 'Cannot parse an undefined';
+    }
     parsed = that._matchLength(parsed);
 
     res.push(parsed);

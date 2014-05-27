@@ -1,4 +1,4 @@
-// Generated on 2014-05-23 using generator-angular-fullstack 1.4.2
+// Generated on 2014-05-27 using generator-angular-fullstack 1.4.2
 'use strict';
 
 // # Globbing
@@ -62,9 +62,9 @@ module.exports = function (grunt) {
         files: ['test/client/spec/{,*/}*.js'],
         tasks: ['newer:jshint:test', 'karma']
       },
-      styles: {
-        files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
-        tasks: ['newer:copy:styles', 'autoprefixer']
+      compass: {
+        files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
+        tasks: ['compass:server', 'autoprefixer']
       },
       gruntfile: {
         files: ['Gruntfile.js']
@@ -196,7 +196,37 @@ module.exports = function (grunt) {
     'bower-install': {
       app: {
         html: '<%= yeoman.app %>/views/index.html',
-        ignorePath: '<%= yeoman.app %>/'
+        ignorePath: '<%= yeoman.app %>/',
+        exclude: ['bootstrap-sass']
+      }
+    },
+
+    // Compiles Sass to CSS and generates necessary files if requested
+    compass: {
+      options: {
+        sassDir: '<%= yeoman.app %>/styles',
+        cssDir: '.tmp/styles',
+        generatedImagesDir: '.tmp/images/generated',
+        imagesDir: '<%= yeoman.app %>/images',
+        javascriptsDir: '<%= yeoman.app %>/scripts',
+        fontsDir: '<%= yeoman.app %>/styles/fonts',
+        importPath: '<%= yeoman.app %>/bower_components',
+        httpImagesPath: '/images',
+        httpGeneratedImagesPath: '/images/generated',
+        httpFontsPath: '/styles/fonts',
+        relativeAssets: false,
+        assetCacheBuster: false,
+        raw: 'Sass::Script::Number.precision = 10\n'
+      },
+      dist: {
+        options: {
+          generatedImagesDir: '<%= yeoman.dist %>/public/images/generated'
+        }
+      },
+      server: {
+        options: {
+          debugInfo: true
+        }
       }
     },
 
@@ -345,10 +375,10 @@ module.exports = function (grunt) {
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: [
-        'copy:styles'
+        'compass:server'
       ],
       test: [
-        'copy:styles'
+        'compass'
       ],
       debug: {
         tasks: [
@@ -360,7 +390,7 @@ module.exports = function (grunt) {
         }
       },
       dist: [
-        'copy:styles',
+        'compass:dist',
         'imagemin',
         'svgmin',
         'htmlmin'
@@ -500,8 +530,6 @@ module.exports = function (grunt) {
     'rev',
     'usemin'
   ]);
-
-  grunt.loadNpmTasks('grunt-contrib-sass');
 
   grunt.registerTask('heroku', function () {
     grunt.log.warn('The `heroku` task has been deprecated. Use `grunt build` to build for deployment.');

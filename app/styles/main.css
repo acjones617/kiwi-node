@@ -84,9 +84,9 @@ body {
 }
 
 /* Customize container */
-@media (min-width: 768px) {
+@media (min-width: 1068px) {
   .container {
-    max-width: 730px;
+    max-width: 1030px;
   }
 }
 .container-narrow > hr {
@@ -129,3 +129,29 @@ body {
     border-bottom: 0;
   }
 }
+
+/* Graph and sidebar container */
+
+.container-graph-sidebar {
+  position:relative; 
+  padding:0 0 0 55px;
+}
+#sidebar {
+  position:fixed;
+  top:1; bottom:1; left:0;
+  width:175px;
+  height:300px;
+  background: #eee;
+}
+.listTest{
+  list-style-type: none;
+}
+
+
+
+
+
+
+
+
+

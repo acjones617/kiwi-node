@@ -5,7 +5,8 @@ angular.module('kiwiNode2App', [
   'ngResource',
   'ngSanitize',
   'ngRoute',
-  'nvd3ChartDirectives'
+  'nvd3ChartDirectives',
+  'ngDragDrop'
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider

@@ -501,6 +501,8 @@ module.exports = function (grunt) {
     'usemin'
   ]);
 
+  grunt.loadNpmTasks('grunt-contrib-sass');
+
   grunt.registerTask('heroku', function () {
     grunt.log.warn('The `heroku` task has been deprecated. Use `grunt build` to build for deployment.');
     grunt.task.run(['build']);

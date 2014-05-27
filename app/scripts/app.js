@@ -64,13 +64,13 @@ angular.module('kiwiNode2App', [
     });
   });
 
-function CarouselDemoCtrl($scope) {
+function CarouselCtrl($scope) {
   $scope.myInterval = 5000;
   var slides = $scope.slides = [];
   $scope.addSlide = function() {
-    var newWidth = 600 + slides.length;
+    var newWidth = 1080 + slides.length;
     slides.push({
-      image: 'http://placekitten.com/' + newWidth + '/300',
+      image: 'http://placekitten.com/' + newWidth + '/400',
       text: ['More','Extra','Lots of','Surplus'][slides.length % 4] + ' ' +
         ['Cats', 'Kittys', 'Felines', 'Cutes'][slides.length % 4]
     });

@@ -1,0 +1,180 @@
+$mellow-yellow: #DEE7B1;
+/**
+ * BASE
+ */
+h1, h2, h3, h4, h5 {
+  a {
+    font-weight: inherit;
+    font-size: inherit;
+  }
+  font-family: 'Lato', sans-serif;
+  font-weight: 100;
+  color: #38251C;
+}
+
+a, p {
+  font-family: 'Lato', san-serif;
+  color: black;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+/**
+ * BOOSTRAP OVERRIDES
+ */
+.jumbotron {
+  padding: 0;
+}
+.carousel-inner {
+  .item {
+    img {
+      width: 100%;
+    }
+  }
+}
+.carousel-indicators {
+  display: none;
+}
+.carousel-control {
+  display: none;
+}
+
+/**
+ * LAYOUT
+ */
+/* Space out content a bit */
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.front-slice {
+  margin: 75px 0;
+}
+
+.kiwis {
+  background-color: #eee;
+  margin-bottom: 20px;
+  > {
+    h4 {
+      /*margin-left: -10px;*/
+      margin-bottom: 0;
+    }
+    p {
+      /*margin-left: -10px;*/
+      margin-bottom: 0;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.main-right {
+  margin-top: 0px;
+  margin-bottom: 27px;
+  float: right;
+}
+
+.nav-pills {
+  li.active {
+    a, a:focus, a:hover {
+      background-color: $mellow-yellow;
+      color: #38251C;
+    }
+  }
+}
+.nav > li {
+  a:focus {
+    background-color: $mellow-yellow;
+    color: #38251C;
+  }
+}
+.table-striped > tbody > tr:nth-child(odd) > {
+  td, th {
+    background-color: $mellow-yellow;
+  }
+}
+
+.header, .marketing, .footer {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* Custom page header */
+.header {
+  border-bottom: 1px solid #e5e5e5;
+  h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 40px;
+    padding-bottom: 19px;
+  }
+}
+
+/* Custom page footer */
+.footer {
+  background-color: #1a1a1a;
+  height: 200px;
+  h1, h2, h3, h4, h5, p, a {
+    color: white;
+  }
+  h5 {
+    margin-top: 20px;
+  }
+}
+
+/* Customize container */
+@media (min-width: 1068px) {
+  .container {
+    max-width: 1030px;
+  }
+}
+
+.container-narrow > hr {
+  margin: 30px 0;
+}
+/* Supporting marketing content */
+
+.marketing {
+  margin: 40px 0;
+  p + h4 {
+    margin-top: 28px;
+  }
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  /* Remove the padding we set earlier */
+  .header, .marketing, .footer {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  /* Space out the masthead */
+  .header {
+    margin-bottom: 30px;
+  }
+  /* Remove the bottom border on the jumbotron for visual effect */
+  .jumbotron {
+    border-bottom: 0;
+  }
+}
+
+/* Graph and sidebar container */
+
+.container-graph-sidebar {
+  position: relative;
+  padding: 0 0 0 55px;
+}
+
+#sidebar {
+  position: fixed;
+  top: 1;
+  bottom: 1;
+  left: 0;
+  width: 175px;
+  height: 300px;
+  background: #eee;
+}
+
+.listTest {
+  list-style-type: none;
+}

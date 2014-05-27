@@ -47,13 +47,14 @@ angular.module('kiwiNode2App')
           key: data[i].title, // TODO: will prob need to shorten if too long
           values: [] 
         }];
+        // Get the value part only
         var plucked = _.pluck(data[i].values, 'value');
         var original = plucked.shift();
+        // Clean up the values
         var parser = new ValueParser(original, plucked);
         var parsedValues = parser.parseAll();
         var count = 0;
         _.each(data[i].values, function(item, key) {
-          // debugger;
           item.value = parsedValues[count++];
           // TODO: need to change if stored dateformat changes
           // or if crawled more than once a day

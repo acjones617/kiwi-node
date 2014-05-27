@@ -15,29 +15,9 @@ var ValueParser = function(original, rest) {
   this.initialize();
 };
 
-/**
- * Algorithm for setting the format for the rest of the values
- */
-ValueParser.prototype.setFormat = function() {
-  _.each(this.rest, function(item) {
-
-  });
-};
-
-/**
- * Gets the regex derived from setFormat
- * @return {[regex]}
- */
-ValueParser.prototype.getFormula = function() {
-
-};
-
 ValueParser.prototype._cleanNumber = function(item) {
   var nonWhiteSpace = item.replace(/\s/g, '');
   var matches = nonWhiteSpace.match(/[0-9 , \.]+/g);
-  if(matches.length > 1) {
-
-  }
   // if(currency) {
   //   var index = item.indexOf(currency[0]);
   //   if(index > this.original.length) {

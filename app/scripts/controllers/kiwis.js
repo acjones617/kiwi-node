@@ -14,7 +14,7 @@ angular.module('kiwiNode2App')
           return d3.format(',f')(d);
       };
     };
-    
+
     //TODO: revisit the url
     $http({
       method: 'GET',
@@ -34,7 +34,7 @@ angular.module('kiwiNode2App')
         var plucked = _.pluck(data[i].values, 'value');
         var original = plucked.shift();
         // if values are non empty
-        if(!_.contains(plucked, '')) {
+        // if(!_.contains(plucked, '')) {
 
           // Clean up the values
           var parser = new ValueParser(original, plucked);
@@ -48,12 +48,14 @@ angular.module('kiwiNode2App')
 
             var dateParts = item.date.split('-');
             var x = new Date(dateParts[0], dateParts[1]-1, dateParts[2]).getTime();
-            var y = item.value.replace(/[^\d.-]/g, '');
-            data[i].graphData[0].values.push([x, y]);
+            if(item.value) {
+              var y = item.value.replace(/[^\d.-]/g, '');
+              data[i].graphData[0].values.push([x, y]);
+            }
 
           });
 
-        }
+        // }
       }
       $scope.kiwis = angularData;
     })

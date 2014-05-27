@@ -30,25 +30,9 @@ ValueParser.prototype._cleanNumber = function(item) {
 };
 
 ValueParser.prototype._matchLength = function(item) {
-  /**
-   * if original value is contained in the item,
-   *   assume that nothing has changed
-   * else
-   *   go from the leftmost part of the string
-   *   iterate through the thing
-   *   make 
-   */
   if(item.indexOf(this.original) !== -1) {
     return this.original;
   } else {
-    // var cleanOriginal = this.original.replace(/\s/g, '').match(/[0-9 , \.]+/g).split('.')[0];
-    // var nonWhiteSpace = item.replace(/\s/g, '');
-    // var matches = nonWhiteSpace.match(/[0-9 , \.]+/g);
-    // var decimalLess = matches.split('.')[0];
-    // if(cleanOriginal.length - matches[0].length > 2) {
-    //   return 
-    // }
-
     return item.substr(0, this.origLength);
   }
 };
@@ -75,12 +59,11 @@ ValueParser.prototype.parse = function() {
 
     // var currency = that._getCurrency();
     var parsed = that._cleanNumber(item);
-    if(!parsed){
-      throw 'Cannot parse an undefined';
+    if(parsed){
+      parsed = that._matchLength(parsed);
+      res.push(parsed);
     }
-    parsed = that._matchLength(parsed);
 
-    res.push(parsed);
   });
   return res;
 };

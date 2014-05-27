@@ -8,28 +8,28 @@ describe('value parser', function () {
     var original = "$585.64";
     var rest = ["$585.64$581.35", "$585.66$582.25", "$586.03$583.38"];
     var parser = new ValueParser(original, rest);
-    expect(parser.parse()).to.eql(["$585.64", "$585.66", "$586.03"]);
+    expect(parser.parse()).to.eql(["585.64", "585.66", "586.03"]);
   });
 
   it('parses when the number of digits on the value has increased', function () {
     var original = "$585.64";
     var rest = ["$5850.64", "$5850.66", "$5860.03"];
     var parser = new ValueParser(original, rest);
-    expect(parser.parse()).to.eql(["$5850.64", "$5850.66", "$5860.03"]);
+    expect(parser.parse()).to.eql(["5850.64", "5850.66", "5860.03"]);
   });
 
   it('parses when the number of digits on the value has decreased', function () {
     var original = "$585.64";
     var rest = ["$58.64", "$50.66", "$58.03"];
     var parser = new ValueParser(original, rest);
-    expect(parser.parse()).to.eql(["$58.64", "$50.66", "$58.03"]);
+    expect(parser.parse()).to.eql(["58.64", "50.66", "58.03"]);
   });
 
   it('parses when decimals go away', function () {
     var original = "$585.64";
     var rest = ["$585", "$505", "$586"];
     var parser = new ValueParser(original, rest);
-    expect(parser.parse()).to.eql(["$585", "$505", "$586"]);
+    expect(parser.parse()).to.eql(["585", "505", "586"]);
   });
 
   it('cleans numbers', function () {

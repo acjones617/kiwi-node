@@ -35,7 +35,6 @@ ValueParser.prototype.getFormula = function() {
 ValueParser.prototype._cleanNumber = function(item) {
   var nonWhiteSpace = item.replace(/\s/g, '');
   var matches = nonWhiteSpace.match(/[0-9 , \.]+/g);
-  // debugger;
   if(matches.length > 1) {
 
   }
@@ -77,6 +76,10 @@ ValueParser.prototype._getCurrency = function() {
   return currency && currency.length ? currency[0] : '';
 };
 
+ValueParser.prototype.parseAll = function() {
+  return _.flatten([this._cleanNumber(this.original), this.parse()]);
+};
+
 /**
  * Parses the rest of the values and returns the formatted values
  * @return {[array]} [the reformatted array]
@@ -88,11 +91,11 @@ ValueParser.prototype.parse = function() {
   var that = this;
   _.each(this.rest, function(item) {
 
-    var currency = that._getCurrency();
+    // var currency = that._getCurrency();
     var parsed = that._cleanNumber(item);
     parsed = that._matchLength(parsed);
 
-    res.push(currency + parsed);
+    res.push(parsed);
   });
   return res;
 };

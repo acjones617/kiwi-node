@@ -38,6 +38,7 @@ angular.module('kiwiNode2App')
       url: 'api/kiwis/' + $routeParams.email
     })
     .then(function(data) {
+      var angularData = jQuery.extend({}, data.data);
       data = data.data;
       
       // loop through because a user can have multiple items being tracked
@@ -46,20 +47,26 @@ angular.module('kiwiNode2App')
           key: data[i].title, // TODO: will prob need to shorten if too long
           values: [] 
         }];
+        var plucked = _.pluck(data[i].values, 'value');
+        var original = plucked.shift();
+        var parser = new ValueParser(original, plucked);
+        var parsedValues = parser.parseAll();
+        var count = 0;
         _.each(data[i].values, function(item, key) {
+          // debugger;
+          item.value = parsedValues[count++];
           // TODO: need to change if stored dateformat changes
           // or if crawled more than once a day
+          // debugger;
+
           var dateParts = item.date.split('-');
           var x = new Date(dateParts[0], dateParts[1]-1, dateParts[2]).getTime();
           var y = item.value.replace(/[^\d.-]/g, '');
-          if(data[i].title === "Bitcoin Charts") {
-            debugger;
-          }
           data[i].graphData[0].values.push([x, y]);
 
         });
       }
-      $scope.kiwis = data;
+      $scope.kiwis = angularData;
     })
     .catch(function() {
       $scope.errors.other = 'Error with retrieving kiwis.';

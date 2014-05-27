@@ -25,18 +25,18 @@ angular.module('kiwiNode2App')
       var angularData = jQuery.extend({}, data.data);
 
       data = data.data;
-        var secondData;
-        var arr = [];
-        $scope.dragItem = function(is) {
-          for(var i = 0; i < data.length; i++) {
-              var title = data[i].title = data[i].title.split(' ')[0] 
-              if(is.target.innerText === title) {
-                secondData = data[i];
-                arr.push(secondData)
-                $scope.kiwis = arr;
-             }
-          }
-        } 
+        // var secondData;
+        // var arr = [];
+        // $scope.dragItem = function(is) {
+        //   for(var i = 0; i < data.length; i++) {
+        //       var title = data[i].title = data[i].title.split(' ')[0] 
+        //       if(is.target.innerText === title) {
+        //         secondData = data[i];
+        //         arr.push(secondData)
+        //         $scope.kiwis = arr;
+        //      }
+        //   }
+        // } 
         // console.log(secondData)
     
       // loop through because a user can have multiple items being tracked

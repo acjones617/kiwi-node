@@ -6,7 +6,6 @@ angular.module('kiwiNode2App', [
   'ngSanitize',
   'ngRoute',
   'nvd3ChartDirectives',
-  'ngDragDrop',
   'ui.bootstrap'
 
 ])

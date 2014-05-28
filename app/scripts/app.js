@@ -28,6 +28,10 @@ angular.module('kiwiNode2App', [
         controller: 'SettingsCtrl',
         authenticate: true
       })
+      .when('/custom/:email', {
+        templateUrl: 'partials/custom',
+        controller: 'KiwisCtrl'
+      })
       .when('/kiwis/:email', {
         templateUrl: 'partials/kiwis',
         controller: 'KiwisCtrl'

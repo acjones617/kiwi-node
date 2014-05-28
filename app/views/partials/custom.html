@@ -1,0 +1,33 @@
+<div class="container" id="custom">
+  <div class="row">
+    <div class="col-sm-9">
+        
+    <div id="chart">
+      <svg></svg>
+    </div>
+
+    </div>
+
+    <div class="col-sm-3">
+      <div class="graphs">
+        <h2>Graph</h2>
+        <div class="kiwiList">
+          <ul ng-repeat="kiwi in group" ng-click="addToGraph(kiwi)">
+            <li>{{ kiwi.title }}</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="groups">
+        <h2>Groups</h2>
+        <div class="kiwiList">
+          <ul ng-repeat="kiwi in kiwis" ng-click="addToGroup(kiwi)">
+            <li>{{ kiwi.title }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

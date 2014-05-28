@@ -38,7 +38,7 @@ angular.module('kiwiNode2App')
         var original = plucked.shift();
 
         // Clean up the values
-        var parser = new ValueParser(original, plucked);
+        var parser = new NumberParser(original, plucked);
         var parsedValues = parser.parseAll();
         var count = 0;
         _.each(data[i].values, function(item, key) {

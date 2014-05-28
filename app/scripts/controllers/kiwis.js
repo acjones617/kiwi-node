@@ -3,6 +3,16 @@
 angular.module('kiwiNode2App')
   .controller('KiwisCtrl', function ($scope, $http, $routeParams) {
     
+    $scope.group = [];
+    // $scope.graph = [{
+    //     'key': 'test1',
+    //     'values': [[3,5], [5,7], [7,9]]
+    //   }, {
+    //     'key': 'test2',
+    //     'values': [[2,4], [3,5], [5,7]]
+    //   }];
+    $scope.graph = [];
+
     $scope.xAxisTickFormatFunc = function(d) {
       return function(d){
         return d3.time.format('%m-%d')(new Date(d));
@@ -14,6 +24,45 @@ angular.module('kiwiNode2App')
           return d3.format(',f')(d);
       };
     };
+
+    $scope.addToGroup = function(kiwi) {
+      $scope.group.push(kiwi);
+    };
+
+    $scope.addToGraph = function(kiwi) {
+      console.log(kiwi.graphData[0]);
+      $scope.graph.push(kiwi.graphData[0]);
+      $scope.$emit('updateCustom');
+    };
+
+    nv.addGraph(function() {
+      var chart = nv.models.cumulativeLineChart()
+        .x(function(d) { return d[0] })
+        //adjusting, 100% is 1.00, not 100 as it is in the data
+        .y(function(d) { return d[1] / 100 })
+        .color(d3.scale.category10().range())
+        .useInteractiveGuideline(true);
+
+      chart.xAxis
+        .tickFormat(function(d) {
+          return d3.time.format('%x')(new Date(d))
+        });
+
+      chart.yAxis.tickFormat(d3.format(',.1%'));
+
+      d3.select('#chart svg')
+        .datum($scope.graph)
+        .transition().duration(500)
+        .call(chart);
+
+      nv.utils.windowResize(chart.update);
+      $scope.$on('updateCustom', function(event) {
+        // debugger;
+        chart.update();
+      });
+
+      return chart;
+    });
 
     //TODO: revisit the url
     $http({
@@ -28,7 +77,6 @@ angular.module('kiwiNode2App')
       // loop through because a user can have multiple items being tracked
       for (var i = 0; i < data.length; i++) {
         var title = data[i].title = data[i].title.split(' ')[0]  
-
         data[i].graphData = [{
           key: title, // TODO: will prob need to shorten if too long
           values: [] 

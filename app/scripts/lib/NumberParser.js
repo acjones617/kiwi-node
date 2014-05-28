@@ -21,9 +21,13 @@ var NumberParser = function(original, rest) {
  * @return {Boolean}
  */
 NumberParser.prototype.isNumerical = function() {
-  var numberCount = this.original.match(/[a-zA-Z]/g).length;
-  var letterCount = this.original.match(/[0-9]/g).length;
-  return numberCount > letterCount;
+  var letters = this.original.match(/[a-zA-Z]/g);
+  var numbers = this.original.match(/\d+/g);
+  if(letters !== null) {
+    return numbers.length > letters.length;
+  } else {
+    return true;
+  }
 }
 
 NumberParser.prototype._cleanNumber = function(item) {

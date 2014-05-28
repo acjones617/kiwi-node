@@ -36,10 +36,16 @@ angular.module('kiwiNode2App')
         // Get the value part only
         var plucked = _.pluck(data[i].values, 'value');
         var original = plucked.shift();
-
-        // Clean up the values
         var parser = new NumberParser(original, plucked);
-        var parsedValues = parser.parseAll();
+
+        if(parser.isNumerical()) {
+          // Use the parser and clean up the values
+          var parsedValues = parser.parseAll();
+        } else {
+          // Do sentiment analysis
+
+        }
+
         var count = 0;
         _.each(data[i].values, function(item, key) {
 

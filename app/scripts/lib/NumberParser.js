@@ -15,6 +15,17 @@ var NumberParser = function(original, rest) {
   this.initialize();
 };
 
+/**
+ * Returns whether the original mostly consists of integers
+ * We assume that if it does, the thing will be parsed like a number
+ * @return {Boolean}
+ */
+NumberParser.prototype.isNumerical = function() {
+  var numberCount = this.original.match(/[a-zA-Z]/g).length;
+  var letterCount = this.original.match(/[0-9]/g).length;
+  return numberCount > letterCount;
+}
+
 NumberParser.prototype._cleanNumber = function(item) {
   var nonWhiteSpace = item.replace(/\s/g, '');
   var matches = nonWhiteSpace.match(/[0-9 , \.]+/g);

@@ -5,11 +5,7 @@ angular.module('kiwiNode2App')
     
     var ref = new Firebase('https://kiwidb.firebaseio.com/');
     $scope.auth = $firebaseSimpleLogin(ref);
-    
-    ref.child('users/').on('value', function(snapshot) {
-      console.log(snapshot);
-    });
-
+     
     $scope.isActive = function(route) {
       return route === $location.path();
     };

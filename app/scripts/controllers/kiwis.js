@@ -3,18 +3,16 @@
 angular.module('kiwiNode2App')
   .controller('KiwisCtrl', function ($scope, $http, $routeParams) {
     
-    // var ref = new Firebase('https://kiwidb.firebaseio.com/');
-    // var auth = $firebaseSimpleLogin(ref);
-
-    var db = new Firebase('https://kiwidb.firebaseio.com/users/');
+    var db = new Firebase('https://kiwidb.firebaseio.com/users/facebook:10103897713367983');
     var result = [];
 
     db.once('value', function(snapshot) {
-      snapshot.forEach(function(item) {
-        // var kiwi = item.val();
-        result.push(item);
-      });
-      console.log(result);
+      console.log(snapshot.val());
+      // snapshot.forEach(function(item) {
+      //   // var kiwi = item.val();
+      //   result.push(item);
+      // });
+      // console.log(result);
     });
 
 
@@ -31,7 +29,7 @@ angular.module('kiwiNode2App')
       };
     };
 
-    //TODO: revisit the url
+    // TODO: revisit the url
     // $http({
     //   method: 'GET',
     //   url: 'api/kiwis/' + $routeParams.email

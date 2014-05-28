@@ -3,6 +3,16 @@
 angular.module('kiwiNode2App')
   .controller('KiwisCtrl', function ($scope, $http, $routeParams) {
     
+    $scope.group = [];
+    // $scope.graph = [{
+    //     'key': 'test1',
+    //     'values': [[3,5], [5,7], [7,9]]
+    //   }, {
+    //     'key': 'test2',
+    //     'values': [[2,4], [3,5], [5,7]]
+    //   }];
+    $scope.graph = [];
+
     $scope.xAxisTickFormatFunc = function(d) {
       return function(d){
         return d3.time.format('%m-%d')(new Date(d));
@@ -14,7 +24,35 @@ angular.module('kiwiNode2App')
           return d3.format(',f')(d);
       };
     };
+    var arr = [];
 
+    $scope.addToGroup = function(kiwi) {
+      $scope.group.push(kiwi);
+    };
+
+    $scope.addToGraph = function(kiwi) {
+      //console.log(kiwi.graphData);
+      debugger;
+     $scope.graph.push(kiwi.graphData[0]);
+     console.log(kiwi.graphData[0])
+    // $scope.graph = [{
+    //     'key': 'test1',
+    //     'values': [[3,5], [5,7], [7,9]]
+    //   }, {
+    //     'key': 'test2',
+    //     'values': [[2,4], [3,5], [5,7]]
+    //   }];
+
+      // debugger;
+    };
+
+    $scope.callback = function(kiwi) {
+      arr.push(kiwi);
+      $scope.kiwigroups = kiwi;
+      $scope.kiwisgroups = arr;
+      console.log(kiwi);
+      console.log(arr);
+    }
     //TODO: revisit the url
     $http({
       method: 'GET',
@@ -25,24 +63,10 @@ angular.module('kiwiNode2App')
       var angularData = jQuery.extend({}, data.data);
 
       data = data.data;
-        // var secondData;
-        // var arr = [];
-        // $scope.dragItem = function(is) {
-        //   for(var i = 0; i < data.length; i++) {
-        //       var title = data[i].title = data[i].title.split(' ')[0] 
-        //       if(is.target.innerText === title) {
-        //         secondData = data[i];
-        //         arr.push(secondData)
-        //         $scope.kiwis = arr;
-        //      }
-        //   }
-        // } 
-        // console.log(secondData)
     
       // loop through because a user can have multiple items being tracked
       for (var i = 0; i < data.length; i++) {
         var title = data[i].title = data[i].title.split(' ')[0]  
-
         data[i].graphData = [{
           key: title, // TODO: will prob need to shorten if too long
           values: [] 

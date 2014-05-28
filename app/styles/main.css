@@ -1,91 +1,101 @@
 /**
  * BASE
  */
-h1,
-h2,
-h3,
-h4,
-h5 {
+h1, h2, h3, h4, h5 {
   font-family: 'Lato', sans-serif;
-  color: #38251C;
-}
+  font-weight: 100;
+  color: #38251C; }
+  h1 a, h2 a, h3 a, h4 a, h5 a {
+    font-weight: inherit;
+    font-size: inherit; }
 
-a {
-  color: #38251C;
-}
+a, p {
+  font-family: 'Lato', san-serif;
+  color: black;
+  font-weight: 400;
+  font-size: 14px; }
 
-.nav > li > a:hover {
-  background-color: #DEE7B1;
-  color: #38251C;
-}
+/**
+ * BOOSTRAP OVERRIDES
+ */
+.jumbotron {
+  padding: 0; }
 
-.table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th {
-background-color: #DEE7B1;
-}
+.carousel-inner .item img {
+  width: 100%; }
+
+.carousel-indicators {
+  display: none; }
+
+.carousel-control {
+  display: none; }
 
 /**
  * LAYOUT
  */
-
 /* Space out content a bit */
 body {
-  padding-top: 20px;
-  padding-bottom: 20px;
-}
+  margin: 0;
+  padding: 0; }
+
+.front-slice {
+  margin: 75px 0; }
 
 .kiwis {
   background-color: #eee;
-  margin-bottom: 20px;
-}
-
-.kiwis > h4,
-.kiwis > p {
-  /*margin-left: -10px;*/
-  margin-bottom: 0;
-}
-
-.kiwis > p {
-  margin-bottom: 10px;
-}
+  margin-bottom: 20px; }
+  .kiwis > h4 {
+    /*margin-left: -10px;*/
+    margin-bottom: 0; }
+  .kiwis > p {
+    /*margin-left: -10px;*/
+    margin-bottom: 0;
+    margin-bottom: 10px; }
 
 .main-right {
   margin-top: 0px;
   margin-bottom: 27px;
-  float: right;
-}
+  float: right; }
 
-/* Everything but the jumbotron gets side spacing for mobile first views */
-.header,
-.marketing,
-.footer {
+.nav-pills li.active a, .nav-pills li.active a:focus, .nav-pills li.active a:hover {
+  background-color: #dee7b1;
+  color: #38251C; }
+
+.nav > li a:focus {
+  background-color: #dee7b1;
+  color: #38251C; }
+
+.table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th {
+  background-color: #dee7b1; }
+
+.header, .marketing, .footer {
   padding-left: 15px;
-  padding-right: 15px;
-}
+  padding-right: 15px; }
 
 /* Custom page header */
 .header {
-  border-bottom: 1px solid #e5e5e5;
-}
-
-
-/* Make the masthead heading the same height as the navigation */
-.header h3 {
-  margin-top: 0;
-  margin-bottom: 0;
-  line-height: 40px;
-  padding-bottom: 19px;
-}
+  border-bottom: 1px solid #e5e5e5; }
+  .header h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 40px;
+    padding-bottom: 19px; }
 
 /* Custom page footer */
 .footer {
-  padding-top: 19px;
-  color: #777;
-  border-top: 1px solid #e5e5e5;
-}
+  background-color: #1a1a1a;
+  height: 200px; }
+  .footer h1, .footer h2, .footer h3, .footer h4, .footer h5, .footer p, .footer a {
+    color: white; }
+  .footer h5 {
+    margin-top: 20px; }
 
 /* Customize container */
 @media (min-width: 1200px) {
   .container {
+<<<<<<< HEAD
+    max-width: 1030px; } }
+=======
     max-width: 1170px;
   }
 }
@@ -118,69 +128,43 @@ body {
 .nav {
   background-color: #eee;
 }
+>>>>>>> 2d10722b6ed4213fff93c6aeb45f58f9384afe14
 .container-narrow > hr {
-  margin: 30px 0;
-}
-
-/* Main marketing message and sign up button */
-.jumbotron {
-  text-align: center;
-  border-bottom: 1px solid #e5e5e5;
-}
-.jumbotron .btn {
-  font-size: 21px;
-  padding: 14px 24px;
-}
+  margin: 30px 0; }
 
 /* Supporting marketing content */
 .marketing {
-  margin: 40px 0;
-}
-.marketing p + h4 {
-  margin-top: 28px;
-}
+  margin: 40px 0; }
+  .marketing p + h4 {
+    margin-top: 28px; }
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   /* Remove the padding we set earlier */
-  .header,
-  .marketing,
-  .footer {
+  .header, .marketing, .footer {
     padding-left: 0;
-    padding-right: 0;
-  }
+    padding-right: 0; }
+
   /* Space out the masthead */
   .header {
-    margin-bottom: 30px;
-  }
+    margin-bottom: 30px; }
+
   /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {
-    border-bottom: 0;
-  }
-}
-
+    border-bottom: 0; } }
 /* Graph and sidebar container */
-
 .container-graph-sidebar {
-  position:relative; 
-  padding:0 0 0 55px;
-}
+  position: relative;
+  padding: 0 0 0 55px; }
+
 #sidebar {
-  position:fixed;
-  top:1; bottom:1; left:0;
-  width:175px;
-  height:300px;
-  background: #eee;
-}
-.listTest{
-  list-style-type: none;
-}
+  position: fixed;
+  top: 1;
+  bottom: 1;
+  left: 0;
+  width: 175px;
+  height: 300px;
+  background: #eee; }
 
-
-
-
-
-
-
-
-
+.listTest {
+  list-style-type: none; }

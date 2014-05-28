@@ -1,66 +1,40 @@
-<div ng-include="'partials/navbar'"></div>
-<div id="chart">
-   <nvd3-line-chart class="chart"
-      data="graph"
-      id="exampleId"
-      width="800"
-      height="350"
-      showXAxis="true"
-      showYAxis="true"
-      interactive="true"
-      tooltips="true"
-      xAxisTickFormat="xAxisTickFormatFunc()"
-      yAxisTickFormat="yAxisTickFormatFunc()">
-    </nvd3-line-chart>
-</div>
 
-<div class="container bs-docs-container">
+<div class="container">
+  <h1 class="main-right">My Kiwis</h1>
   <div class="row">
-    <div class="col-md-9 kiwis" role="main" ng-repeat="kiwi in kiwis">
-    <h3>{{kiwi.title}}</h3>
-    <p>{{kiwi.url}}</p>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Time</th>
-          <th>Value</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="pair in kiwi.values">
-          <td>{{ pair.date }}</td>
-          <td>{{ pair.value }}</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <nvd3-line-chart class="chart"
-      data="kiwi.graphData" 
-      width="800"
-      height="350"
-      showXAxis="true"
-      showYAxis="true"
-      interactive="true"
-      tooltips="true"
-      xAxisTickFormat="xAxisTickFormatFunc()"
-      yAxisTickFormat="yAxisTickFormatFunc()">
-    </nvd3-line-chart>
-    </div>
-    <div class="col-md-3"> 
-     <div class="bs-docs-sidebar-groups hidden-print affix" role="complementary">
-        <h2>My Kiwi Groups</h2>
-        <ul class="nav bs-docs-sidenav-groups" ng-repeat="kiwi in group" ng-click="addToGraph(kiwi)">
-
-          <li>{{kiwi.title}}</li>
-        </ul>
-      </div>
-
-      <div class="bs-docs-sidebar hidden-print affix" role="complementary">
-        <h2>My Kiwis</h2>
-        <ul class="nav bs-docs-sidenav" ng-repeat="kiwi in kiwis" ng-click="addToGroup(kiwi)">
-          {{kiwi.title}}
-        </ul>
-      </div>
+    <div class="col-sm-12 kiwis" ng-repeat="kiwi in kiwis">
+      
+      <h3>{{kiwi.title}}</h3>
+      
+      <a href="{{ kiwi.url}}">{{kiwi.url}}</a>
+      
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="pair in kiwi.values">
+            <td>{{ pair.date }}</td>
+            <td>{{ pair.value }}</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <nvd3-line-chart class="chart"
+        data="kiwi.graphData"
+        width="1000"
+        height="350"
+        showXAxis="true"
+        showYAxis="true"
+        interactive="true"
+        tooltips="true"
+        xAxisTickFormat="xAxisTickFormatFunc()"
+        yAxisTickFormat="yAxisTickFormatFunc()">
+      </nvd3-line-chart>
     </div>
   </div>
-</div>
+</div> 
+

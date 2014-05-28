@@ -5,7 +5,7 @@
  * @param {[string]} original [the original value]
  * @param {[array]} rest  [the rest of the values]
  */
-var ValueParser = function(original, rest) {
+var NumberParser = function(original, rest) {
   this.initialize = function() {
     this.original = original;
     this.rest = rest;
@@ -15,7 +15,22 @@ var ValueParser = function(original, rest) {
   this.initialize();
 };
 
-ValueParser.prototype._cleanNumber = function(item) {
+/**
+ * Returns whether the original mostly consists of integers
+ * We assume that if it does, the thing will be parsed like a number
+ * @return {Boolean}
+ */
+NumberParser.prototype.isNumerical = function() {
+  var letters = this.original.match(/[a-zA-Z]/g);
+  var numbers = this.original.match(/\d+/g);
+  if(letters !== null) {
+    return numbers.length > letters.length;
+  } else {
+    return true;
+  }
+}
+
+NumberParser.prototype._cleanNumber = function(item) {
   var nonWhiteSpace = item.replace(/\s/g, '');
   var matches = nonWhiteSpace.match(/[0-9 , \.]+/g);
   // if(currency) {
@@ -29,7 +44,7 @@ ValueParser.prototype._cleanNumber = function(item) {
   }
 };
 
-ValueParser.prototype._matchLength = function(item) {
+NumberParser.prototype._matchLength = function(item) {
   if(item.indexOf(this.original) !== -1) {
     return this.original;
   } else {
@@ -37,12 +52,12 @@ ValueParser.prototype._matchLength = function(item) {
   }
 };
 
-ValueParser.prototype._getCurrency = function() {
+NumberParser.prototype._getCurrency = function() {
   var currency = this.original.match(/\$/g);
   return currency && currency.length ? currency[0] : '';
 };
 
-ValueParser.prototype.parseAll = function() {
+NumberParser.prototype.parseAll = function() {
   return _.flatten([this._cleanNumber(this.original), this.parse()]);
 };
 
@@ -50,7 +65,7 @@ ValueParser.prototype.parseAll = function() {
  * Parses the rest of the values and returns the formatted values
  * @return {[array]} [the reformatted array]
  */
-ValueParser.prototype.parse = function() {
+NumberParser.prototype.parse = function() {
   var res = [];
   var original = this.original;
   var origLength = this.origLength;

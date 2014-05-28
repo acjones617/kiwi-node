@@ -1,10 +1,12 @@
 'use strict';
 
-angular.module('kiwiNode2App')
-  .controller('KiwisCtrl', function ($scope, $http, $routeParams) {
+angular.module('KiwiApp')
+  .controller('KiwisCtrl', function ($scope, $http, $routeParams, $rootScope) {
     
-    $scope.group = [];
+
+    $scope.groups = [];
     $scope.graph = [];
+    $scope.selectedGroup = [];
 
     $scope.xAxisTickFormatFunc = function(d) {
       return function(d){
@@ -18,17 +20,32 @@ angular.module('kiwiNode2App')
       };
     };
 
+    $scope.selectGroup = function(group) {
+      $scope.selectedGroup = group;
+      // debugger;
+    };
+
+    $scope.createGroup = function() {
+      var group = {
+        name: $scope.group,
+        kiwis: []
+      };
+      $scope.groups.push(group);
+    };
+
+
     $scope.addToGroup = function(kiwi) {
-      $scope.group.push(kiwi);
+      $scope.selectedGroup.kiwis.push(kiwi.graphData[0]);
+      $scope.$broadcast('updateCustom');
     };
 
     $scope.addToGraph = function(kiwi) {
-     $scope.graph.push(kiwi.graphData[0]);
-     console.log(kiwi.graphData[0])
+
+      $scope.graph.push(kiwi.graphData[0]);
+
     };
 
-
-     //TODO: revisit the url
+    //TODO: revisit the url
     $http({
       method: 'GET',
       url: 'api/kiwis/' + $routeParams.email
@@ -38,7 +55,6 @@ angular.module('kiwiNode2App')
       var angularData = jQuery.extend({}, data.data);
 
       data = data.data;
-    
       // loop through because a user can have multiple items being tracked
       for (var i = 0; i < data.length; i++) {
         var title = data[i].title = data[i].title.split(' ')[0]  
@@ -49,10 +65,16 @@ angular.module('kiwiNode2App')
         // Get the value part only
         var plucked = _.pluck(data[i].values, 'value');
         var original = plucked.shift();
+        var parser = new NumberParser(original, plucked);
 
-        // Clean up the values
-        var parser = new ValueParser(original, plucked);
-        var parsedValues = parser.parseAll();
+        if(parser.isNumerical()) {
+          // Use the parser and clean up the values
+          var parsedValues = parser.parseAll();
+        } else {
+          // Do sentiment analysis
+
+        }
+
         var count = 0;
         _.each(data[i].values, function(item, key) {
 

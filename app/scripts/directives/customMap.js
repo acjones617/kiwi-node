@@ -2,15 +2,13 @@ angular.module('KiwiApp')
   .directive('customMap', function(){
     return {
       template: '<svg></svg>',
-      restrict: 'EA',
+      restrict: 'EAC',
       scope: {
-        group: '=',
-        index: '@'
+        group: '='
       },
-      link: function(scope, element, attrs, crtl) {
+      link: function(scope, element, attrs) {
         nv.addGraph(function() {
-          console.log(scope.group, scope.index);
-          var chart = nv.models.cumulativeLineChart()
+          var chart = nv.models.lineChart()
             .x(function(d) { return d[0] })
             .y(function(d) { return d[1] })
             .color(d3.scale.category10().range())
@@ -30,7 +28,7 @@ angular.module('KiwiApp')
             .datum(scope.group.kiwis)
             .transition().duration(500)
             .call(chart);
-
+      
           nv.utils.windowResize(chart.update);
           scope.$on('updateCustom', function(event) {
             chart.update();

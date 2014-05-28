@@ -3,6 +3,7 @@
 angular.module('KiwiApp')
   .controller('KiwisCtrl', function ($scope, $http, $routeParams, $rootScope) {
     
+
     $scope.groups = [];
     $scope.graph = [];
     $scope.selectedGroup = [];
@@ -31,10 +32,12 @@ angular.module('KiwiApp')
       $scope.groups.push(group);
     };
 
+
     $scope.addToGroup = function(kiwi) {
       $scope.selectedGroup.kiwis.push(kiwi.graphData[0]);
       $rootScope.$broadcast('updateCustom');
     };
+
 
     //TODO: revisit the url
     $http({

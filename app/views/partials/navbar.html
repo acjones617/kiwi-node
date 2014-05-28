@@ -1,16 +1,13 @@
-
 <div class='container'>
   <div class='row'>
     <div class="header" ng-controller="NavbarCtrl">
       <ul class="nav nav-pills pull-right">
-        <li ng-repeat="item in menu" ng-class="{active: isActive(item.link)}">
-            <a ng-href="{{item.link}}">{{item.title}}</a>
-        </li>
-        <li ng-hide="currentUser" ng-class="{active: isActive('/login')}"><a href="/login">Login</a></li>
-        <li ng-hide="currentUser" ng-class="{active: isActive('/signup')}"><a href="/signup">Sign up</a></li>
-        <li ng-show="currentUser" ng-class="{active: isActive('/logout')}"><a href="" ng-click="logout()">Logout</a></li>
+        <li ng-show="auth.user" class="navbar-text">{{auth.user.displayName}}</li>
+        <li ng-show="auth.user"><a href="#" ng-click="auth.$logout()">Logout</a></li>
+        <li><a href="#" ng-hide="auth.user" ng-click="auth.$login('facebook')">Login</a></li>
       </ul>
       <h1><a href="/">KIWI</a></h1>
+      <!-- <div>{{auth}}</div> -->
     </div>
   </div>
 </div>

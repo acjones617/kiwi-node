@@ -4,13 +4,6 @@ angular.module('kiwiNode2App')
   .controller('KiwisCtrl', function ($scope, $http, $routeParams) {
     
     $scope.group = [];
-    // $scope.graph = [{
-    //     'key': 'test1',
-    //     'values': [[3,5], [5,7], [7,9]]
-    //   }, {
-    //     'key': 'test2',
-    //     'values': [[2,4], [3,5], [5,7]]
-    //   }];
     $scope.graph = [];
 
     $scope.xAxisTickFormatFunc = function(d) {
@@ -24,36 +17,18 @@ angular.module('kiwiNode2App')
           return d3.format(',f')(d);
       };
     };
-    var arr = [];
 
     $scope.addToGroup = function(kiwi) {
       $scope.group.push(kiwi);
     };
 
     $scope.addToGraph = function(kiwi) {
-      //console.log(kiwi.graphData);
-      debugger;
      $scope.graph.push(kiwi.graphData[0]);
      console.log(kiwi.graphData[0])
-    // $scope.graph = [{
-    //     'key': 'test1',
-    //     'values': [[3,5], [5,7], [7,9]]
-    //   }, {
-    //     'key': 'test2',
-    //     'values': [[2,4], [3,5], [5,7]]
-    //   }];
-
-      // debugger;
     };
 
-    $scope.callback = function(kiwi) {
-      arr.push(kiwi);
-      $scope.kiwigroups = kiwi;
-      $scope.kiwisgroups = arr;
-      console.log(kiwi);
-      console.log(arr);
-    }
-    //TODO: revisit the url
+
+     //TODO: revisit the url
     $http({
       method: 'GET',
       url: 'api/kiwis/' + $routeParams.email

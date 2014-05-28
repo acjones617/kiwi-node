@@ -1,22 +1,15 @@
 'use strict';
 
 angular.module('kiwiNode2App')
-  .controller('NavbarCtrl', function ($scope, $location, Auth) {
-    $scope.menu = [{
-      'title': 'Home',
-      'link': '/'
-    }, {
-      'title': 'Settings',
-      'link': '/settings'
-    }];
+  .controller('NavbarCtrl', function ($scope, $location, $firebase, $firebaseSimpleLogin) {
     
-    $scope.logout = function() {
-      Auth.logout()
-      .then(function() {
-        $location.path('/login');
-      });
-    };
+    var ref = new Firebase('https://kiwidb.firebaseio.com/');
+    $scope.auth = $firebaseSimpleLogin(ref);
     
+    ref.child('users/').on('value', function(snapshot) {
+      console.log(snapshot);
+    });
+
     $scope.isActive = function(route) {
       return route === $location.path();
     };

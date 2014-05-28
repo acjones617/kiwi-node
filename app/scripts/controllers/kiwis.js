@@ -1,8 +1,11 @@
 'use strict';
 
-angular.module('kiwiNode2App')
-  .controller('KiwisCtrl', function ($scope, $http, $routeParams) {
+angular.module('KiwiApp')
+  .controller('KiwisCtrl', function ($scope, $http, $routeParams, $rootScope) {
     
+    $scope.groups = [];
+    $scope.graph = [];
+    $scope.selectedGroup = [];
     var db = new Firebase('https://kiwidb.firebaseio.com/users/facebook:10103897713367983');
     var result = [];
 
@@ -14,8 +17,6 @@ angular.module('kiwiNode2App')
       // });
       // console.log(result);
     });
-
-
 
     $scope.xAxisTickFormatFunc = function(d) {
       return function(d){
@@ -29,62 +30,69 @@ angular.module('kiwiNode2App')
       };
     };
 
+    $scope.selectGroup = function(group) {
+      $scope.selectedGroup = group;
+    };
+
+    $scope.createGroup = function() {
+      var group = {
+        name: $scope.groupName,
+        kiwis: []
+      };
+      $scope.groups.push(group);
+    };
+
+
+    $scope.addToGroup = function(kiwi) {
+      $scope.selectedGroup.kiwis.push(kiwi.graphData[0]);
+      $rootScope.$broadcast('updateCustom');
+    };
+
+
+    //TODO: revisit the url
+    $http({
+      method: 'GET',
+      url: 'api/kiwis/' + $routeParams.email
+    })
+    .then(function(data) {
     // TODO: revisit the url
-    // $http({
-    //   method: 'GET',
-    //   url: 'api/kiwis/' + $routeParams.email
-    // })
-    // .then(function(data) {
+      var angularData = jQuery.extend({}, data.data);
+      data = data.data;
+      // loop through because a user can have multiple items being tracked
+      for (var i = 0; i < data.length; i++) {
+        var title = data[i].title = data[i].title.split(' ')[0]  
+        data[i].graphData = [{
+          key: title, // TODO: will prob need to shorten if too long
+          values: [] 
+        }];
+        // Get the value part only
+        var plucked = _.pluck(data[i].values, 'value');
+        var original = plucked.shift();
+        var parser = new NumberParser(original, plucked);
 
-    //   var angularData = jQuery.extend({}, data.data);
+        if(parser.isNumerical()) {
+          // Use the parser and clean up the values
+          var parsedValues = parser.parseAll();
+        } else {
+          // Do sentiment analysis
+        }
 
-    //   data = data.data;
-    //     // var secondData;
-    //     // var arr = [];
-    //     // $scope.dragItem = function(is) {
-    //     //   for(var i = 0; i < data.length; i++) {
-    //     //       var title = data[i].title = data[i].title.split(' ')[0] 
-    //     //       if(is.target.innerText === title) {
-    //     //         secondData = data[i];
-    //     //         arr.push(secondData)
-    //     //         $scope.kiwis = arr;
-    //     //      }
-    //     //   }
-    //     // } 
-    //     // console.log(secondData)
-    
-    //   // loop through because a user can have multiple items being tracked
-    //   for (var i = 0; i < data.length; i++) {
-    //     var title = data[i].title = data[i].title.split(' ')[0]  
+        var count = 0;
+        _.each(data[i].values, function(item, key) {
+          item.value = parsedValues[count++];
+          if(item.value) {
+            var dateParts = item.date.split('-');
+            var x = new Date(dateParts[0], dateParts[1]-1, dateParts[2]).getTime();
+            var y = item.value.replace(/[^\d.-]/g, '');
+            data[i].graphData[0].values.push([x, y]);
+          }
 
-    //     data[i].graphData = [{
-    //       key: title, // TODO: will prob need to shorten if too long
-    //       values: [] 
-    //     }];
-    //     // Get the value part only
-    //     var plucked = _.pluck(data[i].values, 'value');
-    //     var original = plucked.shift();
+        });
 
-    //     // Clean up the values
-    //     var parser = new ValueParser(original, plucked);
-    //     var parsedValues = parser.parseAll();
-    //     var count = 0;
-    //     _.each(data[i].values, function(item, key) {
-
-    //       item.value = parsedValues[count++];
-    //       if(item.value) {
-    //         var dateParts = item.date.split('-');
-    //         var x = new Date(dateParts[0], dateParts[1]-1, dateParts[2]).getTime();
-    //         var y = item.value.replace(/[^\d.-]/g, '');
-    //         data[i].graphData[0].values.push([x, y]);
-    //       }
-
-    //     });
-
-    //   }
-    //   $scope.kiwis = angularData;
-    // })
-    // .catch(function() {
-    //   $scope.errors.other = 'Error with retrieving kiwis.';
-    // });
+      }
+      $scope.kiwis = angularData;
+    })
+    .catch(function() {
+      $scope.errors.other = 'Error with retrieving kiwis.';
+    });
   });

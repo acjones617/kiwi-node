@@ -1,44 +1,20 @@
-<div class='.container-fluid'>
-  <div class='row'>
-    <div ng-include="'partials/navbar'"></div>
+<div class='jumbotron'>
+  <div ng-controller="CarouselCtrl">
+    <carousel interval="10000">
+      <slide ng-repeat="slide in slides" active="slide.active">
+        <img ng-src="{{slide.image}}" style="margin:auto;">
+        <div class="carousel-caption">
+          <!-- <p>{{slide.text}}</p> -->
+        </div>
+      </slide>
+    </carousel>
   </div>
-<!-- <div class="jumbotron">
-  <h1>'Allo, world <span ng-show="currentUser">{{ currentUser.name }}</span>!</h1>
-  <p class="lead">
-    <img src="images/yeoman.png" alt="I'm Yeoman"><br>
-    Always a pleasure scaffolding your apps.
-  </p>
-  <p><a class="btn btn-lg btn-success" ng-href="#">Splendid!</a></p>
-</div> -->
+</div>
 
-<!--  -->
+<div class='container'>
   <div class='row'>
-    <div ng-controller="CarouselDemoCtrl">
-      <div style="height: 305px">
-        <carousel interval="5000">
-          <slide ng-repeat="slide in slides" active="slide.active">
-            <img ng-src="{{slide.image}}" style="margin:auto;">
-            <div class="carousel-caption">
-              <h4>Slide {{$index}}</h4>
-              <p>{{slide.text}}</p>
-            </div>
-          </slide>
-        </carousel>
-      </div>
-      <div class="row">
-      </div>
-    </div>
-  </div>
-  <!--  -->
-  <!-- <div class="row marketing">
-    <div ng-repeat="thing in awesomeThings">
-        <h4>{{thing.name}}</h4>
-        <p>{{thing.info}}</p>
-    </div>
-  </div> -->
-  <div class='row'>
+    <h2>Wecome to the way of the Kiwi</h2>
     <div class='col-md-12'>
-      <h2>Wecome to the way of the Kiwi</h2>
       <p>
         Kiwi runner will shortly become your favorite way to track data online. It's a super easy-to-use Chrome extension that allows you to select specific pieces of information from websites (kiwis) that we'll track for you over time. To install it, ##do this stuff##. 
       </p>
@@ -51,9 +27,9 @@
     </div> 
   </div>
 
-  <div class='row'>
-    <div class='col-md-6'>
-      <h3>Curious little birds</h3>
+  <div class='row front-slice'>
+    <h3>Curious little birds</h3>
+    <div class='col-sm-6'>
       <p>
         Kiwis are nocturnal and snuffle about the beach at night. When you track an element with Kiwi Runner, Kiwi Runner does exactly the same. Well... not exactly. 
       </p>
@@ -64,16 +40,19 @@
         Kiwis are social! Feel free to share your kiwi findings with your friends! If they're popular, you might raise a top-trending kiwi! You'll have to make an account for this... click here to get started.
       </p>
     </div>    
-    <div class='col-md-6'>
-      <h3></h3></br></br>
+    <div class='col-sm-6'>
       <img src='http://colorfulrevolution.com/sites/default/files/images/blog/2013/07/nightbird.jpg' class='img-responsive' alt='Responsive image'>
       </img>
     </div>
   </div>
 
-  <div class='row'>
-    <div class='col-md-6'>
-      <h3>Data-driven dodos</h3>
+  <div class='row front-slice'>
+    <h3>Data-driven dodos</h3>
+    <div class='col-sm-6'>
+      <img src='http://blogupstairs.com/wp-content/uploads/2012/06/nvd3.png' class='img-responsive' alt='Responsive image'>
+      </img>
+    </div>    
+    <div class='col-sm-6'>
       <p>
         In the course of your data-detecting endeavours, you'll probably find tons of cool information. Kiwi runner comes with a light-weight analysis platform for you to view your kiwis, plot them against each other, and compare them with other pieces of data on the internet.
       </p>
@@ -81,18 +60,14 @@
         Kiwi runner uses the popular D3 analytics library allowing you to create awesome diagrams right here online, with no fancy software. Head over to the Data Dojo to see your kiwis, top-trending kiwis, and start building some awesome charts. 
       </p>
     </div>
-    <div class='col-md-6'>
-      <h3></h3></br></br>
-      <img src='http://blogupstairs.com/wp-content/uploads/2012/06/nvd3.png' class='img-responsive' alt='Responsive image'>
-      </img>
-    </div>    
   </div>    
 
   <div class='row'>
-    <div class='col-md-12'>
+    <div class='col-sm-12'>
       <h5>Footnote</h5>
       <p><small>Kiwis are just plain awesome. So are kiwi fruits. Seriously, go to New Zealand and have some kiwi fruit. It'll change your life. </small></p>
     </div>    
   </div>
 
 </div>
+

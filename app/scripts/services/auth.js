@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('kiwiNode2App')
+angular.module('KiwiApp')
   .factory('Auth', function Auth($location, $rootScope, Session, User, $cookieStore) {
     
     // Get currentUser from cookie

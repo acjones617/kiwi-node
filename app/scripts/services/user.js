@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('kiwiNode2App')
+angular.module('KiwiApp')
   .factory('User', function ($resource) {
     return $resource('/api/users/:id', {
       id: '@id'

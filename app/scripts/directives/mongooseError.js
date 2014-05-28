@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('kiwiNode2App')
+angular.module('KiwiApp')
 
   /**
    * Removes server error when user updates input

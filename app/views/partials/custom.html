@@ -3,7 +3,7 @@
     <div class="col-sm-9">
           
       <div ng-repeat="group in groups">
-        <custom-map></custom-map>
+        <custom-map group="group" index="{{$index}}"></custom-map>
       </div>
 
     </div>
@@ -12,7 +12,7 @@
       <div class="graphs">
         <h2>Groups</h2>
         <div class="kiwiList">
-          <input type="text" class="input" ng-model="group">
+          <input type="text" class="input" ng-model="groupName">
           <button class="btn add-group" ng-click="createGroup()">Create Group</button>
           <ul ng-repeat="group in groups">
             <h2 ng-click="selectGroup(group)">{{group.name}}</h2>

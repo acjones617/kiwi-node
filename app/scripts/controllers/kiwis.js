@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('KiwiApp')
-  .controller('KiwisCtrl', function ($scope, $http, $routeParams) {
+  .controller('KiwisCtrl', function ($scope, $http, $routeParams, $rootScope) {
     
     $scope.groups = [];
     $scope.graph = [];
@@ -21,24 +21,19 @@ angular.module('KiwiApp')
 
     $scope.selectGroup = function(group) {
       $scope.selectedGroup = group;
-      // debugger;
     };
 
     $scope.createGroup = function() {
       var group = {
-        name: $scope.group,
+        name: $scope.groupName,
         kiwis: []
       };
       $scope.groups.push(group);
     };
 
     $scope.addToGroup = function(kiwi) {
-      $scope.selectedGroup.kiwis.push(kiwi);
-    };
-
-    $scope.addToGraph = function(kiwi) {
-      $scope.graph.push(kiwi.graphData[0]);
-      $scope.$emit('updateCustom');
+      $scope.selectedGroup.kiwis.push(kiwi.graphData[0]);
+      $rootScope.$broadcast('updateCustom');
     };
 
     //TODO: revisit the url

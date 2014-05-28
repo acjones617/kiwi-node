@@ -5,7 +5,6 @@ angular.module('KiwiApp', [
   'ngResource',
   'ngSanitize',
   'ngRoute',
-  'nvd3ChartDirectives',
   'ui.bootstrap'
 
 ])

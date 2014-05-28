@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('kiwiNode2App')
+angular.module('KiwiApp')
   .controller('SignupCtrl', function ($scope, Auth, $location) {
     $scope.user = {};
     $scope.errors = {};

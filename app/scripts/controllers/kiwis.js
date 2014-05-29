@@ -3,7 +3,7 @@
 angular.module('kiwiNode2App')
   .controller('KiwisCtrl', function ($scope, $http, $routeParams) {
     
-    var db = new Firebase('https://kiwidb.firebaseio.com/users/facebook:10103897713367983');
+    var db = new Firebase('https://kiwidb.firebaseio.com/users/facebook:10103901484620363');
     var result = [];
 
     db.once('value', function(snapshot) {

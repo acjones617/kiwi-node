@@ -24,6 +24,10 @@ angular.module('kiwiNode2App', [
         templateUrl: 'partials/kiwis',
         controller: 'KiwisCtrl'
       })
+      .when('/special', {
+        templateUrl: 'partials/special',
+        controller: 'SpecialCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

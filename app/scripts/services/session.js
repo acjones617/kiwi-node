@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('kiwiNode2App')
+angular.module('KiwiApp')
   .factory('Session', function ($resource) {
     return $resource('/api/session/');
   });

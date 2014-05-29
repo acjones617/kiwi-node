@@ -1,11 +1,10 @@
 'use strict';
 
-angular.module('kiwiNode2App', [
+angular.module('KiwiApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
   'ngRoute',
-  'nvd3ChartDirectives',
   'ui.bootstrap',
   'firebase'
 ])
@@ -19,6 +18,10 @@ angular.module('kiwiNode2App', [
         templateUrl: 'partials/settings',
         controller: 'SettingsCtrl',
         authenticate: true
+      })
+      .when('/custom/:email', {
+        templateUrl: 'partials/custom',
+        controller: 'KiwisCtrl'
       })
       .when('/kiwis/:email', {
         templateUrl: 'partials/kiwis',
@@ -50,23 +53,21 @@ angular.module('kiwiNode2App', [
     }]);
   })
   .run(function ($rootScope, $location, Auth) {
-
     // Redirect to login if route requires auth and you're not logged in
     $rootScope.$on('$routeChangeStart', function (event, next) {
-      
       if (next.authenticate && !Auth.isLoggedIn()) {
         $location.path('/login');
       }
     });
   });
 
-function CarouselDemoCtrl($scope) {
+function CarouselCtrl($scope) {
   $scope.myInterval = 5000;
   var slides = $scope.slides = [];
   $scope.addSlide = function() {
-    var newWidth = 600 + slides.length;
+    var newWidth = 1080 + slides.length;
     slides.push({
-      image: 'http://placekitten.com/' + newWidth + '/300',
+      image: 'http://placekitten.com/' + newWidth + '/400',
       text: ['More','Extra','Lots of','Surplus'][slides.length % 4] + ' ' +
         ['Cats', 'Kittys', 'Felines', 'Cutes'][slides.length % 4]
     });

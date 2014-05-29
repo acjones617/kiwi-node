@@ -1,5 +1,10 @@
-<div ng-controller="SpecialCtrl">
-  <a ng-hide="auth.user" ng-click="doStuff()">Login</a>
-  <h3>LOGIN</h3>
-  {{auth}}
+<div id="chrome-login" ng-controller="SpecialCtrl">
+  <div class="login-container">
+    <h1> Kiwi </h1>
+    <div class="facebook-login">
+      <img src="images/fb-icon.png" alt=""><a ng-hide="auth.user" ng-click="doStuff()">Log In With Facebook</a>
+    </div>
+    <p>{{ message }}</p>
+  </div>
+  <!-- {{auth}} -->
 </div>

@@ -27,6 +27,10 @@ angular.module('KiwiApp', [
         templateUrl: 'partials/kiwis',
         controller: 'KiwisCtrl'
       })
+      .when('/special', {
+        templateUrl: 'partials/special',
+        controller: 'SpecialCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

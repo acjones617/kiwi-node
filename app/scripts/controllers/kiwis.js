@@ -3,6 +3,7 @@
 angular.module('KiwiApp')
   .controller('KiwisCtrl', function ($scope, $http, $routeParams, $rootScope) {
     
+
     $scope.groups = [];
     $scope.graph = [];
     $scope.selectedGroup = [];

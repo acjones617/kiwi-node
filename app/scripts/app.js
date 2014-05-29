@@ -5,22 +5,14 @@ angular.module('KiwiApp', [
   'ngResource',
   'ngSanitize',
   'ngRoute',
-  'ui.bootstrap'
-
+  'ui.bootstrap',
+  'firebase'
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'partials/main',
         controller: 'MainCtrl'
-      })
-      .when('/login', {
-        templateUrl: 'partials/login',
-        controller: 'LoginCtrl'
-      })
-      .when('/signup', {
-        templateUrl: 'partials/signup',
-        controller: 'SignupCtrl'
       })
       .when('/settings', {
         templateUrl: 'partials/settings',
@@ -34,6 +26,10 @@ angular.module('KiwiApp', [
       .when('/kiwis/:email', {
         templateUrl: 'partials/kiwis',
         controller: 'KiwisCtrl'
+      })
+      .when('/special', {
+        templateUrl: 'partials/special',
+        controller: 'SpecialCtrl'
       })
       .otherwise({
         redirectTo: '/'
@@ -57,10 +53,8 @@ angular.module('KiwiApp', [
     }]);
   })
   .run(function ($rootScope, $location, Auth) {
-
     // Redirect to login if route requires auth and you're not logged in
     $rootScope.$on('$routeChangeStart', function (event, next) {
-      
       if (next.authenticate && !Auth.isLoggedIn()) {
         $location.path('/login');
       }

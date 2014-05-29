@@ -6,6 +6,17 @@ angular.module('KiwiApp')
     $scope.groups = [];
     $scope.graph = [];
     $scope.selectedGroup = [];
+    var db = new Firebase('https://kiwidb.firebaseio.com/users/facebook:10103897713367983');
+    var result = [];
+
+    db.once('value', function(snapshot) {
+      console.log(snapshot.val());
+      // snapshot.forEach(function(item) {
+      //   // var kiwi = item.val();
+      //   result.push(item);
+      // });
+      // console.log(result);
+    });
 
     $scope.xAxisTickFormatFunc = function(d) {
       return function(d){
@@ -58,9 +69,8 @@ angular.module('KiwiApp')
       url: 'api/kiwis/' + $routeParams.email
     })
     .then(function(data) {
-
+    // TODO: revisit the url
       var angularData = jQuery.extend({}, data.data);
-
       data = data.data;
       // loop through because a user can have multiple items being tracked
       for (var i = 0; i < data.length; i++) {
@@ -79,12 +89,10 @@ angular.module('KiwiApp')
           var parsedValues = parser.parseAll();
         } else {
           // Do sentiment analysis
-
         }
 
         var count = 0;
         _.each(data[i].values, function(item, key) {
-
           item.value = parsedValues[count++];
           if(item.value) {
             var dateParts = item.date.split('-');

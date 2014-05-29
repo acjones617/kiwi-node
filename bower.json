@@ -15,11 +15,16 @@
     "nvd3": "~1.1.15-beta",
     "angularjs-nvd3-directives": "~0.0.7",
     "underscore": "~1.6.0",
-    "grunt-contrib-sass": "~0.7.3"
+    "angularfire": "~0.7.1",
+    "firebase-simple-login": "~1.4.1"
   },
   "devDependencies": {
     "angular-mocks": ">=1.2.*",
     "angular-scenario": ">=1.2.*"
   },
-  "testPath": "test/client/spec"
+  "testPath": "test/client/spec",
+  "resolutions": {
+    "d3": "~3.4.1",
+    "firebase-simple-login": "~1.3.0"
+  }
 }

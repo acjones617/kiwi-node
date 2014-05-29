@@ -25,6 +25,9 @@ a, p {
 .jumbotron {
   padding: 0;
 }
+#chart{
+  height: 600px;
+}
 
 .carousel-inner {
   .item {
@@ -122,7 +125,12 @@ body {
     padding-bottom: 19px;
   }
 }
-
+.groupName.Name{
+  color: pink;
+}
+.list {
+  list-style-type: none;
+}
 /* Custom page footer */
 .footer {
   background-color: #1a1a1a;

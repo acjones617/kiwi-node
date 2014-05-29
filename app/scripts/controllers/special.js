@@ -13,16 +13,14 @@ angular.module('KiwiApp')
          console.log('Error:, ', err);
        } else {
          if (user) {
-           // note: not using angular cookies as they are not working
-           // $cookies.kiwiSpecial = user.firebaseAuthToken;
-           // $cookies.kiwiUid = user.uid;
-           // TODO: fix this
-           document.cookie = 'kiwiSpecial='+user.firebaseAuthToken+'; expires=Fri, 3 Aug 2014 20:47:11 UTC; path=/';
-           document.cookie = 'kiwiUid='+user.uid+'; expires=Fri, 3 Aug 2014 20:47:11 UTC; path=/';
-           $('body').append('<h1>You have been successfully logged in</h1>');
-           setTimeout(function(){
-            open(location, '_self').close(); // TODO:
-           }, 5000); 
+           if(user.uid) {
+             document.cookie = 'kiwiSpecial='+user.firebaseAuthToken+'; expires=Fri, 3 Aug 2014 20:47:11 UTC; path=/';
+             document.cookie = 'kiwiUid='+user.uid+'; expires=Fri, 3 Aug 2014 20:47:11 UTC; path=/';
+             $scope.message = 'You have been successfully logged in!';
+             setTimeout(function(){
+              open(location, '_self').close(); // TODO:Do this in a non-hacky manner.
+             }, 5000); 
+           }
          }
        }
      });

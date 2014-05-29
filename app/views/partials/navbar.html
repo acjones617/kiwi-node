@@ -3,10 +3,12 @@
     <div class="header" ng-controller="NavbarCtrl">
       <ul class="nav nav-pills pull-right">
         <li ng-show="auth.user" class="navbar-text">{{auth.user.displayName}}</li>
-        <li ng-show="auth.user"><a href="#" ng-click="auth.$logout()">Logout</a></li>
-        <li><a href="#" ng-hide="auth.user" ng-click="auth.$login('facebook')">Login</a></li>
+        <li><a href="/kiwis/">My Kiwis</a></li>
+        <li ng-show="auth.user"><a href="#" ng-click="logout()">Logout</a></li>
+        <li><a href="#" ng-hide="auth.user" ng-click="login()">Login</a></li>
       </ul>
       <h1><a href="/">KIWI</a></h1>
+      {{auth}}
     </div>
   </div>
 </div>

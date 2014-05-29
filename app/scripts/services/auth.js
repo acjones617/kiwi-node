@@ -1,101 +1,51 @@
 'use strict';
 
 angular.module('KiwiApp')
-  .factory('Auth', function Auth($location, $rootScope, Session, User, $cookieStore) {
+  .factory('Auth', function Auth($location, $rootScope, $firebase, $firebaseSimpleLogin) {
     
+   
+    // TODO: 
     // Get currentUser from cookie
-    $rootScope.currentUser = $cookieStore.get('user') || null;
-    $cookieStore.remove('user');
+    // $rootScope.currentUser = $cookieStore.get('user') || null;
+    // $cookieStore.remove('user');
 
     return {
-
       /**
-       * Authenticate user
-       * 
-       * @param  {Object}   user     - login info
-       * @param  {Function} callback - optional
-       * @return {Promise}            
-       */
-      login: function(user, callback) {
-        var cb = callback || angular.noop;
-
-        return Session.save({
-          email: user.email,
-          password: user.password
-        }, function(user) {
-          $rootScope.currentUser = user;
-          return cb();
-        }, function(err) {
-          return cb(err);
-        }).$promise;
-      },
-
-      /**
-       * Unauthenticate user
+       * Login the user
        * 
        * @param  {Function} callback - optional
-       * @return {Promise}           
        */
-      logout: function(callback) {
+      login: function(callback) {
         var cb = callback || angular.noop;
+        var ref = new Firebase('https://kiwidb.firebaseio.com/');
+        var auth = new FirebaseSimpleLogin(ref, function(err, user) {
+          if (err) {
+            console.log('Error with login. Error:, ', err);
+          } else {
+            if (user) {
+              $rootScope.currentUser = user;
+              // TODO: fix these hardcoded expiration dates
+              document.cookie = 'kiwiSpecial='+user.firebaseAuthToken+'; expires=Fri, 3 Aug 2014 20:47:11 UTC; path=/';
+              document.cookie = 'kiwiUid='+user.uid+'; expires=Fri, 3 Aug 2014 20:47:11 UTC; path=/';
+              cb(user);
+            }
+          }
+        });
 
-        return Session.delete(function() {
-            $rootScope.currentUser = null;
-            return cb();
-          },
-          function(err) {
-            return cb(err);
-          }).$promise;
+        auth.login('facebook');
       },
 
       /**
-       * Create a new user
+       * Logout the user
        * 
-       * @param  {Object}   user     - user info
        * @param  {Function} callback - optional
-       * @return {Promise}            
        */
-      createUser: function(user, callback) {
-        var cb = callback || angular.noop;
-
-        return User.save(user,
-          function(user) {
-            $rootScope.currentUser = user;
-            return cb(user);
-          },
-          function(err) {
-            return cb(err);
-          }).$promise;
-      },
-
-      /**
-       * Change password
-       * 
-       * @param  {String}   oldPassword 
-       * @param  {String}   newPassword 
-       * @param  {Function} callback    - optional
-       * @return {Promise}              
-       */
-      changePassword: function(oldPassword, newPassword, callback) {
-        var cb = callback || angular.noop;
-
-        return User.update({
-          oldPassword: oldPassword,
-          newPassword: newPassword
-        }, function(user) {
-          return cb(user);
-        }, function(err) {
-          return cb(err);
-        }).$promise;
-      },
-
-      /**
-       * Gets all available info on authenticated user
-       * 
-       * @return {Object} user
-       */
-      currentUser: function() {
-        return User.get();
+      logout: function() {
+        // firebase logout function handled directly in controller
+        
+        // handle other cleanup tasks
+        $rootScope.currentUser  = null;
+        $location.path('/');
       },
 
       /**

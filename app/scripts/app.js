@@ -61,16 +61,17 @@ function CarouselCtrl($scope) {
   $scope.myInterval = 5000;
   var slides = $scope.slides = [];
   $scope.addSlide = function() {
-    var newWidth = 1080 + slides.length;
     slides.push({
-      image: 'http://placekitten.com/' + newWidth + '/400',
-      text: ['More','Extra','Lots of','Surplus'][slides.length % 4] + ' ' +
-        ['Cats', 'Kittys', 'Felines', 'Cutes'][slides.length % 4]
+      image: 'images/carousel-01.png'
+    });
+    slides.push({
+      image: 'images/carousel-02.png'
+    });
+    slides.push({
+      image: 'images/carousel-03.png'
     });
   };
-  for (var i=0; i<4; i++) {
-    $scope.addSlide();
-  }
+  $scope.addSlide();
 }
 
 var Utils = {};

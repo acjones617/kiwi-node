@@ -68,6 +68,37 @@ body {
   min-height: 600px;
 }
 
+#chrome-login {
+  margin: auto;
+  .login-container {
+    padding: 50px;
+    position: fixed;
+    margin: auto;
+    top:0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 400px;
+    height: 400px;
+    h1 {
+      margin-bottom: 20px;
+    }
+  }
+  .facebook-login {
+    text-align: center;
+    color: white;
+    a, a:hover {
+      margin-left: 5px;
+      color: inherit;
+      text-decoration: none;
+    }
+    border-radius: 5px;
+    padding: 10px;
+    width: 200px;
+    background-color: rgb(72, 101, 180);
+  }
+}
+
 .kiwis {
   background-color: #eee;
   margin-bottom: 20px;
@@ -180,7 +211,6 @@ body {
 }
 
 /* Graph and sidebar container */
-
 .container-graph-sidebar {
   position: relative;
   padding: 0 0 0 55px;

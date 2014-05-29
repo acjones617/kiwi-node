@@ -3,7 +3,6 @@
 angular.module('KiwiApp')
   .controller('KiwisCtrl', function ($scope, $http, $routeParams, $rootScope) {
     
-
     $scope.groups = [];
     $scope.graph = [];
     $scope.selectedGroup = [];
@@ -33,6 +32,7 @@ angular.module('KiwiApp')
 
     $scope.selectGroup = function(group) {
       $scope.selectedGroup = group;
+      $('.groupName').toggleClass("Name");
     };
 
     $scope.createGroup = function() {
@@ -41,13 +41,26 @@ angular.module('KiwiApp')
         kiwis: []
       };
       $scope.groups.push(group);
+      $('.input').val('');
     };
 
-
+   // var dupsArr = [];
     $scope.addToGroup = function(kiwi) {
-      $scope.selectedGroup.kiwis.push(kiwi.graphData[0]);
-      $rootScope.$broadcast('updateCustom');
+      
+      //if(dupsArr.indexOf(kiwi.title) === -1) {
+        $scope.selectedGroup.kiwis.push(kiwi.graphData[0]);
+        $rootScope.$broadcast('updateCustom');
+      
+     // dupsArr.push(kiwi.title) 
     };
+    // $scope.removeFromGroup = function(kiwi) {
+    //   for(var i = 0; i < $scope.selectedGroup.kiwis.length; i++) {
+    //     console.log($scope.selectedGroup.kiwis[i].key)
+    //   }
+      
+     // $scope.selectedGroup.kiwis.push(kiwi.graphData[0]);
+    //   $rootScope.$broadcast('updateCustom');
+    // }
 
 
     //TODO: revisit the url

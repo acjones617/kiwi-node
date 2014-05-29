@@ -7,8 +7,9 @@ angular.module('KiwiApp')
         group: '='
       },
       link: function(scope, element, attrs) {
+
         nv.addGraph(function() {
-          var chart = nv.models.lineChart()
+          var chart = nv.models.cumulativeLineChart()
             .x(function(d) { return d[0] })
             .y(function(d) { return d[1] })
             .color(d3.scale.category10().range())
@@ -16,7 +17,7 @@ angular.module('KiwiApp')
 
           chart.xAxis
             .tickFormat(function(d) {
-              return d3.time.format('%x')(new Date(d));
+              return d3.time.format('%m-%d')(new Date(d));
             });
 
           chart.yAxis

@@ -2516,7 +2516,7 @@ nv.models.cumulativeLineChart = function() {
     , id = lines.id()
     , state = { index: 0, rescaleY: rescaleY }
     , defaultState = null
-    , noData = 'No Data Available.'
+    , noData = 'Put a kiwi in your group!'
     , average = function(d) { return d.average }
     , dispatch = d3.dispatch('tooltipShow', 'tooltipHide', 'stateChange', 'changeState')
     , transitionDuration = 250
@@ -2525,7 +2525,7 @@ nv.models.cumulativeLineChart = function() {
 
   xAxis
     .orient('bottom')
-    .tickPadding(7)
+    .tickPadding(2)
     ;
   yAxis
     .orient((rightAlignYAxis) ? 'right' : 'left')

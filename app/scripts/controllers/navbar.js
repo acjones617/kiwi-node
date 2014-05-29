@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('KiwiApp')
-  .controller('NavbarCtrl', function ($scope, $location, $firebase, $firebaseSimpleLogin, $q) {
+  .controller('NavbarCtrl', function ($scope, $location, $firebase, $firebaseSimpleLogin, $q, Auth, $http) {
     $scope.menu = [{
       'title': 'Home',
       'link': '/'
@@ -23,7 +23,15 @@ angular.module('KiwiApp')
     $scope.getCreds = function(){
       $scope.prms = $scope.authRegister();
       $scope.prms.then(function(result){
-        console.log(result);
+
+        $http({
+          method: 'POST',
+          url: '/api/createUser',
+          data: result
+        }).success(function(){
+          console.log('sent to server');
+        })
+
       })
     }
 
@@ -37,4 +45,3 @@ angular.module('KiwiApp')
       return route === $location.path();
     };
   });
-

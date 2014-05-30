@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('KiwiApp')
-  .controller('NavbarCtrl', function ($scope, $rootScope, $location, $firebase, $firebaseSimpleLogin, $q, Auth, $http) {
+  .controller('NavbarCtrl', function ($scope, $rootScope, $location, $firebase, $firebaseSimpleLogin, $q, $http) {
     $scope.menu = [{
       'title': 'Home',
       'link': '/'

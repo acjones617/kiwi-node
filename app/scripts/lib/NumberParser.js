@@ -51,7 +51,8 @@ NumberParser.prototype._matchLength = function(item) {
   if(item.indexOf(this.original) !== -1) {
     return this.original;
   } else {
-    return item.substr(0, this.origLength);
+    // return item.substr(0, this.origLength);
+    return item;
   }
 };
 

@@ -8,6 +8,7 @@ angular.module('KiwiApp')
     $scope.selectedGroup = [];
     $scope.showDiscription = false;
     $scope.descriptionText; 
+    $scope.kiwis = [];
 
     $scope.$on('sessionRestored', function() {
       $scope._db = new Firebase('https://kiwidb.firebaseio.com/users/' + $rootScope.currentUser.uid);
@@ -20,19 +21,21 @@ angular.module('KiwiApp')
 
     var getKiwis = function() {
       $scope._db.once('value', function(snapshot) {
-        var data = snapshot.val().kiwis;
-        console.log('got data: ', data);
-        _.each(data, function(kiwi, key, kiwis) {
-          var title = kiwi.title = kiwi.title.split(' ')[0];
-          kiwi.graphData = [{
-            key: title,
-            values: [] 
-          }];
+        var kiwis = snapshot.val().kiwis;
+        // _.each(data, function(kiwi, key, kiwis) {
+        //   debugger;
+        //   var title = kiwi.title = kiwi.title.split(' ')[0];
+        //   kiwi.graphData = [{
+        //     key: title,
+        //     values: [] 
+        //   }];
 
-          var parsedValues = washKiwi(kiwi);
-          pushKiwiToGraph(kiwi, parsedValues);
+        //   var parsedValues = washKiwi(kiwi);
+        //   pushKiwiToGraph(kiwi, parsedValues);
+        // });
+        $scope.$apply(function() {
+          $scope.kiwis = kiwis;
         });
-        $scope.kiwis = data;
       });
     };
 

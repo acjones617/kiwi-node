@@ -71,7 +71,7 @@ angular.module('KiwiApp', [
     // needed to check cookie to see if user already logged in
     // var ref = new Firebase('https://kiwidb.firebaseio.com/');
     // $rootScope.auth = $firebaseSimpleLogin(ref);
-    if($cookies.kiwiSpecial !== null) {
+    if($cookies.kiwiSpecial !== 'null') {
       var ref = new Firebase('https://kiwidb.firebaseio.com/');
       $rootScope.auth = $firebaseSimpleLogin(ref);
 

@@ -13,7 +13,6 @@ angular.module('KiwiApp')
           $scope.settings = settings.val() || {};
         });
       });
-
     }
 
     $scope.update = function() {

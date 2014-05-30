@@ -9,23 +9,31 @@ angular.module('KiwiApp', [
   'firebase'
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
+
     $routeProvider
       .when('/', {
         templateUrl: 'partials/main',
         controller: 'MainCtrl'
       })
-      .when('/kiwis/', {
+      .when('/kiwis', {
         templateUrl: 'partials/kiwis',
         controller: 'KiwisCtrl',
         authenticate: true
       })
+      .when('/profile', {
+        templateUrl: 'partials/profile',
+        controller: 'ProfileCtrl',
+        authenticate: true
+      })
       .when('/custom', {
         templateUrl: 'partials/custom',
-        controller: 'KiwisCtrl'
+        controller: 'KiwisCtrl',
+        authenticate: true
       })
       .when('/customcharts', {
         templateUrl: 'partials/customcharts',
-        controller: 'CustomCtrl'
+        controller: 'CustomCtrl',
+        authenticate: true
       })      
       .when('/chart/:name', {
         templateUrl: 'partials/chart',
@@ -58,8 +66,8 @@ angular.module('KiwiApp', [
   })
   .run(function ($rootScope, $location, $firebase, $firebaseSimpleLogin) {
     // needed to check cookie to see if user already logged in
-    var ref = new Firebase('https://kiwidb.firebaseio.com/');
-    $rootScope.auth = $firebaseSimpleLogin(ref);
+    // var ref = new Firebase('https://kiwidb.firebaseio.com/');
+    // $rootScope.auth = $firebaseSimpleLogin(ref);
 
     // Redirect to login if route requires auth and you're not logged in
     $rootScope.$on('$routeChangeStart', function (event, next) {

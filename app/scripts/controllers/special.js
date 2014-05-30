@@ -5,8 +5,6 @@ angular.module('KiwiApp')
     
     var ref = new Firebase('https://kiwidb.firebaseio.com/');
 
-
-
   $scope.doStuff = function() {
     var auth = new FirebaseSimpleLogin(ref, function(err, user) {
        if (err) {
@@ -26,20 +24,5 @@ angular.module('KiwiApp')
      });
        auth.login('facebook');
     };
-
-
-
-    // $scope.auth = $firebaseSimpleLogin(ref);
-
-    // $scope.doStuff = function() {
-
-    //   $scope.auth.$login('facebook');
-    //   $scope.$watch('auth.firebaseAuthToken', function(newValue) {
-    //     debugger;
-    //     $cookies.kiwiSpecial = newValue.firebaseAuthToken;
-    //     $cookies.kiwiUid = newValue.user.uid;
-    //     //close the window
-    //   });
-    // };
-
+  
   });

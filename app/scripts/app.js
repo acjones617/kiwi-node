@@ -14,18 +14,10 @@ angular.module('KiwiApp', [
         templateUrl: 'partials/main',
         controller: 'MainCtrl'
       })
-      .when('/settings', {
-        templateUrl: 'partials/settings',
-        controller: 'SettingsCtrl',
-        authenticate: true
-      })
-      .when('/custom/:email', {
-        templateUrl: 'partials/custom',
-        controller: 'KiwisCtrl'
-      })
-      .when('/kiwis/:email', {
+      .when('/kiwis/', {
         templateUrl: 'partials/kiwis',
-        controller: 'KiwisCtrl'
+        controller: 'KiwisCtrl',
+        authenticate: true
       })
       .when('/special', {
         templateUrl: 'partials/special',
@@ -52,11 +44,15 @@ angular.module('KiwiApp', [
       };
     }]);
   })
-  .run(function ($rootScope, $location, Auth) {
+  .run(function ($rootScope, $location, $firebase, $firebaseSimpleLogin) {
+    // needed to check cookie to see if user already logged in
+    var ref = new Firebase('https://kiwidb.firebaseio.com/');
+    $rootScope.auth = $firebaseSimpleLogin(ref);
+
     // Redirect to login if route requires auth and you're not logged in
     $rootScope.$on('$routeChangeStart', function (event, next) {
-      if (next.authenticate && !Auth.isLoggedIn()) {
-        $location.path('/login');
+      if (next.authenticate && (!$rootScope.auth || !$rootScope.auth.user)) {
+        $location.path('/');
       }
     });
   });

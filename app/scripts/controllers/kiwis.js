@@ -8,20 +8,19 @@ angular.module('KiwiApp')
     $scope.selectedGroup = [];
     $scope.showDiscription = false;
     $scope.descriptionText; 
-    $scope.kiwis = [];
+    $scope.kiwis = {};
 
     $scope.$on('sessionRestored', function() {
       $scope._db = new Firebase('https://kiwidb.firebaseio.com/users/' + $rootScope.currentUser.uid);
       getKiwis();
     });
-    // $rootScope.$on('$routeChangeSuccess', function() {
-    //   $scope._db = new Firebase('https://kiwidb.firebaseio.com/users/' + $rootScope.currentUser.uid);
-    //   getKiwis();
-    // });
 
     var getKiwis = function() {
       $scope._db.once('value', function(snapshot) {
         var kiwis = snapshot.val().kiwis;
+
+        // RAMIN: GRAPH STUFF GOES HERE
+
         // _.each(data, function(kiwi, key, kiwis) {
         //   debugger;
         //   var title = kiwi.title = kiwi.title.split(' ')[0];
@@ -65,7 +64,6 @@ angular.module('KiwiApp')
         if(item.value) {
           var x = formatDate(item.date.split('-'));
           var y = item.value;
-          // debugger;
           kiwi.graphData[0].values.push({
             x: x, 
             y: y
@@ -130,14 +128,9 @@ angular.module('KiwiApp')
       $('.input').val('');
     };
 
-   // var dupsArr = [];
     $scope.addToGroup = function(kiwi) {
-      
-      //if(dupsArr.indexOf(kiwi.title) === -1) {
-        $scope.selectedGroup.kiwis.push(kiwi.graphData[0]);
-        $rootScope.$broadcast('updateCustom');
-      
-     // dupsArr.push(kiwi.title) 
+      $scope.selectedGroup.kiwis.push(kiwi.graphData[0]);
+      $rootScope.$broadcast('updateCustom');
     };
 
   });

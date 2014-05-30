@@ -6,6 +6,8 @@ angular.module('KiwiApp')
     $scope.groups = [];
     $scope.graph = [];
     $scope.selectedGroup = [];
+    $scope.showDiscription = false;
+    $scope.descriptionText; 
 
     var db = new Firebase('https://kiwidb.firebaseio.com/users/' + $rootScope.auth.user.uid);
     var result = [];
@@ -74,6 +76,35 @@ angular.module('KiwiApp')
           return d3.format(',f')(d);
       };
     };
+
+   $scope.saveGraph = function() {
+      $scope.showDescription = true;
+    }
+
+    $scope.saveGraphToDatabase = function() {
+      var chartLink = new Firebase('https://kiwidb.firebaseio.com/users/' + $rootScope.auth.user.uid +'/charts');
+      var graphObj = {}, arr = [];
+
+      for(var i = 0; i < $scope.groups.length; i++) {
+        var kiwi = $scope.groups[i].kiwis;
+        for(var j = 0; j < kiwi.length; j++) {
+          arr.push(kiwi[j].key);
+        }
+      }
+
+      graphObj.name = $scope.groupName;
+      graphObj.description = $scope.descriptionText;
+      graphObj.kiwis = arr;
+
+      chartLink.push(graphObj);
+      //sendto FB
+    }    
+
+    $scope.selectGroup = function(group) {
+      $scope.selectedGroup = group;
+      $('.groupName').toggleClass("Name");
+    };
+
 
     $scope.selectGroup = function(group) {
       $scope.selectedGroup = group;

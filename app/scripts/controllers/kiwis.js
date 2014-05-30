@@ -6,6 +6,9 @@ angular.module('KiwiApp')
     $scope.groups = [];
     $scope.graph = [];
     $scope.selectedGroup = [];
+    $scope.showDiscription = false;
+    $scope.descriptionText; 
+
     var db = new Firebase('https://kiwidb.firebaseio.com/users/' + $rootScope.auth.user.uid);
     var result = [];
 
@@ -74,6 +77,35 @@ angular.module('KiwiApp')
       };
     };
 
+   $scope.saveGraph = function() {
+      $scope.showDescription = true;
+    }
+
+    $scope.saveGraphToDatabase = function() {
+      var chartLink = new Firebase('https://kiwidb.firebaseio.com/users/' + $rootScope.auth.user.uid +'/charts');
+      var graphObj = {}, arr = [];
+
+      for(var i = 0; i < $scope.groups.length; i++) {
+        var kiwi = $scope.groups[i].kiwis;
+        for(var j = 0; j < kiwi.length; j++) {
+          arr.push(kiwi[j].key);
+        }
+      }
+
+      graphObj.name = $scope.groupName;
+      graphObj.description = $scope.descriptionText;
+      graphObj.kiwis = arr;
+
+      chartLink.push(graphObj);
+      //sendto FB
+    }    
+
+    $scope.selectGroup = function(group) {
+      $scope.selectedGroup = group;
+      $('.groupName').toggleClass("Name");
+    };
+
+
     $scope.selectGroup = function(group) {
       $scope.selectedGroup = group;
       $('.groupName').toggleClass("Name");
@@ -97,6 +129,14 @@ angular.module('KiwiApp')
       
      // dupsArr.push(kiwi.title) 
     };
+    db.once('value', function(snapshot) {
+      // snapshot.forEach(function(item) {
+      //   // var kiwi = item.val();
+      //   result.push(item);
+      // });
+      // console.log(result);
+    });
+
     // $scope.removeFromGroup = function(kiwi) {
     //   for(var i = 0; i < $scope.selectedGroup.kiwis.length; i++) {
     //     console.log($scope.selectedGroup.kiwis[i].key)

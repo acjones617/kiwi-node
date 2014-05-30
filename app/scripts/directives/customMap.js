@@ -1,10 +1,11 @@
 angular.module('KiwiApp')
   .directive('customMap', function(){
     return {
-      template: '<svg></svg>',
+      template: '<svg style="height: 300px;"></svg>',
       restrict: 'EAC',
       scope: {
-        group: '='
+        group: '=',
+        kiwi: '='
       },
       link: function(scope, element, attrs) {
 
@@ -12,8 +13,8 @@ angular.module('KiwiApp')
           var chart = nv.models.cumulativeLineChart()
             .x(function(d) { return d[0] })
             .y(function(d) { return d[1] })
-            .color(d3.scale.category10().range())
-            .useInteractiveGuideline(true);
+            .color(d3.scale.category10().range());
+            // .useInteractiveGuideline(true);
 
           chart.xAxis
             .tickFormat(function(d) {
@@ -25,10 +26,17 @@ angular.module('KiwiApp')
               return d3.format(',f')(d);
             });
 
-          d3.select(element.find('svg')[0])
-            .datum(scope.group.kiwis)
-            .transition().duration(500)
-            .call(chart);
+          if(scope.group) {
+            d3.select(element.find('svg')[0])
+              .datum(scope.group.kiwis)
+              .transition().duration(500)
+              .call(chart);
+          } else {
+            d3.select(element.find('svg')[0])
+              .datum([scope.kiwi])
+              .transition().duration(500)
+              .call(chart);
+            }
       
           nv.utils.windowResize(chart.update);
           scope.$on('updateCustom', function(event) {

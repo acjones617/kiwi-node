@@ -2,7 +2,7 @@
   <div class='row'>
     <div class="header" ng-controller="NavbarCtrl">
       <ul class="nav nav-pills pull-right">
-        <li ng-show="currentUser"><a href="/profile">Hello, {{auth.user.displayName}}</a></li>
+        <li ng-show="currentUser"><a href="/profile">Hello, {{currentUser.displayName}}</a></li>
         <li ng-show="currentUser"><a href="/kiwis/">My Kiwis</a></li>
         <li ng-show="currentUser"><a href="/custom">Make Charts</a></li>
         <li ng-show="currentUser"><a href="/customcharts">My Charts</a></li>

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('KiwiApp')
-  .controller('KiwisCtrl', function ($scope, $http, $routeParams, $rootScope) {
+  .controller('KiwisCtrl', function ($scope, $http, $routeParams, $rootScope, Auth, $cookies) {
     
     $scope.groups = [];
     $scope.graph = [];
@@ -9,6 +9,7 @@ angular.module('KiwiApp')
     $scope.showDiscription = false;
     $scope.descriptionText; 
     $scope.kiwis = {};
+    var sessionRestored = false;
 
     $scope.$on('sessionRestored', function() {
       $scope._db = new Firebase('https://kiwidb.firebaseio.com/users/' + $rootScope.currentUser.uid);
@@ -132,5 +133,10 @@ angular.module('KiwiApp')
       $scope.selectedGroup.kiwis.push(kiwi.graphData[0]);
       $rootScope.$broadcast('updateCustom');
     };
+
+    if($cookies.kiwiUid){
+      $scope._db = new Firebase('https://kiwidb.firebaseio.com/users/' + $cookies.kiwiUid);
+      getKiwis();
+    }
 
   });

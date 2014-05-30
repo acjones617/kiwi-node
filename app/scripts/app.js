@@ -73,7 +73,7 @@ angular.module('KiwiApp', [
     // $rootScope.auth = $firebaseSimpleLogin(ref);
     if($cookies.kiwiSpecial !== 'null') {
       var ref = new Firebase('https://kiwidb.firebaseio.com/');
-      $rootScope.auth = $firebaseSimpleLogin(ref);
+      // $rootScope.auth = $firebaseSimpleLogin(ref);
 
       var auth = new FirebaseSimpleLogin(ref, function(err, user) {
         if (err) {

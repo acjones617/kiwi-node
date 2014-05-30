@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('KiwiApp')
-  .controller('NavbarCtrl', function ($scope, $rootScope, $location, $firebase, $firebaseSimpleLogin, $q, $http) {
+  .controller('NavbarCtrl', function ($scope, $rootScope, $location, Auth, $q, $http) {
     $scope.menu = [{
       'title': 'Home',
       'link': '/'
@@ -10,15 +10,15 @@ angular.module('KiwiApp')
       'link': '/settings'
     }];
     
-    var ref = new Firebase('https://kiwidb.firebaseio.com/');
-    $rootScope.auth = $firebaseSimpleLogin(ref);
-
     $scope.login = function() {
-      $rootScope.auth.$login('facebook');
+      Auth.login(function(user) {
+        $rootScope.currentUser = user;
+      });
     };
 
     $scope.logout = function() {
-      $rootScope.auth.$logout();
+      // $rootScope.auth.$logout();
+      Auth.logout();
     };
     
     $scope.getCreds = function(){

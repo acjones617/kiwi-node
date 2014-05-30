@@ -1,4 +1,3 @@
-
 <div ng-include="'partials/navbar'"></div>
 <div class="container" id="custom">
   <div class="row">
@@ -24,7 +23,6 @@
           </ul>
         </div>
       </div>
-
       <div class="groups">
         <h2>Kiwis</h2>
         <div class="kiwiList">
@@ -33,8 +31,10 @@
           </ul>
         </div>
       </div>
+        <button ng-show="!showDescription" class="btn add-group" ng-click="saveGraph()">Save Chart</button>
+        <textarea ng-model="descriptionText" ng-show="showDescription" type="text" class="description" placeholder="enter a description of your chart" style="width: 215px" ></textarea>
+        <button ng-show="descriptionText.length > 8" class="btn add-group" ng-click="saveGraphToDatabase()">Confirm</button>
     </div>
-
   </div>
 
 </div>

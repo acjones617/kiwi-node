@@ -19,6 +19,14 @@ angular.module('KiwiApp', [
         controller: 'KiwisCtrl',
         authenticate: true
       })
+      .when('/custom', {
+        templateUrl: 'partials/custom',
+        controller: 'KiwisCtrl'
+      })
+      .when('/customcharts', {
+        templateUrl: 'partials/customcharts',
+        controller: 'CustomCtrl'
+      })      
       .when('/special', {
         templateUrl: 'partials/special',
         controller: 'SpecialCtrl'

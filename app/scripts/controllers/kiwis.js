@@ -6,17 +6,8 @@ angular.module('KiwiApp')
     $scope.groups = [];
     $scope.graph = [];
     $scope.selectedGroup = [];
-    var db = new Firebase('https://kiwidb.firebaseio.com/users/facebook:10103897713367983');
+    var db = new Firebase('https://kiwidb.firebaseio.com/users/facebook:10152208636623635');
     var result = [];
-
-    db.once('value', function(snapshot) {
-      console.log(snapshot.val());
-      // snapshot.forEach(function(item) {
-      //   // var kiwi = item.val();
-      //   result.push(item);
-      // });
-      // console.log(result);
-    });
 
     $scope.xAxisTickFormatFunc = function(d) {
       return function(d){
@@ -53,6 +44,14 @@ angular.module('KiwiApp')
       
      // dupsArr.push(kiwi.title) 
     };
+    db.once('value', function(snapshot) {
+      // snapshot.forEach(function(item) {
+      //   // var kiwi = item.val();
+      //   result.push(item);
+      // });
+      // console.log(result);
+    });
+
     // $scope.removeFromGroup = function(kiwi) {
     //   for(var i = 0; i < $scope.selectedGroup.kiwis.length; i++) {
     //     console.log($scope.selectedGroup.kiwis[i].key)

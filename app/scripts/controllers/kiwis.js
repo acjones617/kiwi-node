@@ -6,8 +6,62 @@ angular.module('KiwiApp')
     $scope.groups = [];
     $scope.graph = [];
     $scope.selectedGroup = [];
-    var db = new Firebase('https://kiwidb.firebaseio.com/users/facebook:10152208636623635');
+
+    var db = new Firebase('https://kiwidb.firebaseio.com/users/' + $rootScope.auth.user.uid);
     var result = [];
+
+    var getKiwis = function() {
+      db.once('value', function(snapshot) {
+        var data = snapshot.val().kiwis;
+        _.each(data, function(kiwi, key, kiwis) {
+          var title = kiwi.title = kiwi.title.split(' ')[0];
+          kiwi.graphData = [{
+            key: title,
+            values: [] 
+          }];
+
+          var parsedValues = washKiwi(kiwi);
+          pushKiwiToGraph(kiwi, parsedValues);
+        });
+        $scope.kiwis = data;
+      });
+    };
+
+    var formatDate = function(date) {
+      return new Date(date[0], date[1]-1, date[2]).getTime();
+    };
+
+    var washKiwi = function(kiwi) {
+      // Get the value part only
+      var plucked = _.pluck(kiwi.values, 'value');
+      var original = plucked.shift();
+      var parser = new NumberParser(original, plucked);
+
+      if(parser.isNumerical()) {
+        return parser.parseAll();
+      } else {
+        // Do sentiment analysis
+        // return parser.parseAll();
+        return _.pluck(kiwi.values, 'value');
+      }
+    };
+
+    var pushKiwiToGraph = function(kiwi, parsedValues) {
+      var count = 0;
+      _.each(kiwi.values, function(item, key) {
+        item.value = parsedValues[count++];
+        if(item.value) {
+          var x = formatDate(item.date.split('-'));
+          var y = item.value;
+          // debugger;
+          kiwi.graphData[0].values.push({
+            x: x, 
+            y: y
+          });
+        }
+        formatDate(item);
+      });
+    }
 
     $scope.xAxisTickFormatFunc = function(d) {
       return function(d){
@@ -60,52 +114,6 @@ angular.module('KiwiApp')
      // $scope.selectedGroup.kiwis.push(kiwi.graphData[0]);
     //   $rootScope.$broadcast('updateCustom');
     // }
+    getKiwis();
 
-
-    //TODO: revisit the url
-    $http({
-      method: 'GET',
-      url: 'api/kiwis/' + $routeParams.email
-    })
-    .then(function(data) {
-    // TODO: revisit the url
-      var angularData = jQuery.extend({}, data.data);
-      data = data.data;
-      // loop through because a user can have multiple items being tracked
-      for (var i = 0; i < data.length; i++) {
-        var title = data[i].title = data[i].title.split(' ')[0]  
-        data[i].graphData = [{
-          key: title, // TODO: will prob need to shorten if too long
-          values: [] 
-        }];
-        // Get the value part only
-        var plucked = _.pluck(data[i].values, 'value');
-        var original = plucked.shift();
-        var parser = new NumberParser(original, plucked);
-
-        if(parser.isNumerical()) {
-          // Use the parser and clean up the values
-          var parsedValues = parser.parseAll();
-        } else {
-          // Do sentiment analysis
-        }
-
-        var count = 0;
-        _.each(data[i].values, function(item, key) {
-          item.value = parsedValues[count++];
-          if(item.value) {
-            var dateParts = item.date.split('-');
-            var x = new Date(dateParts[0], dateParts[1]-1, dateParts[2]).getTime();
-            var y = item.value.replace(/[^\d.-]/g, '');
-            data[i].graphData[0].values.push([x, y]);
-          }
-
-        });
-
-      }
-      $scope.kiwis = angularData;
-    })
-    .catch(function() {
-      $scope.errors.other = 'Error with retrieving kiwis.';
-    });
   });

@@ -9,6 +9,7 @@ angular.module('KiwiApp')
     $scope.showDiscription = false;
     $scope.descriptionText; 
     $scope.kiwis = {};
+    $scope.isLoading = true;
     var sessionRestored = false;
 
     $scope.$on('sessionRestored', function() {
@@ -17,6 +18,7 @@ angular.module('KiwiApp')
     });
 
     var getKiwis = function() {
+
       $scope._db.once('value', function(snapshot) {
         var kiwis = snapshot.val().kiwis;
 
@@ -35,6 +37,7 @@ angular.module('KiwiApp')
         // });
         $scope.$apply(function() {
           $scope.kiwis = kiwis;
+          $scope.isLoading = false;
         });
       });
     };

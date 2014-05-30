@@ -121,6 +121,20 @@ body {
   float: right;
 }
 
+.loading-block {
+  height: 400px;
+  position: relative;
+  img {
+    margin: auto;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+
 .nav-pills {
   li.active {
     a, a:focus, a:hover {

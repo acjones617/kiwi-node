@@ -13,7 +13,10 @@ angular.module('KiwiApp')
       $scope._db = new Firebase('https://kiwidb.firebaseio.com/users/' + $rootScope.currentUser.uid);
       getKiwis();
     });
-    var result = [];
+    // $rootScope.$on('$routeChangeSuccess', function() {
+    //   $scope._db = new Firebase('https://kiwidb.firebaseio.com/users/' + $rootScope.currentUser.uid);
+    //   getKiwis();
+    // });
 
     var getKiwis = function() {
       $scope._db.once('value', function(snapshot) {
@@ -29,7 +32,6 @@ angular.module('KiwiApp')
           var parsedValues = washKiwi(kiwi);
           pushKiwiToGraph(kiwi, parsedValues);
         });
-        debugger;
         $scope.kiwis = data;
       });
     };
@@ -134,14 +136,5 @@ angular.module('KiwiApp')
       
      // dupsArr.push(kiwi.title) 
     };
-
-    // $scope.removeFromGroup = function(kiwi) {
-    //   for(var i = 0; i < $scope.selectedGroup.kiwis.length; i++) {
-    //     console.log($scope.selectedGroup.kiwis[i].key)
-    //   }
-      
-     // $scope.selectedGroup.kiwis.push(kiwi.graphData[0]);
-    //   $rootScope.$broadcast('updateCustom');
-    // }
 
   });

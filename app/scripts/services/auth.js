@@ -19,8 +19,9 @@ angular.module('KiwiApp')
             console.log('Error with login. Error:, ', err);
           } else {
             if (user) {
+              $rootScope.currentUser = user;
               $cookies.kiwiSpecial = user.firebaseAuthToken;
-              $cookies.kiwiUid = user.Uid;
+              $cookies.kiwiUid = user.uid;
               callback(user);
             }
           }

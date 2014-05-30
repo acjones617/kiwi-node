@@ -2,13 +2,14 @@
   <div class='row'>
     <div class="header" ng-controller="NavbarCtrl">
       <ul class="nav nav-pills pull-right">
-        <li><a href="/profile" ng-show="auth.user">{{auth.user.displayName}}</a></li>
+        <li ng-show="auth.user"><a href="/profile">Hello, {{auth.user.displayName}}</a></li>
         <li><a href="/kiwis/">My Kiwis</a></li>
+        <li><a href="/custom">Make Charts</a></li>
+        <li><a href="/customcharts">My Charts</a></li>
         <li ng-show="auth.user"><a href="#" ng-click="logout()">Logout</a></li>
         <li><a href="#" ng-hide="auth.user" ng-click="login()">Login</a></li>
       </ul>
       <h1><a href="/">KIWI</a></h1>
-    {{auth}}
     </div>
   </div>
 </div>

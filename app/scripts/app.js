@@ -17,11 +17,22 @@ angular.module('KiwiApp', [
       })
       .when('/kiwis', {
         templateUrl: 'partials/kiwis',
-        controller: 'KiwisCtrl'
+        controller: 'KiwisCtrl',
+        authenticate: true
       })
       .when('/profile', {
         templateUrl: 'partials/profile',
         controller: 'ProfileCtrl',
+        authenticate: true
+      })
+      .when('/custom', {
+        templateUrl: 'partials/custom',
+        controller: 'KiwisCtrl',
+        authenticate: true
+      })
+      .when('/customcharts', {
+        templateUrl: 'partials/customcharts',
+        controller: 'CustomCtrl',
         authenticate: true
       })      
       .when('/special', {

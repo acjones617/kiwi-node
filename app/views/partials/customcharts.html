@@ -1,0 +1,8 @@
+<div ng-include="'partials/navbar'"></div>
+<div class="groups pull-right"> 
+	<h2>My Charts</h2>
+	<ul ng-repeat="chart in myCharts">
+		<li ng-click="selectChart(chart)" class ="list"> {{chart.description}}</li>
+	</ul>
+
+</div>

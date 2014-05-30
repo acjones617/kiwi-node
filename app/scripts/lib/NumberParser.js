@@ -23,12 +23,15 @@ var NumberParser = function(original, rest) {
 NumberParser.prototype.isNumerical = function() {
   var letters = this.original.match(/[a-zA-Z]/g);
   var numbers = this.original.match(/\d+/g);
+  if(numbers === null) {
+    return false;
+  }
   if(letters !== null) {
     return numbers.length > letters.length;
   } else {
     return true;
   }
-}
+};
 
 NumberParser.prototype._cleanNumber = function(item) {
   var nonWhiteSpace = item.replace(/\s/g, '');

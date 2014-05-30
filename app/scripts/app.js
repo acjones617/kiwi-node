@@ -27,6 +27,10 @@ angular.module('KiwiApp', [
         templateUrl: 'partials/customcharts',
         controller: 'CustomCtrl'
       })      
+      .when('/chart/:name', {
+        templateUrl: 'partials/chart',
+        controller: 'ChartCtrl'
+      })
       .when('/special', {
         templateUrl: 'partials/special',
         controller: 'SpecialCtrl'

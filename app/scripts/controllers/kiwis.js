@@ -12,16 +12,31 @@ angular.module('KiwiApp')
 
     $scope.$on('sessionRestored', function() {
       $scope._db = new Firebase('https://kiwidb.firebaseio.com/users/' + $rootScope.currentUser.uid);
+      getCharts();
       getKiwis();
     });
     // $rootScope.$on('$routeChangeSuccess', function() {
     //   $scope._db = new Firebase('https://kiwidb.firebaseio.com/users/' + $rootScope.currentUser.uid);
     //   getKiwis();
     // });
+    
+    // $scope._db.once('value', function(snapshot) { 
+    //   console.log('snapshot.val()')
+
+    // });
+    var getCharts = function(){
+      $scope._db.once('value', function(snapshot){
+        console.log(snapshot.val().charts);
+        for (var chart in snapshot.val().charts){
+          $scope.groups.push(snapshot.val().charts[chart]);
+        }
+      });
+    }
 
     var getKiwis = function() {
       $scope._db.once('value', function(snapshot) {
         var kiwis = snapshot.val().kiwis;
+        console.log(kiwis)
         // _.each(data, function(kiwi, key, kiwis) {
         //   debugger;
         //   var title = kiwi.title = kiwi.title.split(' ')[0];
@@ -116,11 +131,6 @@ angular.module('KiwiApp')
     };
 
 
-    $scope.selectGroup = function(group) {
-      $scope.selectedGroup = group;
-      $('.groupName').toggleClass("Name");
-    };
-
     $scope.createGroup = function() {
       var group = {
         name: $scope.groupName,
@@ -132,7 +142,7 @@ angular.module('KiwiApp')
 
    // var dupsArr = [];
     $scope.addToGroup = function(kiwi) {
-      
+      console.log(kiwi)
       //if(dupsArr.indexOf(kiwi.title) === -1) {
         $scope.selectedGroup.kiwis.push(kiwi.graphData[0]);
         $rootScope.$broadcast('updateCustom');

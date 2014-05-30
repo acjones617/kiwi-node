@@ -9,10 +9,6 @@ angular.module('KiwiApp', [
   'firebase'
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
-    // var ref = new Firebase('https://kiwidb.firebaseio.com/');
-    // $rootScope.auth = $firebaseSimpleLogin(ref);
-    // debugger;
-
     $routeProvider
       .when('/', {
         templateUrl: 'partials/main',
@@ -73,7 +69,7 @@ angular.module('KiwiApp', [
     // $rootScope.auth = $firebaseSimpleLogin(ref);
     if($cookies.kiwiSpecial !== 'null') {
       var ref = new Firebase('https://kiwidb.firebaseio.com/');
-      $rootScope.auth = $firebaseSimpleLogin(ref);
+      // $rootScope.auth = $firebaseSimpleLogin(ref);
 
       var auth = new FirebaseSimpleLogin(ref, function(err, user) {
         if (err) {
@@ -89,7 +85,6 @@ angular.module('KiwiApp', [
 
     // Redirect to login if route requires auth and you're not logged in
     $rootScope.$on('$routeChangeStart', function (event, next) {
-      // if (next.authenticate && (!$rootScope.auth || !$rootScope.auth.user)) {
       if (next.authenticate) {
         if(!Auth.isLoggedIn()) {
           $location.path('/');

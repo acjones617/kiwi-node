@@ -5,7 +5,7 @@
   <h1 class="main-right">My Kiwis</h1>
   <div class="row">
     <div class="col-sm-12 kiwis" ng-repeat="kiwi in kiwis">
-      
+
       <h3>{{kiwi.title}}</h3>
       
       <a href="{{ kiwi.url}}">{{kiwi.url}}</a>
@@ -29,5 +29,9 @@
     </div>
   </div>
 </div> 
+
+<div ng-show="isLoading" class="loading-block">
+  <img src="images/loading.gif" alt="Loading">
+</div>
 
 <div ng-include="'partials/footer'"></div>

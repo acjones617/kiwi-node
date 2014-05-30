@@ -52,6 +52,13 @@ body {
   padding: 0;
 }
 
+.beta {
+  font-size: 15px;
+  top: -20px;
+  position: relative;
+  color: blue;
+}
+
 .front-slice {
   margin: 75px 0;
 }
@@ -119,6 +126,20 @@ body {
   margin-top: 0px;
   margin-bottom: 27px;
   float: right;
+}
+
+.loading-block {
+  height: 400px;
+  position: relative;
+  img {
+    margin: auto;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
 }
 
 .nav-pills {

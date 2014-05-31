@@ -28,12 +28,7 @@ angular.module('KiwiApp', [
         templateUrl: 'partials/custom',
         controller: 'KiwisCtrl',
         authenticate: true
-      })
-      .when('/customcharts/', {
-        templateUrl: 'partials/customcharts',
-        controller: 'CustomCtrl',
-        authenticate: true
-      })      
+      })   
       .when('/:user/:name', {
         templateUrl: 'partials/graph',
         controller: 'GraphCtrl'

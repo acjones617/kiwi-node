@@ -4,7 +4,7 @@
     <div class="col-sm-9">
           
       <div ng-repeat="group in groups" id='chart'>
-        <custom-map group='group'></custom-map>
+        <!-- <custom-map group='group'></custom-map> -->
       </div>
 
     </div>
@@ -16,9 +16,9 @@
           <input type="text" class="input" ng-model="groupName">
           <button class="btn add-group" ng-click="createGroup()">Create Group</button>
           <ul ng-repeat="group in groups">
-            <h2 class="groupName" ng-click="selectGroup(group)">{{group.name}}</h2>
+            <h2 class="done{{group.done}}" ng-click="selectGroup(group)">{{group.name}}</h2>
             <ul ng-repeat="kiwi in group.kiwis track by $index" >
-              <li class="list" ng-click="removeFromGroup(kiwi)">{{ kiwi }}</li>
+              <li class="list" ng-click="removeFromGroup(kiwi)">{{ kiwi.title }}</li>
             </ul>
           </ul>
         </div>
@@ -33,7 +33,7 @@
       </div>
         <button ng-show="!showDescription" class="btn add-group" ng-click="saveGraph()">Save Chart</button>
         <textarea ng-model="descriptionText" ng-show="showDescription" type="text" class="description" placeholder="enter a description of your chart" style="width: 215px" ></textarea>
-        <button ng-show="descriptionText.length > 8" class="btn add-group" ng-click="saveGraphToDatabase()">Confirm</button>
+        <button ng-show="descriptionText.length > 4" class="btn add-group" ng-click="saveGraphToDatabase()">Confirm</button>
     </div>
   </div>
 

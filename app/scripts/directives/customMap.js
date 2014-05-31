@@ -19,7 +19,7 @@ angular.module('KiwiApp')
         myChart.setBounds(60, 30, 505, 305);
         var x = myChart.addCategoryAxis("x", "x");
         x.addOrderRule("Date");
-        myChart.addMeasureAxis("y", "y");
+        m
         var s = myChart.addSeries("Channel", dimple.plot.area);
         s.interpolation = "cardinal";
         myChart.draw();

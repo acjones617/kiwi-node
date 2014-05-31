@@ -9,7 +9,6 @@ angular.module('KiwiApp', [
   'firebase'
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
-
     $routeProvider
       .when('/', {
         templateUrl: 'partials/main',
@@ -35,7 +34,11 @@ angular.module('KiwiApp', [
         controller: 'CustomCtrl',
         authenticate: true
       })      
-      .when('/special/', {
+      .when('/graph/:name', {
+        templateUrl: 'partials/graph',
+        controller: 'GraphCtrl'
+      })
+      .when('/special', {
         templateUrl: 'partials/special',
         controller: 'SpecialCtrl'
       })
@@ -60,15 +63,32 @@ angular.module('KiwiApp', [
       };
     }]);
   })
-  .run(function ($rootScope, $location, $firebase, $firebaseSimpleLogin) {
+  .run(function ($rootScope, $location, Auth, $cookies, $firebase, $firebaseSimpleLogin) {
     // needed to check cookie to see if user already logged in
     // var ref = new Firebase('https://kiwidb.firebaseio.com/');
     // $rootScope.auth = $firebaseSimpleLogin(ref);
+    if($cookies.kiwiSpecial !== 'null') {
+      var ref = new Firebase('https://kiwidb.firebaseio.com/');
+      // $rootScope.auth = $firebaseSimpleLogin(ref);
+
+      var auth = new FirebaseSimpleLogin(ref, function(err, user) {
+        if (err) {
+          console.log('Error with login. Error:, ', err);
+        } else {
+          if (user) {
+            $rootScope.currentUser = user;
+            $rootScope.$broadcast('sessionRestored');
+          }
+        }
+      });
+    }
 
     // Redirect to login if route requires auth and you're not logged in
     $rootScope.$on('$routeChangeStart', function (event, next) {
-      if (next.authenticate && (!$rootScope.auth || !$rootScope.auth.user)) {
-        $location.path('/');
+      if (next.authenticate) {
+        if(!Auth.isLoggedIn()) {
+          $location.path('/');
+        }
       }
     });
   });

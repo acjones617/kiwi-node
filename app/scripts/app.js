@@ -34,7 +34,7 @@ angular.module('KiwiApp', [
         controller: 'CustomCtrl',
         authenticate: true
       })      
-      .when('/graph/:name', {
+      .when('/:user/:name', {
         templateUrl: 'partials/graph',
         controller: 'GraphCtrl'
       })

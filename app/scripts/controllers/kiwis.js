@@ -14,15 +14,26 @@ angular.module('KiwiApp')
 
     $scope.$on('sessionRestored', function() {
       $scope._db = new Firebase('https://kiwidb.firebaseio.com/users/' + $rootScope.currentUser.uid);
+      getCharts();
       getKiwis();
     });
+
+
+    var getCharts = function(){
+      $scope._db.once('value', function(snapshot){
+        console.log(snapshot.val().charts);
+        for (var chart in snapshot.val().charts){
+          $scope.groups.push(snapshot.val().charts[chart]);
+        }
+      });
+    }
+
 
     var getKiwis = function() {
 
       $scope._db.once('value', function(snapshot) {
         var kiwis = snapshot.val().kiwis;
 
-        // RAMIN: GRAPH STUFF GOES HERE
 
         // _.each(data, function(kiwi, key, kiwis) {
         //   debugger;
@@ -116,14 +127,10 @@ angular.module('KiwiApp')
 
     $scope.selectGroup = function(group) {
       $scope.selectedGroup = group;
-      $('.groupName').toggleClass("Name");
+      console.log(group)
+      //$('.groupName').toggleClass("Name");
     };
 
-
-    $scope.selectGroup = function(group) {
-      $scope.selectedGroup = group;
-      $('.groupName').toggleClass("Name");
-    };
 
     $scope.createGroup = function() {
       var group = {
@@ -135,12 +142,15 @@ angular.module('KiwiApp')
     };
 
     $scope.addToGroup = function(kiwi) {
-      $scope.selectedGroup.kiwis.push(kiwi.graphData[0]);
+      console.log($scope.selectedGroup)
+      $scope.selectedGroup.kiwis.push(kiwi);
       $rootScope.$broadcast('updateCustom');
+
     };
 
     if($cookies.kiwiUid){
       $scope._db = new Firebase('https://kiwidb.firebaseio.com/users/' + $cookies.kiwiUid);
+      getCharts();
       getKiwis();
     }
 

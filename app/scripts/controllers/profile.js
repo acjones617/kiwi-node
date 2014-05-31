@@ -12,6 +12,8 @@ angular.module('KiwiApp')
       $scope.settings = settings.val() || {};
     });
 
+    $scope.msg = '';
+
     $scope.update = function() {
       if($scope.profileForm.$valid) {
         db.set($scope.settings, function(err) {
@@ -19,6 +21,7 @@ angular.module('KiwiApp')
             $scope.msg = 'Error saving data.';
           } else {
             // TODO: this is not working as it should
+            console.log('obvous');
             $scope.msg = 'Your changes have been saved.';
           }
         });

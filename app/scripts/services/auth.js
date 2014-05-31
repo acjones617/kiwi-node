@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('KiwiApp')
-  .factory('Auth', function Auth($location, $rootScope, $firebase, $firebaseSimpleLogin, $cookies) {
+  .factory('Auth', function Auth($location, $rootScope, $firebase, $firebaseSimpleLogin, $cookies, flash) {
 
     return {
       /**
@@ -22,6 +22,7 @@ angular.module('KiwiApp')
               $rootScope.currentUser = user;
               $cookies.kiwiSpecial = user.firebaseAuthToken;
               $cookies.kiwiUid = user.uid;
+              flash('Logged in!');
               callback(user);
             }
           }
@@ -44,6 +45,7 @@ angular.module('KiwiApp')
         $rootScope.auth.logout();
         $cookies.kiwiSpecial = null;
         $cookies.kiwiUid = null;
+        flash('You have successfully logged out!');
         $location.path('/');
       },
 

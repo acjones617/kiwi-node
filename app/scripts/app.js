@@ -6,7 +6,8 @@ angular.module('KiwiApp', [
   'ngSanitize',
   'ngRoute',
   'ui.bootstrap',
-  'firebase'
+  'firebase',
+  'flash'
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider
@@ -66,11 +67,8 @@ angular.module('KiwiApp', [
   .run(function ($rootScope, $location, Auth, $cookies, $firebase, $firebaseSimpleLogin) {
     // needed to check cookie to see if user already logged in
     // var ref = new Firebase('https://kiwidb.firebaseio.com/');
-    // $rootScope.auth = $firebaseSimpleLogin(ref);
     if($cookies.kiwiSpecial !== 'null') {
       var ref = new Firebase('https://kiwidb.firebaseio.com/');
-      // $rootScope.auth = $firebaseSimpleLogin(ref);
-
       var auth = new FirebaseSimpleLogin(ref, function(err, user) {
         if (err) {
           console.log('Error with login. Error:, ', err);

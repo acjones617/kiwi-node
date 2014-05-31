@@ -24,6 +24,7 @@ a, p {
  */
 .jumbotron {
   padding: 0;
+  background-color: inherit;
 }
 #chart{
   height: 600px;
@@ -33,6 +34,7 @@ a, p {
   .item {
     img {
       width: 100%;
+      max-width: 1068px;
     }
   }
 }

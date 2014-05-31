@@ -17,6 +17,8 @@ angular.module('KiwiApp')
       });
     }
 
+    $scope.msg = '';
+
     $scope.update = function() {
       if($scope.profileForm.$valid) {
         $scope._db.set($scope.settings, function(err) {

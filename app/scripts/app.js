@@ -14,29 +14,29 @@ angular.module('KiwiApp', [
         templateUrl: 'partials/main',
         controller: 'MainCtrl'
       })
-      .when('/kiwis', {
+      .when('/kiwis/', {
         templateUrl: 'partials/kiwis',
         controller: 'KiwisCtrl',
         authenticate: true
       })
-      .when('/profile', {
+      .when('/profile/', {
         templateUrl: 'partials/profile',
         controller: 'ProfileCtrl',
         authenticate: true
       })
-      .when('/custom', {
+      .when('/custom/', {
         templateUrl: 'partials/custom',
         controller: 'KiwisCtrl',
         authenticate: true
       })
-      .when('/customcharts', {
+      .when('/customcharts/', {
         templateUrl: 'partials/customcharts',
         controller: 'CustomCtrl',
         authenticate: true
       })      
-      .when('/chart/:name', {
-        templateUrl: 'partials/chart',
-        controller: 'ChartCtrl'
+      .when('/:user/:name', {
+        templateUrl: 'partials/graph',
+        controller: 'GraphCtrl'
       })
       .when('/special', {
         templateUrl: 'partials/special',

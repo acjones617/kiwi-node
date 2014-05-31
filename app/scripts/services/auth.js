@@ -26,7 +26,11 @@ angular.module('KiwiApp')
             }
           }
         });
-        auth.login('facebook');
+        // auth.login('facebook');
+        auth.login('facebook', {
+          rememberMe: true,
+          scope: 'email'
+        });
       },
 
       /**

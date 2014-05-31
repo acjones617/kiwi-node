@@ -54,6 +54,8 @@ angular.module('KiwiApp')
       });
     };
 
+    $scope.predicate = 'date';
+
     var formatDate = function(date) {
       return new Date(date[0], date[1]-1, date[2]).getTime();
     };

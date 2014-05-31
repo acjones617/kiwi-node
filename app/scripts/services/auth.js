@@ -39,11 +39,9 @@ angular.module('KiwiApp')
        * @param  {Function} callback - optional
        */
       logout: function() {
-        // firebase logout function handled directly in controller
-        
-        // handle other cleanup tasks
         $rootScope.currentUser  = null;
-        $rootScope.auth.$logout();
+        // debugger;
+        $rootScope.auth.logout();
         $cookies.kiwiSpecial = null;
         $cookies.kiwiUid = null;
         $location.path('/');

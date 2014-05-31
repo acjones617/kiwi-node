@@ -81,6 +81,7 @@ angular.module('KiwiApp', [
           }
         }
       });
+      $rootScope.auth = auth;
     }
 
     // Redirect to login if route requires auth and you're not logged in

@@ -3,6 +3,7 @@
 angular.module('KiwiApp')
   .controller('KiwisCtrl', function ($scope, $http, $routeParams, $rootScope, Auth, $cookies) {
     
+    $scope.chartToSave = [];
     $scope.groups = [];
     $scope.graph = [];
     $scope.selectedGroup = [];
@@ -11,7 +12,7 @@ angular.module('KiwiApp')
     $scope.kiwis = {};
     $scope.isLoading = true;
     var sessionRestored = false;
-
+    // $scope.groups.push({done:false})
     $scope.$on('sessionRestored', function() {
       $scope._db = new Firebase('https://kiwidb.firebaseio.com/users/' + $rootScope.currentUser.uid);
       getCharts();
@@ -103,32 +104,46 @@ angular.module('KiwiApp')
    $scope.saveGraph = function() {
       $scope.showDescription = true;
     }
-
+      //' + $rootScope.auth.user.uid +'
     $scope.saveGraphToDatabase = function() {
-      var chartLink = new Firebase('https://kiwidb.firebaseio.com/users/' + $rootScope.auth.user.uid +'/charts');
+      var selected = $scope.selectedGroup;
+      var chartLink = new Firebase('https://kiwidb.firebaseio.com/users/facebook:10152208636623635/charts');
       var graphObj = {}, arr = [];
 
-      for(var i = 0; i < $scope.groups.length; i++) {
-        var kiwi = $scope.groups[i].kiwis;
-        for(var j = 0; j < kiwi.length; j++) {
-          arr.push(kiwi[j].key);
-        }
+      for(var i = 0; i < selected.kiwis.length; i++) {
+        graphObj.title = selected.kiwis[i].title;
+        graphObj.values = selected.kiwis[i].values;
       }
-
-      graphObj.name = $scope.groupName;
+      // graphObj.title = selected.kiwis[0].title;
       graphObj.description = $scope.descriptionText;
-      graphObj.kiwis = arr;
+      // graphObj.values = selected.kiwis[0].values;
+
+      console.log('selected.kiwis', selected.kiwis[0])
+      console.log('selected.kiwis.title', selected.kiwis[0].title)
+      console.log('selected.kiwis.values', selected.kiwis[0].values)
+      //graphObj.kiwis = 
+           
+
+      // for(var i = 0; i < $scope.groups.length; i++) {
+      //   var kiwi = $scope.groups[i].kiwis;
+      //   //for(var j = 0; j < kiwi.length; j++) {
+      //     arr.push(kiwi.title);
+      //  // }
+      // }
+
+      // graphObj.kiwis = arr;
+      console.log('selected: ', selected);
+      console.log(graphObj)
 
       chartLink.push(graphObj);
       //sendto FB
     }    
 
     $scope.selectGroup = function(group) {
+      $scope.selectedGroup.done = false;
       $scope.selectedGroup = group;
-      console.log(group)
-      //$('.groupName').toggleClass("Name");
+      $scope.selectedGroup.done = true;    
     };
-
 
     $scope.createGroup = function() {
       var group = {
@@ -140,7 +155,6 @@ angular.module('KiwiApp')
     };
 
     $scope.addToGroup = function(kiwi) {
-      console.log($scope.selectedGroup)
       $scope.selectedGroup.kiwis.push(kiwi);
       $rootScope.$broadcast('updateCustom');
 

@@ -13,6 +13,7 @@ angular.module('KiwiApp')
     $scope.login = function() {
       Auth.login(function(user) {
         $rootScope.currentUser = user;
+        $scope.getCreds(user);
       });
     };
 
@@ -21,25 +22,14 @@ angular.module('KiwiApp')
       Auth.logout();
     };
     
-    $scope.getCreds = function(){
-      $scope.prms = $scope.authRegister();
-      $scope.prms.then(function(result){
-
+    $scope.getCreds = function(userData){
         $http({
           method: 'POST',
           url: '/api/createUser',
-          data: result
+          data: userData
         }).success(function(){
           console.log('sent to server');
         });
-
-      });
-    };
-
-    $scope.authRegister = function(){
-      var deferred = $q.defer();
-      deferred.resolve( $rootScope.auth.$login('facebook') );
-      return deferred.promise;
     };
 
     $scope.isActive = function(route) {

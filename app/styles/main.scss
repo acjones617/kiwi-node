@@ -66,12 +66,32 @@ body {
   background-color: #eee;
 }
 
-.group {
-  background-color: #eee;
-}
 
-.groups {
-  background-color: #eee;
+#groups {
+  min-height: 700px;
+  .group {
+    background-color: #eee;
+    margin-bottom: 20px;
+  }
+  .selectedGroup {
+    background-color: $mellow-yellow;
+  }
+  .groups {
+    h2 {
+      margin-top: 0px;
+    }
+    background-color: #eee;
+    .remove {
+      color: red;
+      margin: 0 10px;
+    }
+  }
+  .description {
+    margin-left: 30px;
+  }
+  .donetrue{
+    background-color: $mellow-yellow;
+  }
 }
 
 #custom {
@@ -180,9 +200,6 @@ body {
     line-height: 40px;
     padding-bottom: 19px;
   }
-}
-.donetrue{
-  color: pink;
 }
 .list {
   list-style-type: none;

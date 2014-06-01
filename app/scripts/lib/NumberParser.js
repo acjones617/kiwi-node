@@ -81,7 +81,6 @@ NumberParser.prototype.parse = function() {
   var that = this;
   _.each(this.rest, function(item) {
 
-    // var currency = that._getCurrency();
     var parsed = that._cleanNumber(item);
     if(parsed){
       // parsed = that._matchLength(parsed);

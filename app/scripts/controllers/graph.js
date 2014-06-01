@@ -10,7 +10,7 @@ angular.module('KiwiApp')
 
   var getChart = function() {
     var user = 'facebook:' + $routeParams.user;
-    var db = new Firebase('https://kiwidb.firebaseio.com/users/'+user+ '/charts')
+    var db = new Firebase('https://kiwidb.firebaseio.com/users/'+user+ '/groups')
       .once('value', function(data) {
         var charts = data.val();
         _.each(charts, function(chart) {

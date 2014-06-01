@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('KiwiApp')
   .directive('customMap', function(){
     return {

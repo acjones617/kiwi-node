@@ -34,10 +34,21 @@ angular.module('KiwiApp')
 
       $scope._db.once('value', function(snapshot) {
         var kiwis = snapshot.val().kiwis;
-        _.each(kiwis, function(kiwi) {
-          kiwi.values = valuesToArray(kiwi.values);
-        });
 
+        // RAMIN: GRAPH STUFF GOES HERE
+
+        // _.each(data, function(kiwi, key, kiwis) {
+        //   // debugger;
+        //   var title = kiwi.title = kiwi.title.split(' ')[0];
+        //   kiwi.graphData = [{
+        //     key: title,
+        //     values: [] 
+        //   }];
+
+        //   var parsedValues = washKiwi(kiwi);
+        //   pushKiwiToGraph(kiwi, parsedValues);
+        // });
+        
         $scope.$apply(function() {
           $scope.kiwis = kiwis;
           $scope.isLoading = false;

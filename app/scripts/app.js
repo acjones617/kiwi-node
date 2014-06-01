@@ -24,11 +24,11 @@ angular.module('KiwiApp', [
         controller: 'ProfileCtrl',
         authenticate: true
       })
-      .when('/custom/', {
-        templateUrl: 'partials/custom',
-        controller: 'KiwisCtrl',
+      .when('/groups/', {
+        templateUrl: 'partials/groups',
+        controller: 'GroupCtrl',
         authenticate: true
-      })   
+      })
       .when('/:user/:name', {
         templateUrl: 'partials/graph',
         controller: 'GraphCtrl'
@@ -69,11 +69,11 @@ angular.module('KiwiApp', [
         } else {
           if (user) {
             $rootScope.currentUser = user;
+            $rootScope.auth = auth;
             $rootScope.$broadcast('sessionRestored');
           }
         }
       });
-      $rootScope.auth = auth;
     }
 
     // Redirect to login if route requires auth and you're not logged in

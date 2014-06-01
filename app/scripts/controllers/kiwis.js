@@ -3,6 +3,7 @@
 angular.module('KiwiApp')
   .controller('KiwisCtrl', function ($scope, $http, $routeParams, $rootScope, Auth, $cookies) {
     
+    $scope.groupToSave = [];
     $scope.groups = [];
     $scope.graph = [];
     $scope.selectedGroup = [];
@@ -10,12 +11,24 @@ angular.module('KiwiApp')
     $scope.descriptionText; 
     $scope.kiwis = {};
     $scope.isLoading = true;
+    $scope.groupData = [];
     var sessionRestored = false;
 
-    $scope.$on('sessionRestored', function() {
-      $scope._db = new Firebase('https://kiwidb.firebaseio.com/users/' + $rootScope.currentUser.uid);
-      getKiwis();
-    });
+    var main = function() {
+      // $scope.$on('sessionRestored', function() {
+      //   $scope._db = new Firebase('https://kiwidb.firebaseio.com/users/' + $cookies.kiwiUid);
+      //   getgroups();
+      //   getKiwis();
+      // });
+      if($cookies.kiwiUid){
+        $scope._db = new Firebase('https://kiwidb.firebaseio.com/users/' + $cookies.kiwiUid);
+        getKiwis();
+      }
+    }
+  
+    var valuesToArray = function(obj) {
+      return Object.keys(obj).map(function (key) { return obj[key]; });
+    }
 
     var getKiwis = function() {
 
@@ -50,7 +63,6 @@ angular.module('KiwiApp')
     };
 
     var washKiwi = function(kiwi) {
-      // Get the value part only
       var plucked = _.pluck(kiwi.values, 'value');
       var original = plucked.shift();
       var parser = new NumberParser(original, plucked);
@@ -79,70 +91,7 @@ angular.module('KiwiApp')
         formatDate(item);
       });
     }
-
-    $scope.xAxisTickFormatFunc = function(d) {
-      return function(d){
-        return d3.time.format('%m-%d')(new Date(d));
-      };
-    };
-
-    $scope.yAxisTickFormatFunc = function(){
-      return function(d){
-          return d3.format(',f')(d);
-      };
-    };
-
-   $scope.saveGraph = function() {
-      $scope.showDescription = true;
-    }
-
-    $scope.saveGraphToDatabase = function() {
-      var chartLink = new Firebase('https://kiwidb.firebaseio.com/users/' + $rootScope.auth.user.uid +'/charts');
-      var graphObj = {}, arr = [];
-
-      for(var i = 0; i < $scope.groups.length; i++) {
-        var kiwi = $scope.groups[i].kiwis;
-        for(var j = 0; j < kiwi.length; j++) {
-          arr.push(kiwi[j].key);
-        }
-      }
-
-      graphObj.name = $scope.groupName;
-      graphObj.description = $scope.descriptionText;
-      graphObj.kiwis = arr;
-
-      chartLink.push(graphObj);
-      //sendto FB
-    }    
-
-    $scope.selectGroup = function(group) {
-      $scope.selectedGroup = group;
-      $('.groupName').toggleClass("Name");
-    };
-
-
-    $scope.selectGroup = function(group) {
-      $scope.selectedGroup = group;
-      $('.groupName').toggleClass("Name");
-    };
-
-    $scope.createGroup = function() {
-      var group = {
-        name: $scope.groupName,
-        kiwis: []
-      };
-      $scope.groups.push(group);
-      $('.input').val('');
-    };
-
-    $scope.addToGroup = function(kiwi) {
-      $scope.selectedGroup.kiwis.push(kiwi.graphData[0]);
-      $rootScope.$broadcast('updateCustom');
-    };
-
-    if($cookies.kiwiUid){
-      $scope._db = new Firebase('https://kiwidb.firebaseio.com/users/' + $cookies.kiwiUid);
-      getKiwis();
-    }
+    
+    main();
 
   });

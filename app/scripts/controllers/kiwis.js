@@ -20,6 +20,9 @@ angular.module('KiwiApp')
       getKiwis();
     });
 
+    var valuesToArray = function(obj) {
+      return Object.keys(obj).map(function (key) { return obj[key]; });
+    }
 
 
 
@@ -39,13 +42,13 @@ angular.module('KiwiApp')
       
     }
 
-
     var getKiwis = function() {
 
       $scope._db.once('value', function(snapshot) {
         var kiwis = snapshot.val().kiwis;
-
-
+        _.each(kiwis, function(kiwi) {
+          kiwi.values = valuesToArray(kiwi.values);
+        });
         // _.each(data, function(kiwi, key, kiwis) {
         //   debugger;
         //   var title = kiwi.title = kiwi.title.split(' ')[0];

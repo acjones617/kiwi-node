@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('KiwiApp')
-  .factory('Auth', function Auth($location, $rootScope, $firebase, $firebaseSimpleLogin, $cookies, flash) {
+  .factory('Auth', function Auth($location, $rootScope, $firebase, $firebaseSimpleLogin, $cookies) {
 
     return {
       /**

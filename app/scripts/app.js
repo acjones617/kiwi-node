@@ -6,8 +6,7 @@ angular.module('KiwiApp', [
   'ngSanitize',
   'ngRoute',
   'ui.bootstrap',
-  'firebase',
-  'flash'
+  'firebase'
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider

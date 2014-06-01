@@ -21,8 +21,8 @@ var NumberParser = function(original, rest) {
  * @return {Boolean}
  */
 NumberParser.prototype.isNumerical = function() {
-  var letters = this.original.match(/[a-zA-Z]/g);
-  var numbers = this.original.match(/\d+/g);
+  var letters = this.original.value.match(/[a-zA-Z]/g);
+  var numbers = this.original.value.match(/\d+/g);
   if(numbers === null) {
     return false;
   }
@@ -34,22 +34,25 @@ NumberParser.prototype.isNumerical = function() {
 };
 
 NumberParser.prototype._cleanNumber = function(item) {
-  var nonWhiteSpace = item.replace(/\s/g, '');
+  var nonWhiteSpace = item.value.replace(/\s/g, '');
   var matches = nonWhiteSpace.match(/[0-9 , \.]+/g);
+  item.value = parseFloat(matches[0]);
+  return item;
   // if(currency) {
   //   var index = item.indexOf(currency[0]);
   //   if(index > this.original.length) {
   //     currency = null;
   //   }
   // }
-  if(matches !== null) {
-    return matches[0];
-  }
+  // if(matches !== null) {
+  //   return parseFloat(matches[0]);
+  // }
 };
 
 NumberParser.prototype._matchLength = function(item) {
-  if(item.indexOf(this.original) !== -1) {
-    return this.original;
+  debugger;
+  if(item.value.indexOf(this.original.value) !== -1) {
+    return this.original.value;
   } else {
     // return item.substr(0, this.origLength);
     return item;
@@ -79,7 +82,7 @@ NumberParser.prototype.parse = function() {
     // var currency = that._getCurrency();
     var parsed = that._cleanNumber(item);
     if(parsed){
-      parsed = that._matchLength(parsed);
+      // parsed = that._matchLength(parsed);
       res.push(parsed);
     }
 

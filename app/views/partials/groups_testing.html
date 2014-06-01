@@ -1,0 +1,92 @@
+<div ng-include="'partials/navbar'"></div>
+  <style>
+    /* tell the SVG path to be a thin line without any area fill */
+    path {
+      stroke-width: 2o;
+      fill: none;
+    }
+    
+    .data1 {
+      stroke: blue;
+    }
+
+    .data2 {
+      stroke: orange;
+    }
+
+    .data3 {
+      stroke: red;
+    }
+
+    .axis {
+      shape-rendering: crispEdges;
+    }
+
+    .x.axis line {
+      stroke: grey;
+      stroke-width: 1;
+    }
+
+    .x.axis .minor {
+      stroke-opacity: .5;
+    }
+
+    .x.axis path {
+      display: none;
+    }
+    
+    .x.axis text {
+      font-size: 14;
+    }
+
+    .y.axis line, .y.axis path {
+      fill: none;
+    }
+
+    .y.axis1 line, .y.axis1 path {
+      stroke: blue;
+    }
+
+    .y.axis2 line, .y.axis2 path {
+      stroke: orange;
+    }
+
+    .y.axis3 line, .y.axis3 path {
+      stroke: red;
+    }
+
+    .y.axis text {
+      font-size: 14;
+    }
+
+    .y.axis1 text {
+      fill: blue;
+    }
+    
+    .y.axis2 text {
+      fill: orange;
+    }
+    
+    .y.axis3 text {
+      fill: red;
+    }
+
+  </style>
+
+<div class="container">
+  <h1 class="main-right">My Kiwis</h1>
+  <div class="row">
+    <button ng-click="test()">Add Something</button>
+    <div class="col-sm-12" ng-repeat="group in groups">
+      <multi-yaxis-graph group='group'></multi-yaxis-graph>
+    </div>
+  </div>
+</div> 
+
+<div ng-show="isLoading" class="loading-block">
+  <img src="images/loading.gif" alt="Loading">
+</div>
+
+
+
+<div ng-include="'partials/footer'"></div>

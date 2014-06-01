@@ -33,6 +33,11 @@ angular.module('KiwiApp', [
         templateUrl: 'partials/graph',
         controller: 'GraphCtrl'
       })
+      .when('/groups_testing', {
+        templateUrl: 'partials/groups_testing',
+        controller: 'GroupsTestingCtrl',
+        authenticate: true
+      })
       .when('/special', {
         templateUrl: 'partials/special',
         controller: 'SpecialCtrl'
@@ -68,9 +73,11 @@ angular.module('KiwiApp', [
           console.log('Error with login. Error:, ', err);
         } else {
           if (user) {
-            $rootScope.currentUser = user;
-            $rootScope.auth = auth;
-            $rootScope.$broadcast('sessionRestored');
+            $rootScope.$apply(function() {
+              $rootScope.currentUser = user;
+              $rootScope.auth = auth;
+              $rootScope.$broadcast('sessionRestored');
+            });
           }
         }
       });

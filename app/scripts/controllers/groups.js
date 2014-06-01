@@ -5,9 +5,8 @@ angular.module('KiwiApp')
     
     $scope.groupToSave = [];
     $scope.groups = [];
-    $scope.graph = [];
     $scope.selectedGroup = [];
-    $scope.showDiscription = false;
+
     $scope.descriptionText; 
     $scope.kiwis = {};
     $scope.isLoading = true;
@@ -15,11 +14,6 @@ angular.module('KiwiApp')
     var sessionRestored = false;
 
     var main = function() {
-      // $scope.$on('sessionRestored', function() {
-      //   $scope._db = new Firebase('https://kiwidb.firebaseio.com/users/' + $cookies.kiwiUid);
-      //   getgroups();
-      //   getKiwis();
-      // });
       if($cookies.kiwiUid){
         $scope._db = new Firebase('https://kiwidb.firebaseio.com/users/' + $cookies.kiwiUid);
         getKiwis();
@@ -34,24 +28,34 @@ angular.module('KiwiApp')
     var getGroups = function(){
       $scope._db.once('value', function(snapshot){
         var groups = snapshot.val().groups;
-        _.each(groups, function(group){
-          // debugger;
-          var kiwis = group.kiwis;
-          _.each(kiwis, function(kiwi) {
-            kiwi.values = valuesToArray(kiwi.values);
-          });
-          $scope.$apply(function() {
-            $scope.groups.push(group);
+        _.each(groups, function(group, groupHash){
+          var hashes = group.kiwiHashes;
+          getKiwisFromHash(hashes, function(kiwis) {
+            group.kiwiHashes = hashes;
+            group.kiwis = kiwis;
+            group.groupHash = groupHash;
+            $scope.$apply(function() {
+              $scope.groups.push(group);
+            });
           });
         });
       });
     };
 
+    var getKiwisFromHash = function(hashes, callback) {
+      var result = [];
+      for(var i = 0; i < hashes.length; i++) {
+        result.push($scope.kiwis[hashes[i]]);
+      }
+      callback(result);
+    };
+
     var getKiwis = function() {
       $scope._db.once('value', function(snapshot) {
         var kiwis = snapshot.val().kiwis;
-        _.each(kiwis, function(kiwi) {
-          kiwi.values = valuesToArray(kiwi.values);
+        _.each(kiwis, function(kiwi, hash) {
+          kiwi.values = washKiwi(kiwi);
+          kiwi.hash = hash;
         });
 
         $scope.$apply(function() {
@@ -61,7 +65,6 @@ angular.module('KiwiApp')
       });
     };
 
-
     $scope.predicate = 'date';
 
     var formatDate = function(date) {
@@ -70,9 +73,11 @@ angular.module('KiwiApp')
 
     var washKiwi = function(kiwi) {
       // Get the value part only
-      var plucked = _.pluck(kiwi.values, 'value');
-      var original = plucked.shift();
-      var parser = new NumberParser(original, plucked);
+      // var plucked = _.pluck(kiwi.values, 'value');
+
+      kiwi.values = valuesToArray(kiwi.values);
+      var original = kiwi.values.shift();
+      var parser = new NumberParser(original, kiwi.values);
 
       if(parser.isNumerical()) {
         return parser.parseAll();
@@ -83,48 +88,32 @@ angular.module('KiwiApp')
       }
     };
 
-    var pushKiwiToGraph = function(kiwi, parsedValues) {
-      var count = 0;
-      _.each(kiwi.values, function(item, key) {
-        item.value = parsedValues[count++];
-        if(item.value) {
-          var x = formatDate(item.date.split('-'));
-          var y = item.value;
-          kiwi.graphData[0].values.push({
-            x: x, 
-            y: y
-          });
-        }
-        formatDate(item);
-      });
-    }
-
     $scope.hoverGroupName = function(group) {
       $scope.description = group.description;
-      console.log($scope.description)
     };
 
     $scope.hoverLeaveGroupName = function() {
       $scope.description ='';
-    }
+    };
 
     $scope.saveGraph = function() {
       $scope.showDescription = true;
-    }
-      //' + $rootScope.auth.user.uid +'
+    };
+
     $scope.saveGraphToDatabase = function() {
       var selected = $scope.selectedGroup;
-      // var groupLink = new Firebase('https://kiwidb.firebaseio.com/users/facebook:10152208636623635/groups');
       var groupLink = $scope._db.child('groups');
+
       var graphObj = {}, arr = [];
       graphObj.name = $scope.selectedGroup.name;
-      graphObj.kiwis = $scope.selectedGroup.kiwis;
+      graphObj.kiwiHashes = selected.kiwiHashes;
       graphObj.description = $scope.descriptionText;
 
       $('.description').val('').blur();
+      selected.groupHash = selected.name;
 
-      groupLink.push(graphObj);
-    }    
+      groupLink.child(selected.groupHash).set(graphObj);
+    };
 
     $scope.selectGroup = function(group) {
       $scope.selectedGroup.done = false;
@@ -135,7 +124,8 @@ angular.module('KiwiApp')
     $scope.createGroup = function() {
       var group = {
         name: $scope.groupName,
-        kiwis: []
+        kiwis: [],
+        kiwiHashes: []
       };
       $scope.groups.push(group);
       $('.input').val('');
@@ -143,8 +133,8 @@ angular.module('KiwiApp')
 
     $scope.addToGroup = function(kiwi) {
       $scope.selectedGroup.kiwis.push(kiwi);
+      $scope.selectedGroup.kiwiHashes.push(kiwi.hash);
       $rootScope.$broadcast('updateCustom');
-
     };
 
     main();

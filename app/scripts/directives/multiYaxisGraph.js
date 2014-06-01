@@ -35,7 +35,7 @@ angular.module('KiwiApp')
         // add the y-axes
         var addAnotherYAxis = function(index, yScaler, ticks, d3GraphObj) {
           var yAxisN = d3.svg.axis().scale(yScaler).ticks(ticks).orient('left');
-          var shiftLeft = index === 1 ? -20 : -50 * index + 25;
+          var shiftLeft = index === 1 ? -15 : -50 * index + 25;
           d3GraphObj.append('svg:g')
             .attr('class', 'y axis axis' + index)
             .attr('transform', 'translate(' + shiftLeft + ',0)')
@@ -68,9 +68,9 @@ angular.module('KiwiApp')
           });
 
           // define dimensions of graph
-          var m = [80, 80, 80, 200]; // margins
-          var w = 1000 - m[1] - m[3];  // width - right - left
-          var h = 400 - m[0] - m[2]; // height - top - bottom
+          var m = [40, 40, 40, 200]; // margins
+          var w = 800 - m[1] - m[3];  // width - right - left
+          var h = 300 - m[0] - m[2]; // height - top - bottom
 
           // x will scale all values within pixels 0-w
           var x = d3.time.scale()

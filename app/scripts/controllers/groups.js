@@ -29,7 +29,6 @@ angular.module('KiwiApp')
       $scope._db.once('value', function(snapshot){
         var groups = snapshot.val().groups;
         _.each(groups, function(group, groupHash){
-          debugger;
           var hashes = group.kiwiHashes;
           getKiwisFromHash(hashes, function(kiwis) {
             group.kiwiHashes = hashes;
@@ -114,8 +113,7 @@ angular.module('KiwiApp')
       graphObj.description = $scope.descriptionText;
 
       $('.description').val('').blur();
-      debugger;
-      selected.groupHash = selected.groupHash || "testing";
+      selected.groupHash = selected.name;
 
       groupLink.child(selected.groupHash).set(graphObj);
     };

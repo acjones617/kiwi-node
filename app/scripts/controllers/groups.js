@@ -28,11 +28,12 @@ angular.module('KiwiApp')
     var getGroups = function(){
       $scope._db.once('value', function(snapshot){
         var groups = snapshot.val().groups;
-        _.each(groups, function(group){
+        _.each(groups, function(group, groupHash){
           var hashes = group.kiwiHashes;
           getKiwisFromHash(hashes, function(kiwis) {
             group.kiwiHashes = hashes;
             group.kiwis = kiwis;
+            group.groupHash = groupHash;
             $scope.$apply(function() {
               $scope.groups.push(group);
             });
@@ -112,8 +113,9 @@ angular.module('KiwiApp')
       graphObj.description = $scope.descriptionText;
 
       $('.description').val('').blur();
+      debugger;
 
-      groupLink.push(graphObj);
+      groupLink.child(selected.groupHash).set(graphObj);
     };
 
     $scope.selectGroup = function(group) {

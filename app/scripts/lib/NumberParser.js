@@ -50,8 +50,9 @@ NumberParser.prototype._cleanNumber = function(item) {
 };
 
 NumberParser.prototype._matchLength = function(item) {
-  if(item.indexOf(this.original) !== -1) {
-    return this.original;
+  debugger;
+  if(item.value.indexOf(this.original.value) !== -1) {
+    return this.original.value;
   } else {
     // return item.substr(0, this.origLength);
     return item;
@@ -81,7 +82,7 @@ NumberParser.prototype.parse = function() {
     // var currency = that._getCurrency();
     var parsed = that._cleanNumber(item);
     if(parsed){
-      parsed = that._matchLength(parsed);
+      // parsed = that._matchLength(parsed);
       res.push(parsed);
     }
 

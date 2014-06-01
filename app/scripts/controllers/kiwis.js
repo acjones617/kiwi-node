@@ -11,6 +11,7 @@ angular.module('KiwiApp')
     $scope.descriptionText; 
     $scope.kiwis = {};
     $scope.isLoading = true;
+    $scope.chartData = [];
     var sessionRestored = false;
     // $scope.groups.push({done:false})
     $scope.$on('sessionRestored', function() {
@@ -20,14 +21,22 @@ angular.module('KiwiApp')
     });
 
 
+
+
     var getCharts = function(){
+      var chartObj = {};
       $scope._db.once('value', function(snapshot){
         for (var chart in snapshot.val().charts){
-
           $scope.groups.push(snapshot.val().charts[chart]);
+          chartObj.groupTitle = snapshot.val().charts[chart].name;
+          console.log(snapshot.val().charts[chart].name, "groupName")//groupName
+          console.log(snapshot.val().charts[chart].kiwis[0].title, "title of kiwi") //title of kiwi 
+          console.log(snapshot.val().charts[chart].kiwis[0].values[0].date, "date") // date
+          console.log(snapshot.val().charts[chart].kiwis[0].values[0].value, "value")// value
+          console.log(chartObj,"chartObj")
         }
-        console.log($scope.groups)
       });
+      
     }
 
 
@@ -103,6 +112,13 @@ angular.module('KiwiApp')
           return d3.format(',f')(d);
       };
     };
+    $scope.hoverGroupName = function(group) {
+      $scope.description = group.description;
+      console.log($scope.description)
+    };
+    $scope.hoverLeaveGroupName = function() {
+      $scope.description ='';
+    }
 
    $scope.saveGraph = function() {
       $scope.showDescription = true;
@@ -114,8 +130,11 @@ angular.module('KiwiApp')
       var graphObj = {}, arr = [];
       graphObj.name = $scope.selectedGroup.name;
       graphObj.kiwis = $scope.selectedGroup.kiwis;
+      graphObj.description = $scope.descriptionText;
 
-      console.log($scope.selectedGroup.kiwis)
+
+      console.log($scope.selectedGroup)
+      console.log($scope.descriptionText)
 
   // for(var i = 0; i < selected.kiwis.length; i++) {
   //       graphObj.kiwis = selected.kiwis[i].values; //this must be complete kiwis
@@ -140,6 +159,7 @@ angular.module('KiwiApp')
       // graphObj.kiwis = arr;
       // console.log('selected: ', selected);
       // console.log(graphObj)
+      $('.description').val('').blur();
 
       chartLink.push(graphObj);
       //sendto FB

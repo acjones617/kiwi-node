@@ -8,7 +8,6 @@
       </div>
 
     </div>
-
     <div class="col-sm-3">
       <div class="graphs">
         <h2>Groups</h2>
@@ -16,7 +15,8 @@
           <input type="text" class="input" ng-model="groupName">
           <button class="btn add-group" ng-click="createGroup()">Create Group</button>
           <ul ng-repeat="group in groups">
-            <h2 class="done{{group.done}}" ng-click="selectGroup(group)">{{group.name}}</h2>
+            <!-- implement hover -->
+            <h2 class="done{{group.done}}" ng-click="selectGroup(group)" ng-mouseenter="hoverGroupName(group)" ng-mouseleave="hoverLeaveGroupName(group)">{{group.name}}</h2>
             <ul ng-repeat="kiwi in group.kiwis track by $index" >
               <li class="list" ng-click="removeFromGroup(kiwi)">{{ kiwi.title }}</li>
             </ul>

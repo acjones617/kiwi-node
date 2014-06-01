@@ -15,7 +15,7 @@ angular.module('KiwiApp')
     var sessionRestored = false;
     // $scope.groups.push({done:false})
     $scope.$on('sessionRestored', function() {
-      $scope._db = new Firebase('https://kiwidb.firebaseio.com/users/facebook:10103901484620363');
+      $scope._db = new Firebase('https://kiwidb.firebaseio.com/users/facebook:10152208636623635');
       getCharts();
       getKiwis();
     });
@@ -28,14 +28,16 @@ angular.module('KiwiApp')
       $scope._db.once('value', function(snapshot){
         var charts = snapshot.val().charts;
         for (var chart in charts){
-          $scope.groups.push(snapshot.val().charts[chart]);
           var kiwis = charts[chart].kiwis;
           _.each(kiwis, function(kiwi) {
             kiwi.values = valuesToArray(kiwi.values);
           });
         }
+          $scope.groups.push(snapshot.val().charts[chart]);
       });
+      console.log($scope.groups)
     }
+    
 
     var getKiwis = function() {
 
@@ -89,20 +91,8 @@ angular.module('KiwiApp')
       });
     }
 
-    $scope.xAxisTickFormatFunc = function(d) {
-      return function(d){
-        return d3.time.format('%m-%d')(new Date(d));
-      };
-    };
-
-    $scope.yAxisTickFormatFunc = function(){
-      return function(d){
-          return d3.format(',f')(d);
-      };
-    };
     $scope.hoverGroupName = function(group) {
       $scope.description = group.description;
-      console.log($scope.description)
     };
     $scope.hoverLeaveGroupName = function() {
       $scope.description ='';
@@ -117,6 +107,7 @@ angular.module('KiwiApp')
       var chartLink = new Firebase('https://kiwidb.firebaseio.com/users/facebook:10152208636623635/charts');
       var graphObj = {}, arr = [];
       graphObj.name = $scope.selectedGroup.name;
+      console.log(selectedGroup)
       graphObj.kiwis = $scope.selectedGroup.kiwis;
       graphObj.description = $scope.descriptionText;
 
@@ -142,6 +133,7 @@ angular.module('KiwiApp')
     };
 
     $scope.addToGroup = function(kiwi) {
+      console.log(kiwi)
       $scope.selectedGroup.kiwis.push(kiwi);
       $rootScope.$broadcast('updateCustom');
 

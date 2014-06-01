@@ -1,89 +1,20 @@
 <div ng-include="'partials/navbar'"></div>
 
-<style>
-  /* tell the SVG path to be a thin line without any area fill */
-  path {
-    stroke-width: 2o;
-    fill: none;
-  }
-  
-  .data1 {
-    stroke: blue;
-  }
-
-  .data2 {
-    stroke: orange;
-  }
-
-  .data3 {
-    stroke: red;
-  }
-
-  .axis {
-    shape-rendering: crispEdges;
-  }
-
-  .x.axis line {
-    stroke: grey;
-    stroke-width: 1;
-  }
-
-  .x.axis .minor {
-    stroke-opacity: .5;
-  }
-
-  .x.axis path {
-    display: none;
-  }
-  
-  .x.axis text {
-    font-size: 14;
-  }
-
-  .y.axis line, .y.axis path {
-    fill: none;
-  }
-
-  .y.axis1 line, .y.axis1 path {
-    stroke: blue;
-  }
-
-  .y.axis2 line, .y.axis2 path {
-    stroke: orange;
-  }
-
-  .y.axis3 line, .y.axis3 path {
-    stroke: red;
-  }
-
-  .y.axis text {
-    font-size: 14;
-  }
-
-  .y.axis1 text {
-    fill: blue;
-  }
-  
-  .y.axis2 text {
-    fill: orange;
-  }
-  
-  .y.axis3 text {
-    fill: red;
-  }
-
-</style>
-
 <div class="container" id="custom">
   <div class="row">
-    <div class="col-sm-9">
+    <div class="col-sm-12">
           
-      <div ng-repeat="group in groups" id='chart'>
+      <div ng-repeat="group in groups" class="group">
+        <h3>{{ group.name }}</h3>
+        <p>{{ group.description }}</p>
         <multi-yaxis-graph group='group'></multi-yaxis-graph>
       </div>
 
     </div>
-    <div class="col-sm-3">
+  </row>
+  <div class="row">
+
+    <div class="col-sm-12">
       <div class="graphs">
         <h2>Groups</h2>
         <div class="kiwiList">
@@ -102,7 +33,7 @@
         <h2>Kiwis</h2>
         <div class="kiwiList">
           <ul class="list" ng-repeat="kiwi in kiwis" ng-click="addToGroup(kiwi)">
-            <li>{{ kiwi.title }}</li>
+            <li>{{ kiwi.title | limitTo: 40 }}</li>
           </ul>
         </div>
       </div>

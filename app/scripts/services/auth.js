@@ -17,10 +17,12 @@ angular.module('KiwiApp')
             console.log('Error with login. Error:, ', err);
           } else {
             if (user) {
-              $rootScope.currentUser = user;
-              $cookies.kiwiSpecial = user.firebaseAuthToken;
-              $cookies.kiwiUid = user.uid;
-              callback(user);
+              $scope.$apply(function() {
+                $rootScope.currentUser = user;
+                $cookies.kiwiSpecial = user.firebaseAuthToken;
+                $cookies.kiwiUid = user.uid;
+                callback(user);
+              });
             }
           }
         });

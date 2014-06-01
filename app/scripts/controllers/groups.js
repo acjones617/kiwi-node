@@ -29,7 +29,6 @@ angular.module('KiwiApp')
       $scope._db.once('value', function(snapshot){
         var groups = snapshot.val().groups;
         _.each(groups, function(group, groupHash){
-          debugger;
           var hashes = group.kiwiHashes;
           getKiwisFromHash(hashes, function(kiwis) {
             group.kiwiHashes = hashes;
@@ -45,20 +44,17 @@ angular.module('KiwiApp')
 
     var getKiwisFromHash = function(hashes, callback) {
       var result = [];
-      $scope._db.once('value', function(snapshot) {
-        var kiwis = snapshot.val().kiwis;
-        for(var i = 0; i < hashes.length; i++) {
-          result.push(kiwis[hashes[i]]);
-        }
-        callback(result);
-      });
+      for(var i = 0; i < hashes.length; i++) {
+        result.push($scope.kiwis[hashes[i]]);
+      }
+      callback(result);
     };
 
     var getKiwis = function() {
       $scope._db.once('value', function(snapshot) {
         var kiwis = snapshot.val().kiwis;
         _.each(kiwis, function(kiwi, hash) {
-          kiwi.values = valuesToArray(kiwi.values);
+          kiwi.values = washKiwi(kiwi);
           kiwi.hash = hash;
         });
 
@@ -69,7 +65,6 @@ angular.module('KiwiApp')
       });
     };
 
-
     $scope.predicate = 'date';
 
     var formatDate = function(date) {
@@ -78,9 +73,11 @@ angular.module('KiwiApp')
 
     var washKiwi = function(kiwi) {
       // Get the value part only
-      var plucked = _.pluck(kiwi.values, 'value');
-      var original = plucked.shift();
-      var parser = new NumberParser(original, plucked);
+      // var plucked = _.pluck(kiwi.values, 'value');
+
+      kiwi.values = valuesToArray(kiwi.values);
+      var original = kiwi.values.shift();
+      var parser = new NumberParser(original, kiwi.values);
 
       if(parser.isNumerical()) {
         return parser.parseAll();
@@ -93,7 +90,6 @@ angular.module('KiwiApp')
 
     $scope.hoverGroupName = function(group) {
       $scope.description = group.description;
-      console.log($scope.description)
     };
 
     $scope.hoverLeaveGroupName = function() {
@@ -114,8 +110,7 @@ angular.module('KiwiApp')
       graphObj.description = $scope.descriptionText;
 
       $('.description').val('').blur();
-      debugger;
-      selected.groupHash = selected.groupHash || "testing";
+      selected.groupHash = selected.name;
 
       groupLink.child(selected.groupHash).set(graphObj);
     };

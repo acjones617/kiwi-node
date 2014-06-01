@@ -73,9 +73,11 @@ angular.module('KiwiApp', [
           console.log('Error with login. Error:, ', err);
         } else {
           if (user) {
-            $rootScope.currentUser = user;
-            $rootScope.auth = auth;
-            $rootScope.$broadcast('sessionRestored');
+            $rootScope.$apply(function() {
+              $rootScope.currentUser = user;
+              $rootScope.auth = auth;
+              $rootScope.$broadcast('sessionRestored');
+            });
           }
         }
       });

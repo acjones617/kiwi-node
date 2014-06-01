@@ -26,9 +26,6 @@ a, p {
   padding: 0;
   background-color: inherit;
 }
-#chart{
-  height: 600px;
-}
 
 .carousel-inner {
   .item {
@@ -66,6 +63,10 @@ body {
 }
 
 .graphs {
+  background-color: #eee;
+}
+
+.group {
   background-color: #eee;
 }
 
@@ -252,4 +253,79 @@ body {
 
 .listTest {
   list-style-type: none;
+}
+
+/**
+ * CUSTOM GRAPH
+ */
+ path {
+  stroke-width: 2o;
+  fill: none;
+}
+
+.data1 {
+  stroke: blue;
+}
+
+.data2 {
+  stroke: orange;
+}
+
+.data3 {
+  stroke: red;
+}
+
+.axis {
+  shape-rendering: crispEdges;
+}
+
+.x.axis {
+  line {
+    stroke: grey;
+    stroke-width: 1;
+  }
+  .minor {
+    stroke-opacity: .5;
+  }
+  path {
+    display: none;
+  }
+  text {
+    font-size: 14;
+  }
+}
+
+.y {
+  &.axis {
+    line, path {
+      fill: none;
+    }
+  }
+  &.axis1 {
+    line, path {
+      stroke: blue;
+    }
+  }
+  &.axis2 {
+    line, path {
+      stroke: orange;
+    }
+  }
+  &.axis3 {
+    line, path {
+      stroke: red;
+    }
+  }
+  &.axis text {
+    font-size: 14;
+  }
+  &.axis1 text {
+    fill: blue;
+  }
+  &.axis2 text {
+    fill: orange;
+  }
+  &.axis3 text {
+    fill: red;
+  }
 }

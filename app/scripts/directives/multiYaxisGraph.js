@@ -81,9 +81,13 @@ angular.module('KiwiApp')
           // add an SVG element with the desired dimensions and margin
           var div = element.find('div');
           div.empty();
+          var svgWidth = w + m[1] + m[3];
+          var svgHeight = h + m[0] + m[2];
           var graph = d3.select(div[0]).append('svg:svg')
-            .attr('width', w + m[1] + m[3])
-            .attr('height', h + m[0] + m[2])
+            .attr('width', svgWidth)
+            .attr('height', svgHeight)
+            .attr('viewBox', '0 0 '+ svgWidth + ' ' + svgHeight)
+            .attr('perserveAspectRatio', 'xMinYMid') // for resizing
             .append('svg:g')
             .attr('transform', 'translate(' + m[3] + ',' + m[0] + ')');
 

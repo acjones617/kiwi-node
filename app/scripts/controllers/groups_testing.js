@@ -5,8 +5,8 @@ angular.module('KiwiApp')
     
     $scope.test = function() {
       // var lastTime = $scope.groups[0].kiwis[0].values[-1][0];
-      $scope.groups[0].kiwis[0].values.push([1392105600000, 0]);
-      $scope.$broadcast('updateMultiYaxisChart');
+      $scope.groups[0].kiwis[0].values.push({date: 'Tue Feb 11 2014 00:00:00 GMT-0800 (PST)', value: 0});
+      $scope.$broadcast('updateMultiYaxisGraph');
       // alert('hi');
     };
 
@@ -16,29 +16,30 @@ angular.module('KiwiApp')
         kiwis: [
           {
             title: 'IMDB - Predator',
-            values:[[1391241600000, 7], [1391328000000, 0], [1391414400000, 1.5], [1391500800000, 5], [1391587200000, 4], [1391673600000, 9], [1391760000000, 6], [1391846400000, 6], [1391932800000, 8.1], [1392019200000, 2]]
+            values:[{date:'Sat Feb 01 2014 00:00:00 GMT-0800 (PST)', value: 7},
+                    {date:'Sun Feb 02 2014 00:00:00 GMT-0800 (PST)', value: 0},
+                    {date:'Mon Feb 03 2014 00:00:00 GMT-0800 (PST)', value: 1.5},
+                    {date:'Tue Feb 04 2014 00:00:00 GMT-0800 (PST)', value: 5},
+                    {date:'Wed Feb 05 2014 00:00:00 GMT-0800 (PST)', value: 4},
+                    {date:'Thu Feb 06 2014 00:00:00 GMT-0800 (PST)', value: 9},
+                    {date:'Fri Feb 07 2014 00:00:00 GMT-0800 (PST)', value: 6},
+                    {date:'Sat Feb 08 2014 00:00:00 GMT-0800 (PST)', value: 6},
+                    {date:'Sun Feb 09 2014 00:00:00 GMT-0800 (PST)', value: 8.1},
+                    {date:'Mon Feb 10 2014 00:00:00 GMT-0800 (PST)', value: 2}]
           },
           {
             title: 'IMDB - Total Recall',
-            values:[[1391328000000, 1000], [1391500800000, 2000], [1391673600000, 5000], [1391846400000, 5000], [1392019200000, 4000], [1392192000000, 999], [1392364800000, 3000], [1392537600000, 6700], [1392710400000, 800], [1392883200000, 0]]
+            values:[{date:'Sun Feb 02 2014 00:00:00 GMT-0800 (PST)', value: 1000},
+                    {date:'Tue Feb 04 2014 00:00:00 GMT-0800 (PST)', value: 2000},
+                    {date:'Thu Feb 06 2014 00:00:00 GMT-0800 (PST)', value: 5000},
+                    {date:'Sat Feb 08 2014 00:00:00 GMT-0800 (PST)', value: 5000},
+                    {date:'Mon Feb 10 2014 00:00:00 GMT-0800 (PST)', value: 4000},
+                    {date:'Wed Feb 12 2014 00:00:00 GMT-0800 (PST)', value: 999},
+                    {date:'Fri Feb 14 2014 00:00:00 GMT-0800 (PST)', value: 3000},
+                    {date:'Sun Feb 16 2014 00:00:00 GMT-0800 (PST)', value: 6700},
+                    {date:'Tue Feb 18 2014 00:00:00 GMT-0800 (PST)', value: 800},
+                    {date:'Thu Feb 20 2014 00:00:00 GMT-0800 (PST)', value: 0}]
           }]
-      },
-      {
-        groupTitle: 'Another Sweet Group',
-        kiwis: [
-          {
-            title: 'Usher Twitter Followers',
-            values:[[1391241600000, 7], [1391328000000, 0], [1391414400000, 1.5], [1391500800000, 5], [1391587200000, 4], [1391673600000, 9], [1391760000000, 6], [1391846400000, 6], [1391932800000, 8.1], [1392019200000, 2]]
-          },
-          {
-            title: 'Justing Timberlake Github Commits',
-            values:[[1391328000000, 1000], [1391500800000, 2000], [1391673600000, 5000], [1391846400000, 5000], [1392019200000, 4000], [1392192000000, 999], [1392364800000, 3000], [1392537600000, 6700], [1392710400000, 800], [1392883200000, 5000]]
-          },
-          {
-            title: 'Justing Timberlake Github Commits',
-            values:[[1391328000000, -100], [1391500800000, 100], [1391673600000, 200], [1391846400000, 400], [1392019200000, 0], [1392192000000, 999], [1392364800000, 200], [1392537600000, 670], [1392710400000, 80], [1392883200000, 500]]
-          }
-          ]
       }
     ];
   });

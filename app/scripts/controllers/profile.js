@@ -9,8 +9,10 @@ angular.module('KiwiApp')
     if($cookies.kiwiUid){
       $scope._db = new Firebase('https://kiwidb.firebaseio.com/users/' + $cookies.kiwiUid + '/settings');
       $scope._db.once('value', function(settings) {
+        var email = $rootScope.currentUser.thirdPartyUserData.email;
         $scope.$apply(function() {
           $scope.settings = settings.val() || {};
+          $scope.settings.email = email;
         });
       });
     }

@@ -28,13 +28,8 @@ angular.module('KiwiApp', [
         templateUrl: 'partials/custom',
         controller: 'KiwisCtrl',
         authenticate: true
-      })
-      .when('/customcharts/', {
-        templateUrl: 'partials/customcharts',
-        controller: 'CustomCtrl',
-        authenticate: true
-      })      
-      .when('/graph/:name', {
+      })   
+      .when('/:user/:name', {
         templateUrl: 'partials/graph',
         controller: 'GraphCtrl'
       })
@@ -71,11 +66,8 @@ angular.module('KiwiApp', [
   .run(function ($rootScope, $location, Auth, $cookies, $firebase, $firebaseSimpleLogin) {
     // needed to check cookie to see if user already logged in
     // var ref = new Firebase('https://kiwidb.firebaseio.com/');
-    // $rootScope.auth = $firebaseSimpleLogin(ref);
     if($cookies.kiwiSpecial !== 'null') {
       var ref = new Firebase('https://kiwidb.firebaseio.com/');
-      // $rootScope.auth = $firebaseSimpleLogin(ref);
-
       var auth = new FirebaseSimpleLogin(ref, function(err, user) {
         if (err) {
           console.log('Error with login. Error:, ', err);
@@ -86,6 +78,7 @@ angular.module('KiwiApp', [
           }
         }
       });
+      $rootScope.auth = auth;
     }
 
     // Redirect to login if route requires auth and you're not logged in

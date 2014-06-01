@@ -24,6 +24,7 @@ a, p {
  */
 .jumbotron {
   padding: 0;
+  background-color: inherit;
 }
 #chart{
   height: 600px;
@@ -33,6 +34,7 @@ a, p {
   .item {
     img {
       width: 100%;
+      max-width: 1068px;
     }
   }
 }
@@ -78,15 +80,16 @@ body {
 #chrome-login {
   margin: auto;
   .login-container {
-    padding: 50px;
+    padding: 20px;
     position: fixed;
     margin: auto;
-    top:0;
+    top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    width: 400px;
-    height: 400px;
+    width: 389px;
+    background-color: #eee;
+    height: 186px;
     h1 {
       margin-bottom: 20px;
     }
@@ -177,7 +180,7 @@ body {
     padding-bottom: 19px;
   }
 }
-.groupName.Name{
+.donetrue{
   color: pink;
 }
 .list {

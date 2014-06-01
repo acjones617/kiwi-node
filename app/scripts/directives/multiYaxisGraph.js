@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('KiwiApp')
-  .directive('multiYaxisChart', function(){
+  .directive('multiYaxisGraph', function(){
     return {
-      template: '<div class="multi-chart"></div>',
+      template: '<div class="multi-graph"></div>',
       restrict: 'E',
       scope: {
         group: '='
@@ -43,7 +43,17 @@ angular.module('KiwiApp')
         };
 
         var makeMultiYAxisGraph = function(group) {
-          var datasets = _.pluck(group.kiwis, 'values');
+          // first pluck out the values property of each kiwi
+          // the values property of each kiwi will be an array of 
+          // objects like this {date: "Sat Feb 01 2014 00:00:00 GMT-0800 (PST)", value: 500}
+          var kiwiValArrays = _.pluck(group.kiwis, 'values');
+          
+          // convert these into the desired format [1391241600000, 500]
+          var datasets = _.map(kiwiValArrays, function(arr) {
+            return _.map(arr, function(pair) {
+              return [Date.parse(pair.date), pair.value];
+            });
+          });
 
           var xMin = d3.min(datasets, function(set) {
             return d3.min(set, function(tuple) {
@@ -94,8 +104,8 @@ angular.module('KiwiApp')
             addAnotherYAxis(i + 1, y, 4, graph);
           }
 
-          // add lines
-          // do this AFTER the axes above so that the lines are above the tick-lines
+          // add lines and do so AFTER the axes above so that the lines are 
+          // above the tick-lines
           for (var j = 0; j < datasets.length; j++) {
             graph.append('svg:path').attr('d', lines[j](datasets[j])).attr('class', 'data' + (j+1));
           }
@@ -103,8 +113,7 @@ angular.module('KiwiApp')
         
         makeMultiYAxisGraph(scope.group);
 
-        scope.$on('updateMultiYaxisChart', function(event) {
-          // debugger;
+        scope.$on('updateMultiYaxisGraph', function(event) {
           makeMultiYAxisGraph(scope.group);
         });
       }

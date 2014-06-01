@@ -25,7 +25,7 @@ angular.module('KiwiApp')
         // RAMIN: GRAPH STUFF GOES HERE
 
         // _.each(data, function(kiwi, key, kiwis) {
-        //   debugger;
+        //   // debugger;
         //   var title = kiwi.title = kiwi.title.split(' ')[0];
         //   kiwi.graphData = [{
         //     key: title,
@@ -35,6 +35,7 @@ angular.module('KiwiApp')
         //   var parsedValues = washKiwi(kiwi);
         //   pushKiwiToGraph(kiwi, parsedValues);
         // });
+        
         $scope.$apply(function() {
           $scope.kiwis = kiwis;
           $scope.isLoading = false;

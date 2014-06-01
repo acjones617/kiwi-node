@@ -38,6 +38,11 @@ angular.module('KiwiApp', [
         templateUrl: 'partials/graph',
         controller: 'GraphCtrl'
       })
+      .when('/groups_testing', {
+        templateUrl: 'partials/groups_testing',
+        controller: 'GroupsTestingCtrl',
+        authenticate: true
+      })
       .when('/special', {
         templateUrl: 'partials/special',
         controller: 'SpecialCtrl'

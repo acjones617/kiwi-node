@@ -15,11 +15,6 @@ angular.module('KiwiApp')
     var sessionRestored = false;
 
     var main = function() {
-      // $scope.$on('sessionRestored', function() {
-      //   $scope._db = new Firebase('https://kiwidb.firebaseio.com/users/' + $cookies.kiwiUid);
-      //   getgroups();
-      //   getKiwis();
-      // });
       if($cookies.kiwiUid){
         $scope._db = new Firebase('https://kiwidb.firebaseio.com/users/' + $cookies.kiwiUid);
         getKiwis();
@@ -36,22 +31,40 @@ angular.module('KiwiApp')
         var groups = snapshot.val().groups;
         _.each(groups, function(group){
           // debugger;
-          var kiwis = group.kiwis;
-          _.each(kiwis, function(kiwi) {
-            kiwi.values = valuesToArray(kiwi.values);
-          });
-          $scope.$apply(function() {
-            $scope.groups.push(group);
+          var hashes = group.kiwis;
+          // _.each(kiwis, function(kiwi) {
+          //   kiwi.values = valuesToArray(kiwi.values);
+          // });
+          getKiwisFromHash(hashes, function(kiwis) {
+            group.kiwis = kiwis;
+            $scope.$apply(function() {
+              debugger;
+              $scope.groups.push(group);
+            });
           });
         });
+      });
+    };
+
+    var getKiwisFromHash = function(hashes, callback) {
+      var result = [];
+      $scope._db.once('value', function(snapshot) {
+        var kiwis = snapshot.val().kiwis;
+        _.each(kiwis, function(kiwi, hash) {
+          if(_.contains(hashes, hash)) {
+            result.push(kiwi);
+          }
+        });
+        callback(result);
       });
     };
 
     var getKiwis = function() {
       $scope._db.once('value', function(snapshot) {
         var kiwis = snapshot.val().kiwis;
-        _.each(kiwis, function(kiwi) {
+        _.each(kiwis, function(kiwi, hash) {
           kiwi.values = valuesToArray(kiwi.values);
+          kiwi.hash = hash;
         });
 
         $scope.$apply(function() {
@@ -114,11 +127,16 @@ angular.module('KiwiApp')
       //' + $rootScope.auth.user.uid +'
     $scope.saveGraphToDatabase = function() {
       var selected = $scope.selectedGroup;
-      // var groupLink = new Firebase('https://kiwidb.firebaseio.com/users/facebook:10152208636623635/groups');
       var groupLink = $scope._db.child('groups');
+
       var graphObj = {}, arr = [];
       graphObj.name = $scope.selectedGroup.name;
-      graphObj.kiwis = $scope.selectedGroup.kiwis;
+
+      var kiwiHashes = [];
+      _.each($scope.selectedGroup.kiwis, function(kiwi) {
+        kiwiHashes.push(kiwi.hash);
+      });
+      graphObj.kiwis = kiwiHashes;
       graphObj.description = $scope.descriptionText;
 
       $('.description').val('').blur();

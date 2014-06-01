@@ -71,6 +71,7 @@ angular.module('KiwiApp')
       return new Date(date[0], date[1]-1, date[2]).getTime();
     };
 
+
     var washKiwi = function(kiwi) {
       // Get the value part only
       // var plucked = _.pluck(kiwi.values, 'value');
@@ -88,37 +89,33 @@ angular.module('KiwiApp')
       }
     };
 
-    $scope.hoverGroupName = function(group) {
-      $scope.description = group.description;
-    };
-
-    $scope.hoverLeaveGroupName = function() {
-      $scope.description ='';
-    };
-
     $scope.saveGraph = function() {
       $scope.showDescription = true;
     };
 
-    $scope.saveGraphToDatabase = function() {
-      var selected = $scope.selectedGroup;
+    $scope.removeFromGroup = function(group, kiwi) {
+      var index = group.kiwis.indexOf(kiwi);
+      var hashIndex = group.kiwiHashes.indexOf(kiwi.hash);
+      if(index > -1 && hashIndex > -1) {
+        Array.prototype.splice.call(group.kiwis, index, 1);
+        Array.prototype.splice.call(group.kiwiHashes, hashIndex, 1);
+      }
+    };
+
+    $scope.save = function(group) {
+      var selected = group;
       var groupLink = $scope._db.child('groups');
 
-      var graphObj = {}, arr = [];
-      graphObj.name = $scope.selectedGroup.name;
-      graphObj.kiwiHashes = selected.kiwiHashes;
-      graphObj.description = $scope.descriptionText;
+      var groupToSave = {};
+      groupToSave.name = group.name;
+      groupToSave.kiwiHashes = group.kiwiHashes;
+      groupToSave.description = group.description;
 
-      $('.description').val('').blur();
-      selected.groupHash = selected.name;
-
-      groupLink.child(selected.groupHash).set(graphObj);
+      groupLink.child(group.name).set(groupToSave);
     };
 
     $scope.selectGroup = function(group) {
-      $scope.selectedGroup.done = false;
       $scope.selectedGroup = group;
-      $scope.selectedGroup.done = true;
     };
 
     $scope.createGroup = function() {

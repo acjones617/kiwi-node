@@ -19,24 +19,26 @@ angular.module('KiwiApp')
       getKiwis();
     });
 
+    var valuesToArray = function(obj) {
+      return Object.keys(obj).map(function (key) { return obj[key]; });
+    }
 
     var getCharts = function(){
       $scope._db.once('value', function(snapshot){
         for (var chart in snapshot.val().charts){
-
           $scope.groups.push(snapshot.val().charts[chart]);
         }
         console.log($scope.groups)
       });
     }
 
-
     var getKiwis = function() {
 
       $scope._db.once('value', function(snapshot) {
         var kiwis = snapshot.val().kiwis;
-
-
+        _.each(kiwis, function(kiwi) {
+          kiwi.values = valuesToArray(kiwi.values);
+        });
         // _.each(data, function(kiwi, key, kiwis) {
         //   debugger;
         //   var title = kiwi.title = kiwi.title.split(' ')[0];

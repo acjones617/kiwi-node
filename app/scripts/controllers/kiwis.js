@@ -24,22 +24,17 @@ angular.module('KiwiApp')
       return Object.keys(obj).map(function (key) { return obj[key]; });
     }
 
-
-
     var getCharts = function(){
-      var chartObj = {};
       $scope._db.once('value', function(snapshot){
-        for (var chart in snapshot.val().charts){
+        var charts = snapshot.val().charts;
+        for (var chart in charts){
           $scope.groups.push(snapshot.val().charts[chart]);
-          chartObj.groupTitle = snapshot.val().charts[chart].name;
-          console.log(snapshot.val().charts[chart].name, "groupName")//groupName
-          console.log(snapshot.val().charts[chart].kiwis[0].title, "title of kiwi") //title of kiwi 
-          console.log(snapshot.val().charts[chart].kiwis[0].values[0].date, "date") // date
-          console.log(snapshot.val().charts[chart].kiwis[0].values[0].value, "value")// value
-          console.log(chartObj,"chartObj")
+          var kiwis = charts[chart].kiwis;
+          _.each(kiwis, function(kiwi) {
+            kiwi.values = valuesToArray(kiwi.values);
+          });
         }
       });
-      
     }
 
     var getKiwis = function() {
@@ -49,17 +44,7 @@ angular.module('KiwiApp')
         _.each(kiwis, function(kiwi) {
           kiwi.values = valuesToArray(kiwi.values);
         });
-        // _.each(data, function(kiwi, key, kiwis) {
-        //   debugger;
-        //   var title = kiwi.title = kiwi.title.split(' ')[0];
-        //   kiwi.graphData = [{
-        //     key: title,
-        //     values: [] 
-        //   }];
 
-        //   var parsedValues = washKiwi(kiwi);
-        //   pushKiwiToGraph(kiwi, parsedValues);
-        // });
         $scope.$apply(function() {
           $scope.kiwis = kiwis;
           $scope.isLoading = false;
@@ -135,33 +120,6 @@ angular.module('KiwiApp')
       graphObj.kiwis = $scope.selectedGroup.kiwis;
       graphObj.description = $scope.descriptionText;
 
-
-      console.log($scope.selectedGroup)
-      console.log($scope.descriptionText)
-
-  // for(var i = 0; i < selected.kiwis.length; i++) {
-  //       graphObj.kiwis = selected.kiwis[i].values; //this must be complete kiwis
-  //     }    
-      // graphObj.title = selected.kiwis[0].title;
-      // graphObj.description = $scope.descriptionText;
-      // graphObj.values = selected.kiwis[0].values;
-
-      // console.log('selected.kiwis', selected.kiwis[0])
-      // console.log('selected.kiwis.title', selected.kiwis[0].name)
-      // console.log('selected.kiwis.values', selected.kiwis[0].values)
-      // //graphObj.kiwis = 
-           
-
-      // for(var i = 0; i < $scope.groups.length; i++) {
-      //   var kiwi = $scope.groups[i].kiwis;
-      //   //for(var j = 0; j < kiwi.length; j++) {
-      //     arr.push(kiwi.title);
-      //  // }
-      // }
-
-      // graphObj.kiwis = arr;
-      // console.log('selected: ', selected);
-      // console.log(graphObj)
       $('.description').val('').blur();
 
       chartLink.push(graphObj);

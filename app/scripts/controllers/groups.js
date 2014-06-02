@@ -113,7 +113,7 @@ angular.module('KiwiApp')
 
       var groupToSave = {};
       groupToSave.name = group.name;
-      groupToSave.kiwiHashes = group.kiwiHashes;
+      groupToSave.kiwiHashes = group.kiwiHashes || [];
       groupToSave.description = group.description || '';
 
       groupLink.child(group.name).set(groupToSave);

@@ -34,6 +34,10 @@ angular.module('KiwiApp')
       console.log($scope.kiwiName, "2x")
       var prevTitle = kiwi.title;
         $scope.editKiwi1 = function($scope) {
+          if(!this.text) {
+            kiwi.title = "Your kiwi must be at least one character long."
+            return;
+          }
           kiwi.title = this.text;
           var that = this;
           var newFBConnection = new Firebase('https://kiwidb.firebaseio.com/users/' + $cookies.kiwiUid);

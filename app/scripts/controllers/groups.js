@@ -29,7 +29,7 @@ angular.module('KiwiApp')
         _.each(groups, function(group, groupHash){
           var hashes = group.kiwiHashes;
           getKiwisFromHash(hashes, function(kiwis) {
-            group.kiwiHashes = hashes;
+            group.kiwiHashes = hashes || [];
             group.kiwis = kiwis;
             group.groupHash = groupHash;
             $scope.$apply(function() {
@@ -127,12 +127,6 @@ angular.module('KiwiApp')
       };
       $scope.groups.push(group);
       $('.input').val('');
-    };
-
-    $scope.addToGroup = function(kiwi) {
-      $scope.selectedGroup.kiwis.push(kiwi);
-      $scope.selectedGroup.kiwiHashes.push(kiwi.hash);
-      $rootScope.$broadcast('updateCustom');
     };
 
     $scope.updateGroup = function(group, from, to, kiwi) {

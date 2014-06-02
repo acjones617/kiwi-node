@@ -11,6 +11,9 @@
           <input ng-model="group.description"></input>
           <button class="btn" ng-click="save(group)">Save</button>
         </div>
+        <ul>
+          <li ng-repeat="kiwi in group.kiwis"class="list">{{ kiwi.title }} <span class="remove" ng-click="removeFromGroup(group, kiwi)">x</span></li>
+        </ul>
       </div>
     </div>
 
@@ -20,12 +23,6 @@
         <div>
           <input type="text" class="input" ng-model="groupName">
           <button class="btn add-group" ng-click="createGroup()">Create Group</button>
-          <ul ng-repeat="group in groups">
-            <h2>{{group.name}}</h2>
-            <ul>
-              <li ng-repeat="kiwi in group.kiwis"class="list">{{ kiwi.title }} <span class="remove" ng-click="removeFromGroup(group, kiwi)">x</span></li>
-            </ul>
-          </ul>
         </div>
       </div>
       <div class="kiwis">

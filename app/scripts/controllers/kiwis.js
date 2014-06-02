@@ -41,14 +41,14 @@ angular.module('KiwiApp')
             if(value.title === prevTitle) {
               var newFBConnection1 = new Firebase('https://kiwidb.firebaseio.com/users/' + $cookies.kiwiUid + '/kiwis/' + key);
               newFBConnection1.once('value', function(snapshot) {
-               newFBConnection1.update({title: that.text});
+                newFBConnection1.update({title: that.text});
               });
             }
-          })
-        })
+          });
+        });
         thatScope.kiwiName = true; 
         kiwi.edit = false;
-      }
+      };
     };
 
     $scope.delete = function(kiwi) {

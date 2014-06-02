@@ -1,35 +1,34 @@
 <div ng-include="'partials/navbar'"></div>
 
-<div class="container" id="custom">
+<div class="container" id="groups">
   <div class="row">
     <div class="col-sm-8">
           
       <div ng-repeat="group in groups" class="group">
-        <h3>{{ group.name }}</h3>
-        <p>{{ group.description }}</p>
         <multi-yaxis-graph group='group'></multi-yaxis-graph>
+        <div class="description">
+          <h3>{{ group.name }}</h3>
+          <input ng-model="group.description"></input>
+          <button class="btn" ng-click="save(group)">Save</button>
+        </div>
       </div>
 
     </div>
-  </row>
-  <div class="row">
-
     <div class="col-sm-4">
-      <div class="graphs">
+      <div class="groups">
         <h2>Groups</h2>
         <div class="kiwiList">
           <input type="text" class="input" ng-model="groupName">
           <button class="btn add-group" ng-click="createGroup()">Create Group</button>
-          <ul ng-repeat="group in groups">
-            <!-- implement hover -->
-            <h2 class="done{{group.done}}" ng-click="selectGroup(group)" ng-mouseenter="hoverGroupName(group)" ng-mouseleave="hoverLeaveGroupName(group)">{{group.name}}</h2>
-            <ul ng-repeat="kiwi in group.kiwis track by $index" >
-              <li class="list" ng-click="removeFromGroup(kiwi)">{{ kiwi.title }}</li>
+          <ul ng-repeat="group in groups" ng-click="selectGroup(group)" ng-class="selectedGroup===group ? 'selectedGroup' : ''">
+            <h2>{{group.name}}</h2>
+            <ul ng-repeat="kiwi in group.kiwis" >
+              <li class="list">{{ kiwi.title }} <span class="remove" ng-click="removeFromGroup(group, kiwi)">x</span></li>
             </ul>
           </ul>
         </div>
       </div>
-      <div class="groups">
+      <div class="kiwis">
         <h2>Kiwis</h2>
         <div class="kiwiList">
           <ul class="list" ng-repeat="kiwi in kiwis" ng-click="addToGroup(kiwi)">
@@ -37,9 +36,6 @@
           </ul>
         </div>
       </div>
-        <button ng-show="!showDescription" class="btn add-group" ng-click="saveGraph()">Save Chart</button>
-        <textarea ng-model="descriptionText" ng-show="showDescription" type="text" class="description" placeholder="enter a description of your chart" style="width: 215px" ></textarea>
-        <button ng-show="descriptionText.length > 4" class="btn add-group" ng-click="saveGraphToDatabase()">Confirm</button>
     </div>
   </div>
 

@@ -46,7 +46,6 @@ angular.module('KiwiApp')
           // first pluck out the values property of each kiwi
           // the values property of each kiwi will be an array of 
           // objects like this {date: "Sat Feb 01 2014 00:00:00 GMT-0800 (PST)", value: 500}
-          debugger;
           var kiwiValArrays = _.pluck(group.kiwis, 'values');
           
           // convert these into the desired format [1391241600000, 500]

@@ -20,11 +20,11 @@ angular.module('KiwiApp')
         $scope._db = new Firebase('https://kiwidb.firebaseio.com/users/' + $cookies.kiwiUid);
         getKiwis();
       }
-    }
-  
+    };
+
     var valuesToArray = function(obj) {
       return Object.keys(obj).map(function (key) { return obj[key]; });
-    }
+    };
 
     $scope.editKiwi = function(kiwi) {
       kiwi.edit = true;
@@ -41,34 +41,32 @@ angular.module('KiwiApp')
             if(value.title === prevTitle) {
               var newFBConnection1 = new Firebase('https://kiwidb.firebaseio.com/users/' + $cookies.kiwiUid + '/kiwis/' + key);
               newFBConnection1.once('value', function(snapshot) {
-               newFBConnection1.update({title: that.text})
-              })
+               newFBConnection1.update({title: that.text});
+              });
             }
           })
         })
         thatScope.kiwiName = true; 
         kiwi.edit = false;
       }
-    }
+    };
+
+    $scope.delete = function(kiwi) {
+      debugger;
+      $scope._db.child('kiwis').child(kiwi.hash).remove(function() {
+        debugger;
+      });
+    };
+
 
     var getKiwis = function() {
-
       $scope._db.once('value', function(snapshot) {
         var kiwis = snapshot.val().kiwis;
+        _.each(kiwis, function(kiwi, hash) {
+          kiwi.values = washKiwi(kiwi);
+          kiwi.hash = hash;
+        });
 
-        // RAMIN: GRAPH STUFF GOES HERE
-
-        // _.each(data, function(kiwi, key, kiwis) {
-        //   var title = kiwi.title = kiwi.title.split(' ')[0];
-        //   kiwi.graphData = [{
-        //     key: title,
-        //     values: [] 
-        //   }];
-
-        //   var parsedValues = washKiwi(kiwi);
-        //   pushKiwiToGraph(kiwi, parsedValues);
-        // });
-        
         $scope.$apply(function() {
           $scope.kiwis = kiwis;
           $scope.isLoading = false;
@@ -83,9 +81,12 @@ angular.module('KiwiApp')
     };
 
     var washKiwi = function(kiwi) {
-      var plucked = _.pluck(kiwi.values, 'value');
-      var original = plucked.shift();
-      var parser = new NumberParser(original, plucked);
+      // Get the value part only
+      // var plucked = _.pluck(kiwi.values, 'value');
+
+      kiwi.values = valuesToArray(kiwi.values);
+      var original = kiwi.values.shift();
+      var parser = new NumberParser(original, kiwi.values);
 
       if(parser.isNumerical()) {
         return parser.parseAll();
@@ -95,6 +96,7 @@ angular.module('KiwiApp')
         return _.pluck(kiwi.values, 'value');
       }
     };
+
 
     var pushKiwiToGraph = function(kiwi, parsedValues) {
       var count = 0;

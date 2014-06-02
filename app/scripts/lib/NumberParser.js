@@ -36,8 +36,10 @@ NumberParser.prototype.isNumerical = function() {
 NumberParser.prototype._cleanNumber = function(item) {
   var nonWhiteSpace = item.value.replace(/\s/g, '');
   var matches = nonWhiteSpace.match(/[0-9 , \.]+/g);
-  item.value = parseFloat(matches[0]);
-  return item;
+  if(matches !== null) {
+    item.value = parseFloat(matches[0]);
+    return item;
+  }
   // if(currency) {
   //   var index = item.indexOf(currency[0]);
   //   if(index > this.original.length) {
@@ -79,7 +81,6 @@ NumberParser.prototype.parse = function() {
   var that = this;
   _.each(this.rest, function(item) {
 
-    // var currency = that._getCurrency();
     var parsed = that._cleanNumber(item);
     if(parsed){
       // parsed = that._matchLength(parsed);

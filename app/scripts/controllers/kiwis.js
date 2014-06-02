@@ -52,9 +52,8 @@ angular.module('KiwiApp')
     };
 
     $scope.delete = function(kiwi) {
-      debugger;
       $scope._db.child('kiwis').child(kiwi.hash).remove(function() {
-        debugger;
+        
       });
     };
 

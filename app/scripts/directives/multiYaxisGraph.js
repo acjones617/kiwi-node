@@ -88,9 +88,9 @@ angular.module('KiwiApp')
         };
 
         // add the y-axes
-        var addAnotherYAxis = function(index, yScaler, ticks, d3GraphObj) {
+        var addAnotherYAxis = function(index, yScaler, ticks, d3GraphObj, axisWidth) {
           var yAxisN = d3.svg.axis().scale(yScaler).ticks(ticks).orient('left');
-          var shiftLeft = index === 1 ? -15 : -50 * index + 25;
+          var shiftLeft = index === 1 ? -0 : -axisWidth * (index-1);
           d3GraphObj.append('svg:g')
             .attr('class', 'y axis axis' + index)
             .attr('transform', 'translate(' + shiftLeft + ',0)')
@@ -102,7 +102,8 @@ angular.module('KiwiApp')
           // the values property of each kiwi will be an array of 
           // objects like this {date: "Sat Feb 01 2014 00:00:00 GMT-0800 (PST)", value: 500}
           var kiwiValArrays = _.pluck(group.kiwis, 'values');
-          
+          var numYAxes = kiwiValArrays.length;
+          var newAxisWidth = 65;
           // convert these into the desired format [1391241600000, 500]
           var datasets = _.map(kiwiValArrays, function(arr) {
             return _.map(arr, function(pair, index, arr) {
@@ -123,9 +124,9 @@ angular.module('KiwiApp')
           });
 
           // define dimensions of graph
-          var m = [40, 40, 100, 200]; // margins
-          var w = 800 - m[1] - m[3];  // width - right - left
-          var h = 400 - m[0] - m[2]; // height - top - bottom
+          var m = [10, 0, 100, numYAxes * newAxisWidth]; // margins
+          var w = 600 - m[1] - m[3];  // width - right - left
+          var h = 300 - m[0] - m[2]; // height - top - bottom
 
           // x will scale all values within pixels 0-w
           var x = d3.time.scale()
@@ -146,7 +147,7 @@ angular.module('KiwiApp')
             .attr('transform', 'translate(' + m[3] + ',' + m[0] + ')');
 
           // create x-axis
-          var xAxis = d3.svg.axis().scale(x).tickSize(-h);
+          var xAxis = d3.svg.axis().scale(x).ticks(6);
           // add the x-axis.
           graph.append('svg:g')
             .attr('class', 'x axis')
@@ -160,7 +161,7 @@ angular.module('KiwiApp')
             var dataMin = Math.min(getMin(datasets[i], 1), 0); // user negative lower bound if exists
             var y = d3.scale.linear().domain([dataMin, dataMax]).range([h, 0]);
             lines.push(makeLine(x, y));
-            addAnotherYAxis(i + 1, y, 4, graph);
+            addAnotherYAxis(i + 1, y, 4, graph, newAxisWidth);
           }
 
           // add lines and do so AFTER the axes above so that the lines are 

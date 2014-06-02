@@ -12,7 +12,6 @@
     "angular-sanitize": ">=1.2.*",
     "angular-route": ">=1.2.*",
     "d3": "3.3.13",
-    "nvd3": "~1.1.15-beta",
     "underscore": "~1.6.0",
     "angularfire": "~0.7.1",
     "firebase-simple-login": "~1.4.1",

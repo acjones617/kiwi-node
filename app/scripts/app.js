@@ -15,17 +15,17 @@ angular.module('KiwiApp', [
         templateUrl: 'partials/main',
         controller: 'MainCtrl'
       })
-      .when('/kiwis/', {
+      .when('/kiwis', {
         templateUrl: 'partials/kiwis',
         controller: 'KiwisCtrl',
         authenticate: true
       })
-      .when('/profile/', {
+      .when('/profile', {
         templateUrl: 'partials/profile',
         controller: 'ProfileCtrl',
         authenticate: true
       })
-      .when('/groups/', {
+      .when('/groups', {
         templateUrl: 'partials/groups',
         controller: 'GroupCtrl',
         authenticate: true
@@ -33,11 +33,6 @@ angular.module('KiwiApp', [
       .when('/:user/:name', {
         templateUrl: 'partials/graph',
         controller: 'GraphCtrl'
-      })
-      .when('/groups_testing', {
-        templateUrl: 'partials/groups_testing',
-        controller: 'GroupsTestingCtrl',
-        authenticate: true
       })
       .when('/special', {
         templateUrl: 'partials/special',

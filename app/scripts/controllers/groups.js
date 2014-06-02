@@ -104,6 +104,7 @@ angular.module('KiwiApp')
       if(index > -1 && hashIndex > -1) {
         Array.prototype.splice.call(group.kiwis, index, 1);
         Array.prototype.splice.call(group.kiwiHashes, hashIndex, 1);
+        $rootScope.$broadcast('updateCustom');
       }
     };
 
@@ -138,6 +139,7 @@ angular.module('KiwiApp')
     $scope.updateGroup = function(group, from, to, kiwi) {
       group.kiwiHashes.push(kiwi.hash);
       group.kiwis.push(kiwi);
+      $rootScope.$broadcast('updateCustom');
     };
 
     main();

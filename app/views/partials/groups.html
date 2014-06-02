@@ -6,11 +6,13 @@
           
       <div ng-repeat="group in groups" class="group" droppable='group' ng-update='updateGroup(group, from, to, kiwi)'>
         <multi-yaxis-graph group='group'></multi-yaxis-graph>
+
         <div class="description">
           <h3>{{ group.name }}</h3>
           <input ng-model="group.description"></input>
           <button class="btn" ng-click="save(group)">Save</button>
         </div>
+
       </div>
     </div>
 

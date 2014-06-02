@@ -6,7 +6,7 @@ angular.module('KiwiApp')
     $scope.test = function() {
       // var lastTime = $scope.groups[0].kiwis[0].values[-1][0];
       $scope.groups[0].kiwis[0].values.push({date: 'Tue Feb 11 2014 00:00:00 GMT-0800 (PST)', value: 0});
-      $scope.$broadcast('updateMultiYaxisGraph');
+      $scope.$broadcast('updateCustom');
       // alert('hi');
     };
 

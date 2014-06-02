@@ -305,7 +305,7 @@ body {
  * CUSTOM GRAPH
  */
  path {
-  stroke-width: 2o;
+  stroke-width: 2;
   fill: none;
 }
 
@@ -334,10 +334,11 @@ body {
     stroke-opacity: .5;
   }
   path {
-    display: none;
+    stroke-width: 1;
+    // display: none;
   }
   text {
-    font-size: 14;
+    font-size: 16;
   }
 }
 
@@ -374,4 +375,10 @@ body {
   &.axis3 text {
     fill: red;
   }
+}
+
+.legend rect {
+  fill: white;
+  stroke: black;
+  opacity: 1;
 }

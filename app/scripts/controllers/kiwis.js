@@ -36,6 +36,7 @@ angular.module('KiwiApp')
           kiwi.title = this.text;
           var that = this;
           var newFBConnection = new Firebase('https://kiwidb.firebaseio.com/users/' + $cookies.kiwiUid);
+          // var newFBConnection = $scope._db.child('kiwis').child('title')
           newFBConnection.once('value', function(snapshot){
           _.each(snapshot.val().kiwis, function(value, key, obj) {
             if(value.title === prevTitle) {
@@ -53,7 +54,15 @@ angular.module('KiwiApp')
 
     $scope.delete = function(kiwi) {
       $scope._db.child('kiwis').child(kiwi.hash).remove(function() {
-        alerter.alert('YOUR KIWI HAS BEEN DELETED');
+        alerter.alert('Your kiwi has been deleted :(');
+      });
+      $scope._db.child('groups').once('value', function(snapshot) {
+        var groups = snapshot.val();
+        _.each(groups, function(group, hash) {
+          if(_.contains(group.kiwiHashes, kiwi.hash)) {
+            $scope._db.child('groups').child(hash).child('kiwiHashes').child(group.kiwiHashes.indexOf(kiwi.hash)).remove();
+          }
+        });
       });
     };
 
@@ -112,7 +121,7 @@ angular.module('KiwiApp')
         
         formatDate(item);
       });
-    }
+    };
 
     main();
   });

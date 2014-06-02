@@ -66,25 +66,44 @@ body {
   background-color: #eee;
 }
 
-
-#groups {
-  min-height: 700px;
-  .group {
+#kiwis {
+  .kiwis {
     background-color: #eee;
     margin-bottom: 20px;
   }
+}
+
+
+#groups {
+  .group {
+    background-color: #eee;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    ul {
+      margin-top: 10px;
+      min-height: 30px;
+    }
+    .description {
+    }
+  }
+  .kiwi-pill {
+    background-color: $mellow-yellow;
+    border-radius: 10px;
+    padding: 0 5px;
+    margin-right: 10px;
+    float: left;
+    list-style-type: none;
+    .remove a {
+      text-decoration: none;
+      color: red;
+      margin-left: 5px;
+    }
+  }
   .groups {
+    margin-bottom: 20px;
     h2 {
       margin-top: 0px;
     }
-    background-color: #eee;
-    .remove {
-      color: red;
-      margin: 0 10px;
-    }
-  }
-  .description {
-    margin-left: 30px;
   }
   .donetrue{
     background-color: $mellow-yellow;
@@ -305,7 +324,7 @@ body {
  * CUSTOM GRAPH
  */
  path {
-  stroke-width: 2o;
+  stroke-width: 2;
   fill: none;
 }
 
@@ -334,10 +353,11 @@ body {
     stroke-opacity: .5;
   }
   path {
-    display: none;
+    stroke-width: 1;
+    // display: none;
   }
   text {
-    font-size: 14;
+    font-size: 16;
   }
 }
 
@@ -374,4 +394,10 @@ body {
   &.axis3 text {
     fill: red;
   }
+}
+
+.legend rect {
+  fill: white;
+  stroke: black;
+  opacity: 1;
 }

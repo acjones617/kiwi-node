@@ -34,6 +34,7 @@ angular.module('KiwiApp')
             group.groupHash = groupHash;
             $scope.$apply(function() {
               $scope.groups.push(group);
+              $scope.isLoading = false;
             });
           });
         });
@@ -94,7 +95,6 @@ angular.module('KiwiApp')
     };
 
     $scope.selectKiwi = function(kiwi) {
-      debugger;
       $scope.selectedKiwi = kiwi;
     };
 
@@ -104,6 +104,7 @@ angular.module('KiwiApp')
       if(index > -1 && hashIndex > -1) {
         Array.prototype.splice.call(group.kiwis, index, 1);
         Array.prototype.splice.call(group.kiwiHashes, hashIndex, 1);
+        $rootScope.$broadcast('updateCustom');
       }
     };
 
@@ -130,8 +131,11 @@ angular.module('KiwiApp')
     };
 
     $scope.updateGroup = function(group, from, to, kiwi) {
-      group.kiwiHashes.push(kiwi.hash);
-      group.kiwis.push(kiwi);
+      if(!_.contains(group.kiwiHashes, kiwi.hash)) {
+        group.kiwiHashes.push(kiwi.hash);
+        group.kiwis.push(kiwi);
+        $rootScope.$broadcast('updateCustom');
+      }
     };
 
     main();

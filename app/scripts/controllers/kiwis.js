@@ -16,7 +16,6 @@ angular.module('KiwiApp')
     var sessionRestored = false;
 
     var main = function() {
-
       if($cookies.kiwiUid){
         $scope._db = new Firebase('https://kiwidb.firebaseio.com/users/' + $cookies.kiwiUid);
         getKiwis();
@@ -60,7 +59,6 @@ angular.module('KiwiApp')
         // RAMIN: GRAPH STUFF GOES HERE
 
         // _.each(data, function(kiwi, key, kiwis) {
-        //   // debugger;
         //   var title = kiwi.title = kiwi.title.split(' ')[0];
         //   kiwi.graphData = [{
         //     key: title,

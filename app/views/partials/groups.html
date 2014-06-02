@@ -24,8 +24,8 @@
           <button class="btn add-group" ng-click="createGroup()">Create Group</button>
           <ul ng-repeat="group in groups" ng-click="selectGroup(group)" ng-class="selectedGroup===group ? 'selectedGroup' : ''">
             <h2>{{group.name}}</h2>
-            <ul ng-repeat="kiwi in group.kiwis" >
-              <li class="list">{{ kiwi.title }} <span class="remove" ng-click="removeFromGroup(group, kiwi)">x</span></li>
+            <ul>
+              <li ng-repeat="kiwi in group.kiwis"class="list">{{ kiwi.title }} <span class="remove" ng-click="removeFromGroup(group, kiwi)">x</span></li>
             </ul>
           </ul>
         </div>
@@ -33,8 +33,8 @@
       <div class="kiwis">
         <h2>Kiwis</h2>
         <div class="kiwiList">
-          <ul class="list" ng-repeat="kiwi in kiwis track by kiwi.hash" ng-click="selectKiwi(kiwi);">
-            <li draggable='kiwi' draggable-target='.group'>{{ kiwi.title | limitTo: 40 }}</li>
+          <ul>
+            <li class="kiwiList" ng-repeat="kiwi in kiwis track by kiwi.hash" draggable='kiwi' draggable-target='.group'>{{ kiwi.title | limitTo: 40 }}</li>
           </ul>
         </div>
       </div>

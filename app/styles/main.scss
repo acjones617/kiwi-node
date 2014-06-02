@@ -92,6 +92,14 @@ body {
   .donetrue{
     background-color: $mellow-yellow;
   }
+  .kiwiList {
+    &:hover {
+      cursor: grab;
+    }
+    &:active {
+      cursor: grabbing;
+    }
+  }
 }
 
 #custom {

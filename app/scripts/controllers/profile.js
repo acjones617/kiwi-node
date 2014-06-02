@@ -20,8 +20,17 @@ angular.module('KiwiApp')
     $scope.msg = '';
 
     $scope.update = function() {
+      var amp = $scope.settings.email.match(/\@/);
+      var dot = $scope.settings.email.match(/\./);
+      var dotLastIndex = $scope.settings.email.lastIndexOf('.');
+
+      if(!dot || dotLastIndex < amp.index) {
+         $scope.msg = 'Please enter a valid email.'
+         return;
+      }
       if($scope.profileForm.$valid) {
         $scope._db.set($scope.settings, function(err) {
+
           if(err) {
             $scope.$apply(function() {
               $scope.msg = 'Error saving data.';

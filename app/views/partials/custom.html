@@ -1,0 +1,41 @@
+<div ng-include="'partials/navbar'"></div>
+<div class="container" id="custom">
+  <div class="row">
+    <div class="col-sm-9">
+          
+      <div ng-repeat="chart in groups" id='chart'>
+        <!-- <custom-map group='chart'></custom-map> -->
+      </div>
+
+    </div>
+    <div class="col-sm-3">
+      <div class="graphs">
+        <h2>Groups</h2>
+        <div class="kiwiList">
+          <input type="text" class="input" ng-model="groupName">
+          <button class="btn add-group" ng-click="createGroup()">Create Group</button>
+          <ul ng-repeat="group in groups">
+            <!-- implement hover -->
+            <h2 class="done{{group.done}}" ng-click="selectGroup(group)" ng-mouseenter="hoverGroupName(group)" ng-mouseleave="hoverLeaveGroupName(group)">{{group.name}}</h2>
+            <ul ng-repeat="kiwi in group.kiwis track by $index" >
+              <li class="list" ng-click="removeFromGroup(kiwi)">{{ kiwi.title }}</li>
+            </ul>
+          </ul>
+        </div>
+      </div>
+      <div class="groups">
+        <h2>Kiwis</h2>
+        <div class="kiwiList">
+          <ul class="list" ng-repeat="kiwi in kiwis" ng-click="addToGroup(kiwi)">
+            <li>{{ kiwi.title }}</li>
+          </ul>
+        </div>
+      </div>
+        <button ng-show="!showDescription" class="btn add-group" ng-click="saveGraph()">Save Chart</button>
+        <textarea ng-model="descriptionText" ng-show="showDescription" type="text" class="description" placeholder="enter a description of your chart" style="width: 215px" ></textarea>
+        <button ng-show="descriptionText.length > 4" class="btn add-group" ng-click="saveGraphToDatabase()">Confirm</button>
+    </div>
+  </div>
+
+</div>
+<div ng-include="'partials/footer'"></div>

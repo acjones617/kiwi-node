@@ -17,10 +17,10 @@
     <div class="col-sm-4">
       <div class="groups">
         <h2>Groups</h2>
-        <div class="kiwiList">
+        <div>
           <input type="text" class="input" ng-model="groupName">
           <button class="btn add-group" ng-click="createGroup()">Create Group</button>
-          <ul ng-repeat="group in groups" ng-click="selectGroup(group)" ng-class="selectedGroup===group ? 'selectedGroup' : ''">
+          <ul ng-repeat="group in groups">
             <h2>{{group.name}}</h2>
             <ul>
               <li ng-repeat="kiwi in group.kiwis"class="list">{{ kiwi.title }} <span class="remove" ng-click="removeFromGroup(group, kiwi)">x</span></li>
@@ -30,7 +30,7 @@
       </div>
       <div class="kiwis">
         <h2>Kiwis</h2>
-        <div class="kiwiList">
+        <div>
           <ul>
             <li class="kiwiList" ng-repeat="kiwi in kiwis track by kiwi.hash" draggable='kiwi' draggable-target='.group'>{{ kiwi.title | limitTo: 40 }}</li>
           </ul>

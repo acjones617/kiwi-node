@@ -3,9 +3,7 @@
 angular.module('KiwiApp')
   .controller('GroupCtrl', function ($scope, $http, $routeParams, $rootScope, Auth, $cookies) {
     
-    $scope.groupToSave = [];
     $scope.groups = [];
-    $scope.selectedGroup = [];
 
     $scope.descriptionText; 
     $scope.kiwis = {};
@@ -44,8 +42,10 @@ angular.module('KiwiApp')
 
     var getKiwisFromHash = function(hashes, callback) {
       var result = [];
-      for(var i = 0; i < hashes.length; i++) {
-        result.push($scope.kiwis[hashes[i]]);
+      if(hashes) {
+        for(var i = 0; i < hashes.length; i++) {
+          result.push($scope.kiwis[hashes[i]]);
+        }
       }
       callback(result);
     };
@@ -93,10 +93,6 @@ angular.module('KiwiApp')
       }
     };
 
-    $scope.saveGraph = function() {
-      $scope.showDescription = true;
-    };
-
     $scope.selectKiwi = function(kiwi) {
       debugger;
       $scope.selectedKiwi = kiwi;
@@ -118,13 +114,9 @@ angular.module('KiwiApp')
       var groupToSave = {};
       groupToSave.name = group.name;
       groupToSave.kiwiHashes = group.kiwiHashes;
-      groupToSave.description = group.description;
+      groupToSave.description = group.description || '';
 
       groupLink.child(group.name).set(groupToSave);
-    };
-
-    $scope.selectGroup = function(group) {
-      $scope.selectedGroup = group;
     };
 
     $scope.createGroup = function() {

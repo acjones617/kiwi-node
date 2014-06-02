@@ -20,7 +20,7 @@ angular.module('KiwiApp')
         getGroups();
       }
     };
-  
+
     var valuesToArray = function(obj) {
       return Object.keys(obj).map(function (key) { return obj[key]; });
     };
@@ -65,6 +65,10 @@ angular.module('KiwiApp')
       });
     };
 
+    var getKiwi = function(hash) {
+      return $scope.kiwis[hash];
+    }
+
     $scope.predicate = 'date';
 
     var formatDate = function(date) {
@@ -91,6 +95,11 @@ angular.module('KiwiApp')
 
     $scope.saveGraph = function() {
       $scope.showDescription = true;
+    };
+
+    $scope.selectKiwi = function(kiwi) {
+      debugger;
+      $scope.selectedKiwi = kiwi;
     };
 
     $scope.removeFromGroup = function(group, kiwi) {
@@ -132,6 +141,11 @@ angular.module('KiwiApp')
       $scope.selectedGroup.kiwis.push(kiwi);
       $scope.selectedGroup.kiwiHashes.push(kiwi.hash);
       $rootScope.$broadcast('updateCustom');
+    };
+
+    $scope.updateGroup = function(group, from, to, kiwi) {
+      group.kiwiHashes.push(kiwi.hash);
+      group.kiwis.push(kiwi);
     };
 
     main();

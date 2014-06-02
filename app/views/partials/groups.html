@@ -2,9 +2,9 @@
 
 <div class="container" id="groups">
   <div class="row">
-    <div class="col-sm-8">
+    <div class="col-sm-8" >
           
-      <div ng-repeat="group in groups" class="group">
+      <div ng-repeat="group in groups" class="group" droppable='group' ng-update='updateGroup(group, from, to, kiwi)'>
         <multi-yaxis-graph group='group'></multi-yaxis-graph>
         <div class="description">
           <h3>{{ group.name }}</h3>
@@ -12,8 +12,8 @@
           <button class="btn" ng-click="save(group)">Save</button>
         </div>
       </div>
-
     </div>
+
     <div class="col-sm-4">
       <div class="groups">
         <h2>Groups</h2>
@@ -31,8 +31,8 @@
       <div class="kiwis">
         <h2>Kiwis</h2>
         <div class="kiwiList">
-          <ul class="list" ng-repeat="kiwi in kiwis" ng-click="addToGroup(kiwi)">
-            <li>{{ kiwi.title | limitTo: 40 }}</li>
+          <ul class="list" ng-repeat="kiwi in kiwis track by kiwi.hash" ng-click="selectKiwi(kiwi);">
+            <li draggable='kiwi' draggable-target='.group'>{{ kiwi.title | limitTo: 40 }}</li>
           </ul>
         </div>
       </div>

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('KiwiApp')
-  .controller('KiwisCtrl', function ($scope, $http, $routeParams, $rootScope, Auth, $cookies) {
+  .controller('KiwisCtrl', function ($scope, $http, $routeParams, $rootScope, Auth, $cookies, alerter) {
     
     $scope.groupToSave = [];
     $scope.groups = [];
@@ -53,7 +53,7 @@ angular.module('KiwiApp')
 
     $scope.delete = function(kiwi) {
       $scope._db.child('kiwis').child(kiwi.hash).remove(function() {
-        
+        alerter.alert('YOUR KIWI HAS BEEN DELETED');
       });
     };
 

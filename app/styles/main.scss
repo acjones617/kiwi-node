@@ -73,9 +73,6 @@ body {
     background-color: #eee;
     margin-bottom: 20px;
   }
-  .selectedGroup {
-    background-color: $mellow-yellow;
-  }
   .groups {
     h2 {
       margin-top: 0px;
@@ -92,13 +89,42 @@ body {
   .donetrue{
     background-color: $mellow-yellow;
   }
+  .kiwis {
+    ul {
+      margin: 0;
+      padding: 0;
+    }
+    > {
+      h4 {
+        /*margin-left: -10px;*/
+        margin-bottom: 0;
+      }
+      p {
+        /*margin-left: -10px;*/
+        margin-bottom: 0;
+        margin-bottom: 10px;
+      }
+    }
+  }
   .kiwiList {
+    list-style-type: none;
+    background-color: #eee;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    padding: 10px;
     &:hover {
+      background-color: $mellow-yellow;
       cursor: grab;
     }
     &:active {
+      background-color: $mellow-yellow;
       cursor: grabbing;
     }
+  }
+  .ui-draggable-dragging {
+    background-color: $mellow-yellow;
+    width: inherit !important;
+    transform: rotate(-8deg);
   }
 }
 
@@ -138,21 +164,7 @@ body {
   }
 }
 
-.kiwis {
-  background-color: #eee;
-  margin-bottom: 20px;
-  > {
-    h4 {
-      /*margin-left: -10px;*/
-      margin-bottom: 0;
-    }
-    p {
-      /*margin-left: -10px;*/
-      margin-bottom: 0;
-      margin-bottom: 10px;
-    }
-  }
-}
+
 
 .main-right {
   margin-top: 0px;

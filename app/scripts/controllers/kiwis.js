@@ -12,14 +12,11 @@ angular.module('KiwiApp')
     $scope.kiwis = {};
     $scope.isLoading = true;
     $scope.groupData = [];
+    $scope.kiwiName = true;
     var sessionRestored = false;
 
     var main = function() {
-      // $scope.$on('sessionRestored', function() {
-      //   $scope._db = new Firebase('https://kiwidb.firebaseio.com/users/' + $cookies.kiwiUid);
-      //   getgroups();
-      //   getKiwis();
-      // });
+
       if($cookies.kiwiUid){
         $scope._db = new Firebase('https://kiwidb.firebaseio.com/users/' + $cookies.kiwiUid);
         getKiwis();
@@ -28,6 +25,31 @@ angular.module('KiwiApp')
   
     var valuesToArray = function(obj) {
       return Object.keys(obj).map(function (key) { return obj[key]; });
+    }
+
+    $scope.editKiwi = function(kiwi) {
+      kiwi.edit = true;
+      $scope.kiwiName = false;
+      var thatScope = $scope;
+      console.log($scope.kiwiName, "2x")
+      var prevTitle = kiwi.title;
+        $scope.editKiwi1 = function($scope) {
+          kiwi.title = this.text;
+          var that = this;
+          var newFBConnection = new Firebase('https://kiwidb.firebaseio.com/users/' + $cookies.kiwiUid);
+          newFBConnection.once('value', function(snapshot){
+          _.each(snapshot.val().kiwis, function(value, key, obj) {
+            if(value.title === prevTitle) {
+              var newFBConnection1 = new Firebase('https://kiwidb.firebaseio.com/users/' + $cookies.kiwiUid + '/kiwis/' + key);
+              newFBConnection1.once('value', function(snapshot) {
+               newFBConnection1.update({title: that.text})
+              })
+            }
+          })
+        })
+        thatScope.kiwiName = true; 
+        kiwi.edit = false;
+      }
     }
 
     var getKiwis = function() {
@@ -88,10 +110,10 @@ angular.module('KiwiApp')
             y: y
           });
         }
+        
         formatDate(item);
       });
     }
-    
-    main();
 
+    main();
   });

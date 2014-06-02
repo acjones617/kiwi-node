@@ -52,7 +52,6 @@ NumberParser.prototype._cleanNumber = function(item) {
 };
 
 NumberParser.prototype._matchLength = function(item) {
-  debugger;
   if(item.value.indexOf(this.original.value) !== -1) {
     return this.original.value;
   } else {

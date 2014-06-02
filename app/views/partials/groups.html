@@ -5,11 +5,18 @@
     <div class="col-sm-8">
           
       <div ng-repeat="group in groups" class="group">
+        <div class="description">
+        <h3 ng-show="showDescriptionTitle"  class="hoverColor" ng-dblclick="testSave(group)" >{{ group.name }}</h3>
+        <form ng-submit="save(group)">
+          <input ng-show="!showDescriptionTitle" ng-model="group.name"></input>
+        </form>
+      </div>
         <multi-yaxis-graph group='group'></multi-yaxis-graph>
         <div class="description">
-          <h3>{{ group.name }}</h3>
-          <input ng-model="group.description"></input>
-          <button class="btn" ng-click="save(group)">Save</button>
+          <h4 class="hoverColor" ng-show="showDescription" ng-dblclick="testSave()">{{ group.description }}</h4>
+          <form ng-submit="save(group)">
+            <input ng-blur="looseFocus()" ng-show="!showDescription" ng-model="group.description"></input>
+          </form>
         </div>
       </div>
 

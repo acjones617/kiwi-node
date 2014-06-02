@@ -65,7 +65,9 @@ body {
 .graphs {
   background-color: #eee;
 }
-
+.hoverColor:hover{
+  color: blue;
+}
 
 #groups {
   min-height: 700px;

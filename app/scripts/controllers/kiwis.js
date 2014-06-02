@@ -27,6 +27,10 @@ angular.module('KiwiApp')
       return Object.keys(obj).map(function (key) { return obj[key]; });
     }
 
+    $scope.looseFocus = function() {
+      $scope.kiwiName = true;
+    }
+
     $scope.editKiwi = function(kiwi) {
       kiwi.edit = true;
       $scope.kiwiName = false;

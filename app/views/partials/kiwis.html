@@ -9,9 +9,9 @@
   </div>
   <div class="row">
     <div class="col-sm-12 kiwis" ng-repeat="kiwi in kiwis | filter:statusFilter track by $index" >
-      <h3 ng-show="kiwiName"  ng-dblclick='editKiwi(kiwi)' > <strong> {{kiwi.title}} </strong></h3>
+      <h3 class="hoverColor" ng-show="kiwiName"  ng-dblclick='editKiwi(kiwi)' > <strong> {{kiwi.title}} </strong></h3>
   <form ng-show="!kiwiName" ng-submit='editKiwi1(kiwi)'>
-      <input input="text" ng-model="text" class="edit-{{kiwi.edit}}" placeholder="{{kiwi.title}}" ng-model="{{kiwi.title}}"></input>
+      <input ng-blur="looseFocus()" input="text" ng-model="text" class="edit-{{kiwi.edit}}" placeholder="{{kiwi.title}}" ng-model="{{kiwi.title}}"></input>
       <pre>Sorting predicate = {{predicate}}; reverse = {{reverse}}</pre>
   </form>
       <a href="{{ kiwi.url}}">{{kiwi.url}}</a>

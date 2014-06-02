@@ -11,6 +11,8 @@ angular.module('KiwiApp')
     $scope.kiwis = {};
     $scope.isLoading = true;
     $scope.groupData = [];
+    $scope.showDescription = true;
+    $scope.showDescriptionTitle = true;
     var sessionRestored = false;
 
     var main = function() {
@@ -93,6 +95,10 @@ angular.module('KiwiApp')
       $scope.showDescription = true;
     };
 
+    $scope.looseFocus = function() {
+      $scope.showDescription = true;
+    }
+
     $scope.removeFromGroup = function(group, kiwi) {
       var index = group.kiwis.indexOf(kiwi);
       var hashIndex = group.kiwiHashes.indexOf(kiwi.hash);
@@ -101,6 +107,41 @@ angular.module('KiwiApp')
         Array.prototype.splice.call(group.kiwiHashes, hashIndex, 1);
       }
     };
+
+  //   $scope.testSave = function(group) {
+  //     $scope.showDescription = false;
+  //     var orginalName = group.name;
+  //     $scope.updateName = function(group) {
+  //       var newName = group.name;
+  //       var groupLink = $scope._db.child('groups');
+  //       groupLink.once('value', function(snapshot){
+  //         _.each(snapshot.val(), function(value, key, obj){
+  //           if(key === orginalName) {
+  //             var temp = obj[key].name
+  //             groupLink.update({temp: newName})
+  //             //console.log(obj[key].name)
+  //           }
+  //         })
+  //       })
+        
+  //       $scope.showDescription = true;
+  //   }
+  // }
+    $scope.testSave = function(group) {
+      $scope.showDescription = false;
+      var selected = group;
+      var groupLink = $scope._db.child('groups');
+
+      var groupToSave = {};
+      groupToSave.name = group.name;
+      groupToSave.kiwiHashes = group.kiwiHashes;
+      groupToSave.description = group.description;
+
+      groupLink.child(group.name).update(groupToSave.name);
+      console.log(groupLink.child(group.name))
+      // $scope.showDescription = true;  
+      //$scope.showDescription = true;
+  }
 
     $scope.save = function(group) {
       var selected = group;
@@ -112,6 +153,7 @@ angular.module('KiwiApp')
       groupToSave.description = group.description;
 
       groupLink.child(group.name).set(groupToSave);
+      $scope.showDescription = true;
     };
 
     $scope.selectGroup = function(group) {

@@ -183,7 +183,7 @@ angular.module('KiwiApp')
         
         makeMultiYAxisGraph(scope.group);
 
-        scope.$on('updateMultiYaxisGraph', function(event) {
+        scope.$on('updateCustom', function(event) {
           makeMultiYAxisGraph(scope.group);
         });
       }

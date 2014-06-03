@@ -31,6 +31,11 @@ angular.module('KiwiApp', [
         controller: 'GroupCtrl',
         authenticate: true
       })
+      .when('/groups/:id', {
+        templateUrl: 'partials/groups',
+        controller: 'SingleGroupCtrl',
+        authenticate: true
+      })
       .when('/:user/:name', {
         templateUrl: 'partials/graph',
         controller: 'GraphCtrl'

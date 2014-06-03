@@ -1,14 +1,14 @@
 'use strict';
 
 angular.module('KiwiApp')
-.controller('GraphCtrl', function ($scope, $http, $routeParams, $rootScope, $cookies) {
+.controller('SingleGraphCtrl', function ($scope, $http, $routeParams, $rootScope, $cookies) {
 
   $scope.$on('sessionRestored', function() {
     $scope._db = new Firebase('https://kiwidb.firebaseio.com/users/' + $rootScope.currentUser.uid);
-    getCharts();
+    getChart();
   });
 
-  var getCharts = function() {
+  var getChart = function() {
     var user = 'facebook:' + $routeParams.user;
     var db = new Firebase('https://kiwidb.firebaseio.com/users/'+user+ '/groups')
       .once('value', function(data) {
@@ -25,7 +25,7 @@ angular.module('KiwiApp')
  
   if($cookies.kiwiUid){
     $scope._db = new Firebase('https://kiwidb.firebaseio.com/users/' + $cookies.kiwiUid);
-    getCharts();
+    getChart();
   }
 
 });

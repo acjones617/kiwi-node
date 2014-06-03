@@ -36,8 +36,10 @@ NumberParser.prototype.isNumerical = function() {
 NumberParser.prototype._cleanNumber = function(item) {
   var nonWhiteSpace = item.value.replace(/\s/g, '');
   var matches = nonWhiteSpace.match(/[0-9 , \.]+/g);
+  var val = matches[0].match(/\d/g).join('');
+
   if(matches !== null) {
-    item.value = parseFloat(matches[0]);
+    item.value = parseFloat(val);
     return item;
   }
   // if(currency) {

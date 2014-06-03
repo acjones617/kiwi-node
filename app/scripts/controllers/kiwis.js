@@ -54,7 +54,10 @@ angular.module('KiwiApp')
 
     $scope.delete = function(kiwi) {
       $scope._db.child('kiwis').child(kiwi.hash).remove(function() {
-        alerter.alert('Your kiwi has been deleted :(');
+        $scope.$apply(function() {
+          delete $scope.kiwis[kiwi.hash];
+          alerter.alert('Your kiwi has been deleted :(');
+        });
       });
       $scope._db.child('groups').once('value', function(snapshot) {
         var groups = snapshot.val();

@@ -20,14 +20,18 @@
           
       <div ng-repeat="group in groups" class="group" droppable='group' ng-update='updateGroup(group, from, to, kiwi)'>
         <h3>{{ group.name }}</h3>
-        <multi-yaxis-graph group='group'></multi-yaxis-graph>
-
+        <div class="graph-legend">
+          <ul class="list-unstyled ul-legend">
+            <li ng-repeat="kiwi in group.kiwis" class="data{{$index + 1}}">{{ kiwi.title | limitTo: 20 }} </li>
+          </ul>
+        </div>
+        <multi-yaxis-graph group="group"></multi-yaxis-graph>
         <div class="description">
           <p>{{ group.description }}</p>
           <button class="btn" ng-click="save(group)">Save</button>
         </div>
         <ul class="list-unstyled">
-          <li ng-repeat="kiwi in group.kiwis" class="kiwi-pill">{{ kiwi.title | limitTo: 15 }} <span class="remove" ng-click="removeFromGroup(group, kiwi)"><a href="">x</a></span></li>
+          <li ng-repeat="kiwi in group.kiwis" class="kiwi-pill">{{ kiwi.title | limitTo: 20 }} <span class="remove" ng-click="removeFromGroup(group, kiwi)"><a href="">x</a></span></li>
         </ul>
       </div>
     </div>

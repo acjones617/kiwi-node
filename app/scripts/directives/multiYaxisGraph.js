@@ -78,7 +78,22 @@ angular.module('KiwiApp')
           // objects like this {date: "Sat Feb 01 2014 00:00:00 GMT-0800 (PST)", value: 500}
           var kiwiValArrays = _.pluck(group.kiwis, 'values');
           var numYAxes = kiwiValArrays.length;
-          var newAxisWidth = 55;
+
+          // given the number formatting (i.e. 999 or 1.00k or 8.45M), this is how much
+          // room to give each new y-axis (also given the fonts, etc.)
+          var newYAxisWidth = 55;
+          
+          // define dimensions of graph
+          var m = [10, 5, 20, numYAxes * newYAxisWidth - 10]; // top, right, bottom, left
+          var w = 615 - m[1] - m[3];  // width - right - left
+          var h = 300 - m[0] - m[2]; // height - top - bottom
+
+          // number of ticks
+          var xAxisTicks = 6;
+          var yAxisTicks = 4;
+          
+          var yAxisBuffer = 0.05;
+
           // convert these into the desired format [1391241600000, 500]
           var datasets = _.map(kiwiValArrays, function(arr) {
             return _.map(arr, function(pair, index, arr) {
@@ -98,17 +113,11 @@ angular.module('KiwiApp')
             });
           });
 
-          // define dimensions of graph
-          var m = [10, 5, 20, numYAxes * newAxisWidth - 10]; // top, right, bottom, left
-          var w = 615 - m[1] - m[3];  // width - right - left
-          var h = 300 - m[0] - m[2]; // height - top - bottom
-
-          
           // don't start and stop exactly at min and max
-          var buffer = 0.1 * (xMax - xMin);
+          var xAxisBuffer = 0.05 * (xMax - xMin);
           // x will scale all values within pixels 0-w
           var x = d3.time.scale()
-            .domain([xMin - buffer, xMax + buffer])
+            .domain([xMin - xAxisBuffer, xMax + xAxisBuffer])
             .range([0, w]);
 
           // add an SVG element with the desired dimensions and margin
@@ -125,7 +134,7 @@ angular.module('KiwiApp')
             .attr('transform', 'translate(' + m[3] + ',' + m[0] + ')');
 
           // create x-axis
-          var xAxis = d3.svg.axis().scale(x).ticks(6);
+          var xAxis = d3.svg.axis().scale(x).ticks(xAxisTicks);
           // add the x-axis.
           graph.append('svg:g')
             .attr('class', 'x axis')
@@ -138,10 +147,10 @@ angular.module('KiwiApp')
           for (var i = 0; i < datasets.length; i++) {
             var dataMax = getMax(datasets[i], 1);
             var dataMin = Math.min(getMin(datasets[i], 1), 0); // user negative lower bound if exists
-            var y = d3.scale.linear().domain([dataMin, dataMax]).range([h, 0]);
+            var y = d3.scale.linear().domain([dataMin, dataMax * (1 + yAxisBuffer)]).range([h, 0]);
             yScalers.push(y); // needed below for plotting points
             lines.push(makeLine(x, y));
-            addAnotherYAxis(i + 1, y, 4, graph, newAxisWidth);
+            addAnotherYAxis(i + 1, y, yAxisTicks, graph, newYAxisWidth);
           }
 
           // add lines and do so AFTER the axes above so that the lines are 
@@ -155,7 +164,7 @@ angular.module('KiwiApp')
                 .attr('cx', x(datasets[j][k][0]))
                 .attr('cy', yScalers[j](datasets[j][k][1]))
                 .attr('class', 'data' + (j+1) + '-point')
-                .attr('r', 3);
+                .attr('r', 2);
             }
             // .attr('data-legend', group.kiwis[j].title);
           }

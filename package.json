@@ -21,10 +21,10 @@
     "node-fs": "^0.1.7",
     "passport": "~0.2.0",
     "passport-local": "~0.1.6",
-    "static-favicon": "*",
-    "grunt": "~0.4.1",
+    "static-favicon": "*"
   },
   "devDependencies": {
+    "grunt": "~0.4.1",
     "grunt-autoprefixer": "~0.4.0",
     "grunt-bower-install": "~0.7.0",
     "grunt-concurrent": "~0.4.1",

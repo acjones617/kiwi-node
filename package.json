@@ -1,6 +1,6 @@
 {
-  "name": "kiwinode2",
-  "version": "0.0.0",
+  "name": "Kiwi",
+  "version": "0.0.1",
   "dependencies": {
     "bluebird": "^1.2.4",
     "body-parser": "~1.0.0",
@@ -20,10 +20,11 @@
     "morgan": "~1.0.0",
     "node-fs": "^0.1.7",
     "passport": "~0.2.0",
-    "passport-local": "~0.1.6"
+    "passport-local": "~0.1.6",
+    "static-favicon": "*",
+    "grunt": "~0.4.1",
   },
   "devDependencies": {
-    "grunt": "~0.4.1",
     "grunt-autoprefixer": "~0.4.0",
     "grunt-bower-install": "~0.7.0",
     "grunt-concurrent": "~0.4.1",

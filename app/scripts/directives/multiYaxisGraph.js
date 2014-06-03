@@ -10,59 +10,28 @@ angular.module('KiwiApp')
       },
       link: function(scope, element, attrs) {
         
-        // self invoking function to help make a legend
-        //https://gist.github.com/ZJONSSON/3918369
-        (function() {
-          d3.legend = function(g) {
-            g.each(function() {
-              var g= d3.select(this),
-                  items = {},
-                  svg = d3.select(g.property('nearestViewportElement')),
-                  legendPadding = g.attr('data-style-padding') || 5,
-                  lb = g.selectAll('.legend-box').data([true]),
-                  li = g.selectAll('.legend-items').data([true]);
+        var ranges = [
+          {divider: 1e18 , suffix: 'P'},
+          {divider: 1e15 , suffix: 'E'},
+          {divider: 1e12 , suffix: 'T'},
+          {divider: 1e9 , suffix: 'G'},
+          {divider: 1e6 , suffix: 'M'},
+          {divider: 1e3 , suffix: 'k'}
+        ];
 
-              lb.enter().append('rect').classed('legend-box',true);
-              li.enter().append('g').classed('legend-items',true);
-
-              svg.selectAll('[data-legend]').each(function() {
-                  var self = d3.select(this);
-                  items[self.attr('data-legend')] = {
-                    pos : self.attr('data-legend-pos') || this.getBBox().y,
-                    color : self.attr('data-legend-color') != undefined ? self.attr('data-legend-color') : self.style('fill') != 'none' ? self.style('fill') : self.style('stroke') 
-                  };
-                });
-
-              items = d3.entries(items).sort(function(a,b) { return a.value.pos-b.value.pos});
-
-              
-              li.selectAll('text')
-                  .data(items,function(d) { return d.key})
-                  .call(function(d) { d.enter().append('text')})
-                  .call(function(d) { d.exit().remove()})
-                  .attr('y',function(d,i) { return i+'em'})
-                  .attr('x','1em')
-                  .text(function(d) { ;return d.key})
-              
-              li.selectAll('circle')
-                  .data(items,function(d) { return d.key})
-                  .call(function(d) { d.enter().append('circle')})
-                  .call(function(d) { d.exit().remove()})
-                  .attr('cy',function(d,i) { return i-0.25+'em'})
-                  .attr('cx',0)
-                  .attr('r','0.4em')
-                  .style('fill',function(d) { console.log(d.value.color);return d.value.color}); 
-              
-              // Reposition and resize the box
-              var lbbox = li[0][0].getBBox();
-              lb.attr('x',(lbbox.x-legendPadding))
-                  .attr('y',(lbbox.y-legendPadding))
-                  .attr('height',(lbbox.height+2*legendPadding))
-                  .attr('width',(lbbox.width+2*legendPadding));
-            });
-            return g;
-          };
-          })();
+        var formatNumber = function(n) {          
+          if (n < 0) {
+              // if negative run it as positive then prepend with '-'
+              return '-' + formatNumber(-n);
+          }
+          for (var i = 0; i < ranges.length; i++) {
+            if (n >= ranges[i].divider) {
+              return (n / ranges[i].divider).toPrecision(3) + ranges[i].suffix;
+            }
+          }
+          // if not within the ranges
+          return n;
+        };
 
         var getMax = function(tuples, index) {
           return d3.max(tuples, function(tuple) {
@@ -89,7 +58,13 @@ angular.module('KiwiApp')
 
         // add the y-axes
         var addAnotherYAxis = function(index, yScaler, ticks, d3GraphObj, axisWidth) {
-          var yAxisN = d3.svg.axis().scale(yScaler).ticks(ticks).orient('left');
+          var yAxisN = d3.svg.axis()
+            .scale(yScaler)
+            .ticks(ticks)
+            .orient('left')
+            .tickFormat(function(d) {
+              return formatNumber(d);
+            });
           var shiftLeft = index === 1 ? -0 : -axisWidth * (index-1);
           d3GraphObj.append('svg:g')
             .attr('class', 'y axis axis' + index)
@@ -103,7 +78,7 @@ angular.module('KiwiApp')
           // objects like this {date: "Sat Feb 01 2014 00:00:00 GMT-0800 (PST)", value: 500}
           var kiwiValArrays = _.pluck(group.kiwis, 'values');
           var numYAxes = kiwiValArrays.length;
-          var newAxisWidth = 65;
+          var newAxisWidth = 55;
           // convert these into the desired format [1391241600000, 500]
           var datasets = _.map(kiwiValArrays, function(arr) {
             return _.map(arr, function(pair, index, arr) {
@@ -124,13 +99,16 @@ angular.module('KiwiApp')
           });
 
           // define dimensions of graph
-          var m = [10, 0, 100, numYAxes * newAxisWidth]; // margins
-          var w = 600 - m[1] - m[3];  // width - right - left
+          var m = [10, 5, 20, numYAxes * newAxisWidth - 10]; // top, right, bottom, left
+          var w = 615 - m[1] - m[3];  // width - right - left
           var h = 300 - m[0] - m[2]; // height - top - bottom
 
+          
+          // don't start and stop exactly at min and max
+          var buffer = 0.1 * (xMax - xMin);
           // x will scale all values within pixels 0-w
           var x = d3.time.scale()
-            .domain([xMin, xMax])
+            .domain([xMin - buffer, xMax + buffer])
             .range([0, w]);
 
           // add an SVG element with the desired dimensions and margin
@@ -155,11 +133,13 @@ angular.module('KiwiApp')
             .call(xAxis);
 
           var lines = [];
+          var yScalers = [];
           
           for (var i = 0; i < datasets.length; i++) {
             var dataMax = getMax(datasets[i], 1);
             var dataMin = Math.min(getMin(datasets[i], 1), 0); // user negative lower bound if exists
             var y = d3.scale.linear().domain([dataMin, dataMax]).range([h, 0]);
+            yScalers.push(y); // needed below for plotting points
             lines.push(makeLine(x, y));
             addAnotherYAxis(i + 1, y, 4, graph, newAxisWidth);
           }
@@ -168,17 +148,24 @@ angular.module('KiwiApp')
           // above the tick-lines
           for (var j = 0; j < datasets.length; j++) {
             graph.append('svg:path')
-            .attr('d', lines[j](datasets[j]))
-            .attr('class', 'data' + (j+1))
-            .attr('data-legend', group.kiwis[j].title);
+              .attr('d', lines[j](datasets[j]))
+              .attr('class', 'data' + (j+1));
+            for (var k = 0; k < datasets[j].length; k++) {
+              graph.append('svg:circle')
+                .attr('cx', x(datasets[j][k][0]))
+                .attr('cy', yScalers[j](datasets[j][k][1]))
+                .attr('class', 'data' + (j+1) + '-point')
+                .attr('r', 3);
+            }
+            // .attr('data-legend', group.kiwis[j].title);
           }
 
-        var legend = graph.append('g')
-          .attr('class','legend')
-          .attr('transform','translate(0, ' + (h + 40) + ')')
-          .style('font-size','12px')
-          .attr('data-style-padding',5)
-          .call(d3.legend);
+        // var legend = graph.append('g')
+        //   .attr('class','legend')
+        //   .attr('transform','translate(0, ' + (h + 40) + ')')
+        //   .style('font-size','12px')
+        //   .attr('data-style-padding',5)
+        //   .call(d3.legend);
 
         };
         

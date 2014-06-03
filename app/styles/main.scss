@@ -325,11 +325,24 @@ body {
  */
 
 .multi-graph {
+
   path {
-    stroke-width: 2;
+    stroke-width: 1;
     fill: none;
   }
 
+  .data1-point {
+    fill: blue;
+  }
+
+  .data2-point {
+    fill: orange;
+  }
+
+  .data3-point {
+    fill: red;
+  }
+   
   .data1 {
     stroke: blue;
   }
@@ -356,6 +369,7 @@ body {
     }
     path {
       stroke-width: 1;
+      stroke: grey;
       // display: none;
     }
     text {

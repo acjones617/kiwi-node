@@ -106,6 +106,7 @@ if [[ "$IN_PLACE_DEPLOYMENT" -ne "1" ]]; then
   exitWithMessageOnError "Kudu Sync failed"
 fi
 
+echo "Finished KuduSync #1"
 # 2. Select node version
 selectNodeVersion
 
@@ -116,6 +117,7 @@ if [ -e "$DEPLOYMENT_TARGET/package.json" ]; then
   exitWithMessageOnError "npm failed"
   cd - > /dev/null
 fi
+echo "Finished installing npm packages"
 
 # 4. Install bower packages
 if [ -e "$DEPLOYMENT_TARGET/bower.json" ]; then
@@ -127,6 +129,7 @@ if [ -e "$DEPLOYMENT_TARGET/bower.json" ]; then
   cd - > /dev/null
 fi
 
+echo "Finished installing bower packages"
 # 5. Run grunt
 if [ -e "$DEPLOYMENT_TARGET/Gruntfile.js" ]; then
   cd "$DEPLOYMENT_TARGET"
@@ -136,6 +139,7 @@ if [ -e "$DEPLOYMENT_TARGET/Gruntfile.js" ]; then
   exitWithMessageOnError "grunt failed"
   cd - > /dev/null
 fi
+echo "Finished running grunt"
 ##################################################################################################################################
 
 # Post deployment stub

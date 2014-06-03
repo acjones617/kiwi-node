@@ -11,6 +11,16 @@ angular.module('KiwiApp')
     $scope.groupData = [];
     var sessionRestored = false;
 
+    Array.prototype.clean = function(deleteValue) {
+      for (var i = 0; i < this.length; i++) {
+        if (this[i] == deleteValue) {         
+          this.splice(i, 1);
+          i--;
+        }
+      }
+      return this;
+    };
+
     var main = function() {
       if($cookies.kiwiUid){
         $scope._db = new Firebase('https://kiwidb.firebaseio.com/users/' + $cookies.kiwiUid);
@@ -43,6 +53,7 @@ angular.module('KiwiApp')
 
     var getKiwisFromHash = function(hashes, callback) {
       var result = [];
+      hashes.clean(undefined);
       if(hashes) {
         for(var i = 0; i < hashes.length; i++) {
           result.push($scope.kiwis[hashes[i]]);

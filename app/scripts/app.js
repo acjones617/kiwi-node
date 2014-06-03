@@ -7,6 +7,7 @@ angular.module('KiwiApp', [
   'ngRoute',
   'ui.bootstrap',
   'common.dragdrop',
+  'common.confirm',
   'firebase'
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {

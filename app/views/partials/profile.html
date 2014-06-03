@@ -3,9 +3,11 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-sm-12">
-      <h1>Update Profile</h1>
+    <div class="col-md-12">
+      <h1 class="main-right">My Profile</h1>
     </div>
+  </div>
+  <div class="row">
     <div class="col-sm-12">
       <form class="form" name="profileForm" novalidate>
         
@@ -14,11 +16,17 @@
           <input type="text" class="form-control" ng-model="settings.name"/>
         </div>
 
+
         <div class="form-group">
           <label>Email</label>
           <input type="email" name="email" class="form-control" ng-model="settings.email"/>
            <span ng-show="profileForm.email.$error.email ">Please enter a valid email.</span>
         </div>
+
+        <div class="form-group">
+          <p>You have <strong>{{ settings.kiwiCount }}</strong> kiwis at your disposure</p>
+        </div>
+
         <button class="btn btn-lg btn-primary" ng-click="update()">Save</button>
 
       </form>

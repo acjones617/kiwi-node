@@ -2,44 +2,62 @@
 
 <div class="container" id="groups">
   <div class="row">
-    <div class="col-sm-8">
+    <div class="col-md-12">
+      <h1 class="main-right">My Groups</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="groups">
+        <input type="text" class="input form-control" placeholder="A cool group name" ng-model="groupName">
+        <button class="btn add-group btn-default" ng-click="createGroup()">Create Group</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-8" >
           
-      <div ng-repeat="group in groups" class="group">
+<!-- <<<<<<< HEAD -->
+<!--       <div ng-repeat="group in groups" class="group">
         <div class="description">
         <h3 ng-show="showDescriptionTitle"  class="hoverColor" ng-dblclick="testSave(group)" >{{ group.name }}</h3>
         <form ng-submit="save(group)">
           <input ng-show="!showDescriptionTitle" ng-model="group.name"></input>
         </form>
-      </div>
+      </div> -->
+<!-- ======= -->
+      <div ng-repeat="group in groups" class="group" droppable='group' ng-update='updateGroup(group, from, to, kiwi)'>
+        <h3 ng-show="changeNameShow" class="hoverColor" ng-dblclick="changeFocus()" >{{ group.name }}</h3>
+        <form ng-submit="changeGroupName(group, changedGroupName)">
+        <input ng-blur="changeFocusBlur()"ng-show="!changeNameShow" type="text" class="input form-control" placeholder="Update your group name." ng-model="changedGroupName">
+      </form>
+<!-- >>>>>>> 38824fe94201b6a486adecbef04f9c55fe24c8f9 -->
         <multi-yaxis-graph group='group'></multi-yaxis-graph>
+
         <div class="description">
+<!-- <<<<<<< HEAD
           <h4 class="hoverColor" ng-show="showDescription" ng-dblclick="testSave()">{{ group.description }}</h4>
           <form ng-submit="save(group)">
             <input ng-blur="looseFocus()" ng-show="!showDescription" ng-model="group.description"></input>
           </form>
+======= -->
+          <p>{{ group.description }}</p>
+         <!--  <button class="btn" ng-click="save(group)">Save</button> -->
+<!-- >>>>>>> 38824fe94201b6a486adecbef04f9c55fe24c8f9 -->
         </div>
+        <ul class="list-unstyled">
+          <li ng-repeat="kiwi in group.kiwis" class="kiwi-pill">{{ kiwi.title | limitTo: 15 }} <span class="remove" ng-click="removeFromGroup(group, kiwi)"><a href="">x</a></span></li>
+        </ul>
       </div>
-
     </div>
+
     <div class="col-sm-4">
-      <div class="groups">
-        <h2>Groups</h2>
-        <div class="kiwiList">
-          <input type="text" class="input" ng-model="groupName">
-          <button class="btn add-group" ng-click="createGroup()">Create Group</button>
-          <ul ng-repeat="group in groups" ng-click="selectGroup(group)" ng-class="selectedGroup===group ? 'selectedGroup' : ''">
-            <h2>{{group.name}}</h2>
-            <ul ng-repeat="kiwi in group.kiwis" >
-              <li class="list">{{ kiwi.title }} <span class="remove" ng-click="removeFromGroup(group, kiwi)">x</span></li>
-            </ul>
-          </ul>
-        </div>
-      </div>
       <div class="kiwis">
         <h2>Kiwis</h2>
-        <div class="kiwiList">
-          <ul class="list" ng-repeat="kiwi in kiwis" ng-click="addToGroup(kiwi)">
-            <li>{{ kiwi.title | limitTo: 40 }}</li>
+        <div>
+          <ul>
+            <li class="kiwiList" ng-repeat="kiwi in kiwis track by kiwi.hash" draggable='kiwi' draggable-target='.group'>{{ kiwi.title | limitTo: 40 }}</li>
           </ul>
         </div>
       </div>
@@ -47,4 +65,9 @@
   </div>
 
 </div>
+
+<div ng-show="isLoading" class="loading-block">
+  <img src="images/loading.gif" alt="Loading">
+</div>
+
 <div ng-include="'partials/footer'"></div>

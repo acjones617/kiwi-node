@@ -1,7 +1,7 @@
 
 <div ng-include="'partials/navbar'"></div>
 
-<div class="container">
+<div class="container" id="kiwis">
   <div class="row">
     <div class="col-md-12">
       <h1 class="main-right">My Kiwis</h1>
@@ -12,7 +12,6 @@
       <h3 class="hoverColor" ng-show="kiwiName"  ng-dblclick='editKiwi(kiwi)' > <strong> {{kiwi.title}} </strong></h3>
   <form ng-show="!kiwiName" ng-submit='editKiwi1(kiwi)'>
       <input ng-blur="looseFocus()" input="text" ng-model="text" class="edit-{{kiwi.edit}}" placeholder="{{kiwi.title}}" ng-model="{{kiwi.title}}"></input>
-      <pre>Sorting predicate = {{predicate}}; reverse = {{reverse}}</pre>
   </form>
       <a href="{{ kiwi.url}}">{{kiwi.url}}</a>
       

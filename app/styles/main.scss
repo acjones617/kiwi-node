@@ -65,34 +65,88 @@ body {
 .graphs {
   background-color: #eee;
 }
+
 .hoverColor:hover{
   color: blue;
 }
 
-#groups {
-  min-height: 700px;
-  .group {
+#kiwis {
+  .kiwis {
     background-color: #eee;
     margin-bottom: 20px;
   }
-  .selectedGroup {
+}
+
+#groups {
+  .group {
+    background-color: #eee;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    ul {
+      margin-top: 10px;
+      min-height: 30px;
+    }
+    .description {
+    }
+  }
+  .kiwi-pill {
     background-color: $mellow-yellow;
+    border-radius: 10px;
+    padding: 0 5px;
+    margin-right: 10px;
+    float: left;
+    list-style-type: none;
+    .remove a {
+      text-decoration: none;
+      color: red;
+      margin-left: 5px;
+    }
   }
   .groups {
+    margin-bottom: 20px;
     h2 {
       margin-top: 0px;
     }
-    background-color: #eee;
-    .remove {
-      color: red;
-      margin: 0 10px;
-    }
-  }
-  .description {
-    margin-left: 30px;
   }
   .donetrue{
     background-color: $mellow-yellow;
+  }
+  .kiwis {
+    ul {
+      margin: 0;
+      padding: 0;
+    }
+    > {
+      h4 {
+        /*margin-left: -10px;*/
+        margin-bottom: 0;
+      }
+      p {
+        /*margin-left: -10px;*/
+        margin-bottom: 0;
+        margin-bottom: 10px;
+      }
+    }
+  }
+  .kiwiList {
+    list-style-type: none;
+    background-color: #eee;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    padding: 10px;
+    &:hover {
+      background-color: $mellow-yellow;
+      cursor: grab;
+    }
+    &:active {
+      background-color: $mellow-yellow;
+      cursor: grabbing;
+    }
+  }
+  .ui-draggable-dragging {
+    background-color: $mellow-yellow;
+    width: inherit !important;
+    transform: rotate(-8deg);
   }
 }
 
@@ -132,21 +186,7 @@ body {
   }
 }
 
-.kiwis {
-  background-color: #eee;
-  margin-bottom: 20px;
-  > {
-    h4 {
-      /*margin-left: -10px;*/
-      margin-bottom: 0;
-    }
-    p {
-      /*margin-left: -10px;*/
-      margin-bottom: 0;
-      margin-bottom: 10px;
-    }
-  }
-}
+
 
 .main-right {
   margin-top: 0px;
@@ -287,7 +327,7 @@ body {
  * CUSTOM GRAPH
  */
  path {
-  stroke-width: 2o;
+  stroke-width: 2;
   fill: none;
 }
 
@@ -316,10 +356,11 @@ body {
     stroke-opacity: .5;
   }
   path {
-    display: none;
+    stroke-width: 1;
+    // display: none;
   }
   text {
-    font-size: 14;
+    font-size: 16;
   }
 }
 
@@ -356,4 +397,10 @@ body {
   &.axis3 text {
     fill: red;
   }
+}
+
+.legend rect {
+  fill: white;
+  stroke: black;
+  opacity: 1;
 }

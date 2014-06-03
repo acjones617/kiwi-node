@@ -2,9 +2,9 @@
   <div class='row'>
     <div class="header" ng-controller="NavbarCtrl">
       <ul class="nav nav-pills pull-right">
-        <li ng-show="currentUser"><a href="/profile">Hello, {{currentUser.displayName}}</a></li>
-        <li ng-show="currentUser"><a href="/kiwis/">My Kiwis</a></li>
-        <li ng-show="currentUser"><a href="/groups">My Groups</a></li>
+        <li ng-show="currentUser" ng-class="{active: isActive('/profile')}"><a href="/profile">Hello, {{currentUser.displayName}}</a></li>
+        <li ng-show="currentUser" ng-class="{active: isActive('/kiwis')}"><a href="/kiwis">My Kiwis</a></li>
+        <li ng-show="currentUser" ng-class="{active: isActive('/groups')}"><a href="/groups">My Groups</a></li>
         <li ng-show="currentUser"><a href="#" ng-click="logout()">Logout</a></li>
         <li><a href="#" ng-hide="currentUser" ng-click="login()">Login</a></li>
       </ul>

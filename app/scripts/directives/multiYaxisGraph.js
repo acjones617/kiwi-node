@@ -166,19 +166,13 @@ angular.module('KiwiApp')
                 .attr('class', 'data' + (j+1) + '-point')
                 .attr('r', 2);
             }
-            // .attr('data-legend', group.kiwis[j].title);
           }
-
-        // var legend = graph.append('g')
-        //   .attr('class','legend')
-        //   .attr('transform','translate(0, ' + (h + 40) + ')')
-        //   .style('font-size','12px')
-        //   .attr('data-style-padding',5)
-        //   .call(d3.legend);
 
         };
         
-        makeMultiYAxisGraph(scope.group);
+        scope.$watch('group', function(newVal, oldVale) {
+          makeMultiYAxisGraph(scope.group);
+        });
 
         scope.$on('updateCustom', function(event) {
           makeMultiYAxisGraph(scope.group);

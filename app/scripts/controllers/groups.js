@@ -56,9 +56,10 @@ angular.module('KiwiApp')
       if(Array.isArray(hashes)) {
         hashes.clean(undefined);
       } else {
-        Object.keys(hashes).clean(undefined);
+        hashes = _.map(hashes, function(hash) {
+          return hash;
+        }).clean(undefined);
       }
-      debugger;
       if(hashes) {
         for(var i = 0; i < hashes.length; i++) {
           result.push($scope.kiwis[hashes[i]]);

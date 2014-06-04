@@ -326,6 +326,38 @@ body {
 /**
  * CUSTOM GRAPH
  */
+// The lines
+.data1 {
+  color: blue;
+}
+
+.data2 {
+  stroke: white;
+  color: orange;
+}
+
+.data3 {
+  stroke: white;
+  color: red;
+}
+
+// the legend
+#groups {
+  .group {
+    .graph-legend {
+      border: 1px solid grey;
+      padding: 2px 4px;
+      position: absolute;
+      top: 35px;
+      right: 30px;
+    }
+    .ul-legend {
+      margin: 0 0;
+      min-height: 0;
+    }
+  }
+}
+
 
 .multi-graph {
 

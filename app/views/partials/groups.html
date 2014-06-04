@@ -28,13 +28,23 @@
       </div> -->
 <!-- ======= -->
       <div ng-repeat="group in groups" class="group" droppable='group' ng-update='updateGroup(group, from, to, kiwi)'>
+<!-- <<<<<<< HEAD
         <h3 ng-show="changeNameShow" class="hoverColor" ng-dblclick="changeFocus()" >{{ group.name }}</h3>
         <form ng-submit="changeGroupName(group, changedGroupName)">
         <input ng-blur="changeFocusBlur()"ng-show="!changeNameShow" type="text" class="input form-control" placeholder="Update your group name." ng-model="changedGroupName">
       </form>
-<!-- >>>>>>> 38824fe94201b6a486adecbef04f9c55fe24c8f9 -->
+
         <multi-yaxis-graph group='group'></multi-yaxis-graph>
 
+======= -->
+        <h3>{{ group.name }}</h3>
+        <div class="graph-legend">
+          <ul class="list-unstyled ul-legend">
+            <li ng-repeat="kiwi in group.kiwis" class="data{{$index + 1}}">{{ kiwi.title | limitTo: 20 }} </li>
+          </ul>
+        </div>
+        <multi-yaxis-graph group="group"></multi-yaxis-graph>
+<!-- >>>>>>> 20b11e10a0524c7c1b649596edbed5b63e70074d -->
         <div class="description">
 <!-- <<<<<<< HEAD
           <h4 class="hoverColor" ng-show="showDescription" ng-dblclick="testSave()">{{ group.description }}</h4>
@@ -47,7 +57,7 @@
 <!-- >>>>>>> 38824fe94201b6a486adecbef04f9c55fe24c8f9 -->
         </div>
         <ul class="list-unstyled">
-          <li ng-repeat="kiwi in group.kiwis" class="kiwi-pill">{{ kiwi.title | limitTo: 15 }} <span class="remove" ng-click="removeFromGroup(group, kiwi)"><a href="">x</a></span></li>
+          <li ng-repeat="kiwi in group.kiwis" class="kiwi-pill">{{ kiwi.title | limitTo: 20 }} <span class="remove" ng-click="removeFromGroup(group, kiwi)"><a href="">x</a></span></li>
         </ul>
       </div>
     </div>

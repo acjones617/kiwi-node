@@ -26,38 +26,50 @@ angular.module('KiwiApp')
       return Object.keys(obj).map(function (key) { return obj[key]; });
     };
 
-    $scope.looseFocus = function() {
-      $scope.kiwiName = true;
-    }
+// <<<<<<< HEAD
+//     $scope.looseFocus = function() {
+//       $scope.kiwiName = true;
+//     }
 
-    $scope.editKiwi = function(kiwi) {
-      kiwi.edit = true;
-      $scope.kiwiName = false;
-      var thatScope = $scope;
-      console.log($scope.kiwiName, "2x")
-      var prevTitle = kiwi.title;
-        $scope.editKiwi1 = function($scope) {
-          if(!this.text) {
-            kiwi.title = "Your kiwi must be at least one character long."
-            return;
-          }
-          kiwi.title = this.text;
-          var that = this;
-          var newFBConnection = new Firebase('https://kiwidb.firebaseio.com/users/' + $cookies.kiwiUid);
-          // var newFBConnection = $scope._db.child('kiwis').child('title')
-          newFBConnection.once('value', function(snapshot){
-          _.each(snapshot.val().kiwis, function(value, key, obj) {
-            if(value.title === prevTitle) {
-              var newFBConnection1 = new Firebase('https://kiwidb.firebaseio.com/users/' + $cookies.kiwiUid + '/kiwis/' + key);
-              newFBConnection1.once('value', function(snapshot) {
-                newFBConnection1.update({title: that.text});
-              });
-            }
-          });
-        });
-        thatScope.kiwiName = true; 
-        kiwi.edit = false;
-      };
+//     $scope.editKiwi = function(kiwi) {
+//       kiwi.edit = true;
+//       $scope.kiwiName = false;
+//       var thatScope = $scope;
+//       console.log($scope.kiwiName, "2x")
+//       var prevTitle = kiwi.title;
+//         $scope.editKiwi1 = function($scope) {
+//           if(!this.text) {
+//             kiwi.title = "Your kiwi must be at least one character long."
+//             return;
+//           }
+//           kiwi.title = this.text;
+//           var that = this;
+//           var newFBConnection = new Firebase('https://kiwidb.firebaseio.com/users/' + $cookies.kiwiUid);
+//           // var newFBConnection = $scope._db.child('kiwis').child('title')
+//           newFBConnection.once('value', function(snapshot){
+//           _.each(snapshot.val().kiwis, function(value, key, obj) {
+//             if(value.title === prevTitle) {
+//               var newFBConnection1 = new Firebase('https://kiwidb.firebaseio.com/users/' + $cookies.kiwiUid + '/kiwis/' + key);
+//               newFBConnection1.once('value', function(snapshot) {
+//                 newFBConnection1.update({title: that.text});
+//               });
+//             }
+//           });
+//         });
+//         thatScope.kiwiName = true; 
+//         kiwi.edit = false;
+//       };
+// =======
+    $scope.editing = function(kiwi) {
+      kiwi.editing = true;
+    };
+
+    $scope.edit = function(kiwi) {
+      var name = kiwi.title;
+      $scope._db.child('kiwis').child(kiwi.hash).child('title').set(name);
+      kiwi.editing = false;
+      alerter.alert('Your kiwi has been saved! :)');
+// >>>>>>> f88931b6e3bd07eb4f2f73ef7dc00f4219fe4c77
     };
 
     $scope.delete = function(kiwi) {

@@ -82,7 +82,7 @@ angular.module('KiwiApp')
 
       kiwi.values = valuesToArray(kiwi.values);
       var original = kiwi.values.shift();
-      var parser = new NumberParser(original, kiwi.values);
+      var parser = new NumberParser(original, kiwi.values); 
 
       if(parser.isNumerical()) {
         return parser.parseAll();
@@ -92,7 +92,6 @@ angular.module('KiwiApp')
         return _.pluck(kiwi.values, 'value');
       }
     };
-
 
     var pushKiwiToGraph = function(kiwi, parsedValues) {
       var count = 0;

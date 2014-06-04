@@ -27,7 +27,8 @@
         </div>
         <multi-yaxis-graph group="group"></multi-yaxis-graph>
         <div class="description">
-          <p>{{ group.description }}</p>
+          <h4>Description</h4>
+          <textarea class="form-control" ng-model="group.description" placeholder="What does your graph say?"></textarea>
           <button class="btn" ng-click="save(group)">Save</button>
         </div>
         <ul class="list-unstyled">

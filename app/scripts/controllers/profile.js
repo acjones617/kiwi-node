@@ -9,7 +9,10 @@ angular.module('KiwiApp')
     if($cookies.kiwiUid){
       $scope._db = new Firebase('https://kiwidb.firebaseio.com/users/' + $cookies.kiwiUid + '/settings');
       $scope._db.once('value', function(settings) {
-        // bower 
+// <<<<<<< HEAD
+//         // bower 
+// =======
+// >>>>>>> a27c36756eca013809d5ade3c4d77e996bda35bc
         var email = $rootScope.currentUser.thirdPartyUserData.email;
         $scope.$apply(function() {
           $scope.settings = settings.val() || {};

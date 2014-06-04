@@ -326,81 +326,98 @@ body {
 /**
  * CUSTOM GRAPH
  */
- path {
-  stroke-width: 2;
-  fill: none;
-}
 
-.data1 {
-  stroke: blue;
-}
+.multi-graph {
 
-.data2 {
-  stroke: orange;
-}
-
-.data3 {
-  stroke: red;
-}
-
-.axis {
-  shape-rendering: crispEdges;
-}
-
-.x.axis {
-  line {
-    stroke: grey;
-    stroke-width: 1;
-  }
-  .minor {
-    stroke-opacity: .5;
-  }
   path {
     stroke-width: 1;
-    // display: none;
+    fill: none;
   }
-  text {
-    font-size: 16;
-  }
-}
 
-.y {
-  &.axis {
-    line, path {
-      fill: none;
-    }
-  }
-  &.axis1 {
-    line, path {
-      stroke: blue;
-    }
-  }
-  &.axis2 {
-    line, path {
-      stroke: orange;
-    }
-  }
-  &.axis3 {
-    line, path {
-      stroke: red;
-    }
-  }
-  &.axis text {
-    font-size: 14;
-  }
-  &.axis1 text {
+  .data1-point {
     fill: blue;
   }
-  &.axis2 text {
+
+  .data2-point {
     fill: orange;
   }
-  &.axis3 text {
+
+  .data3-point {
     fill: red;
   }
-}
+   
+  .data1 {
+    stroke: blue;
+  }
 
-.legend rect {
-  fill: white;
-  stroke: black;
-  opacity: 1;
+  .data2 {
+    stroke: orange;
+  }
+
+  .data3 {
+    stroke: red;
+  }
+
+  .axis {
+    shape-rendering: crispEdges;
+  }
+
+  .x.axis {
+    line {
+      stroke: grey;
+      stroke-width: 1;
+    }
+    .minor {
+      stroke-opacity: .5;
+    }
+    path {
+      stroke-width: 1;
+      stroke: grey;
+      // display: none;
+    }
+    text {
+      font-size: 12px;
+    }
+  }
+
+  .y {
+    &.axis {
+      line, path {
+        fill: none;
+      }
+    }
+    &.axis1 {
+      line, path {
+        stroke: blue;
+      }
+    }
+    &.axis2 {
+      line, path {
+        stroke: orange;
+      }
+    }
+    &.axis3 {
+      line, path {
+        stroke: red;
+      }
+    }
+    &.axis text {
+      font-size: 14px;
+    }
+    &.axis1 text {
+      fill: blue;
+    }
+    &.axis2 text {
+      fill: orange;
+    }
+    &.axis3 text {
+      fill: red;
+    }
+  }
+
+  .legend rect {
+    fill: white;
+    // stroke: black;
+    opacity: 0;
+  }
 }

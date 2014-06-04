@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('KiwiApp')
-  .controller('GroupCtrl', function ($scope, $http, $routeParams, $rootScope, Auth, $cookies) {
+  .controller('GroupCtrl', function ($scope, $http, $routeParams, $rootScope, Auth, $cookies, alerter) {
     
     $scope.groups = [];
 
@@ -135,6 +135,7 @@ angular.module('KiwiApp')
       groupToSave.description = group.description || '';
 
       groupLink.child(group.name).set(groupToSave);
+      alerter.alert('Your graph has been saved! :)');
     };
 
     $scope.createGroup = function() {

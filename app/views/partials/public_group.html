@@ -1,0 +1,33 @@
+<div ng-include="'partials/navbar'"></div>
+
+<div class="container" id="groups">
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="main-right">Public Group</h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-8" >
+      <div class="group" ng-show="!isLoading">
+        <h3>{{ group.name }}</h3>
+        <div class="graph-legend">
+          <ul class="list-unstyled ul-legend">
+            <li ng-repeat="kiwi in group.kiwis" class="data{{$index + 1}}">{{ kiwi.title | limitTo: 20 }} </li>
+          </ul>
+        </div>
+        <multi-yaxis-graph group="group"></multi-yaxis-graph>
+        <div class="description">
+          <p>{{ group.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div ng-show="isLoading" class="loading-block">
+  <img src="images/loading.gif" alt="Loading">
+</div>
+
+<div ng-include="'partials/footer'"></div>

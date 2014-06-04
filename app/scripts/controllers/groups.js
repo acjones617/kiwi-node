@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('KiwiApp')
-  .controller('GroupCtrl', function ($scope, $http, $routeParams, $rootScope, Auth, $cookies) {
+  .controller('GroupCtrl', function ($scope, $http, $routeParams, $rootScope, Auth, $cookies, alerter) {
     
     $scope.groups = [];
 
@@ -9,9 +9,6 @@ angular.module('KiwiApp')
     $scope.kiwis = {};
     $scope.isLoading = true;
     $scope.groupData = [];
-    $scope.showDescription = true;
-    $scope.showDescriptionTitle = true;
-    $scope.changeNameShow = true;
     var sessionRestored = false;
 
     Array.prototype.clean = function(deleteValue) {
@@ -56,7 +53,13 @@ angular.module('KiwiApp')
 
     var getKiwisFromHash = function(hashes, callback) {
       var result = [];
-      hashes.clean(undefined);
+      if(Array.isArray(hashes)) {
+        hashes.clean(undefined);
+      } else {
+        hashes = _.map(hashes, function(hash) {
+          return hash;
+        }).clean(undefined);
+      }
       if(hashes) {
         for(var i = 0; i < hashes.length; i++) {
           result.push($scope.kiwis[hashes[i]]);
@@ -94,7 +97,6 @@ angular.module('KiwiApp')
     var washKiwi = function(kiwi) {
       // Get the value part only
       // var plucked = _.pluck(kiwi.values, 'value');
-
       kiwi.values = valuesToArray(kiwi.values);
       var original = kiwi.values.shift();
       var parser = new NumberParser(original, kiwi.values);
@@ -112,10 +114,6 @@ angular.module('KiwiApp')
       $scope.selectedKiwi = kiwi;
     };
 
-    $scope.looseFocus = function() {
-      $scope.showDescription = true;
-    }
-
     $scope.removeFromGroup = function(group, kiwi) {
       var index = group.kiwis.indexOf(kiwi);
       var hashIndex = group.kiwiHashes.indexOf(kiwi.hash);
@@ -125,78 +123,6 @@ angular.module('KiwiApp')
         $rootScope.$broadcast('updateCustom');
       }
     };
-
-    // //save new group name
-    // $scope.changeGroupName = function(group) {
-
-    //   $scope._db.once('value', function(snapshot){
-
-    //   })
-    //   $scope.changeNameShow = false;
-      
-    // }
-    $scope.changeGroupName = function(group, changedGroupName) {
-      var nameToUpdate = changedGroupName;
-      var originalName = group.name;
-      var toUpdateKey = $scope._db + '/groups/'
-
-      $scope._db.once('value', function(snapshot) {
-        _.each(snapshot.val().groups, function(value, key, obj){
-          if(key === originalName) {
-            //revisit
-            // console.log(toUpdateKey)
-            //update key in snapshot.val().groups
-
-            //update value.name in snapshot.val().groups
-          }
-        })
-        
-      })
-
-      $scope.changeFocus();
-    }
-
-    $scope.changeFocus = function() {
-      $scope.changeNameShow = !$scope.changeNameShow;
-    }
-    $scope.changeFocusBlur = function() {
-      $scope.changeNameShow = true;
-    }
-
-  //   $scope.testSave = function(group) {
-  //     $scope.showDescription = false;
-  //     var orginalName = group.name;
-  //     $scope.updateName = function(group) {
-  //       var newName = group.name;
-  //       var groupLink = $scope._db.child('groups');
-  //       groupLink.once('value', function(snapshot){
-  //         _.each(snapshot.val(), function(value, key, obj){
-  //           if(key === orginalName) {
-  //             var temp = obj[key].name
-  //             groupLink.update({temp: newName})
-  //             //console.log(obj[key].name)
-  //           }
-  //         })
-  //       })
-        
-  //       $scope.showDescription = true;
-  //   }
-  // }
-  //   $scope.testSave = function(group) {
-  //     $scope.showDescription = false;
-  //     var selected = group;
-  //     var groupLink = $scope._db.child('groups');
-
-  //     var groupToSave = {};
-  //     groupToSave.name = group.name;
-  //     groupToSave.kiwiHashes = group.kiwiHashes;
-  //     groupToSave.description = group.description;
-
-  //     groupLink.child(group.name).update(groupToSave.name);
-  //     console.log(groupLink.child(group.name))
-  //     // $scope.showDescription = true;  
-  //     //$scope.showDescription = true;
-  // }
 
     $scope.save = function(group) {
       var selected = group;
@@ -208,7 +134,7 @@ angular.module('KiwiApp')
       groupToSave.description = group.description || '';
 
       groupLink.child(group.name).set(groupToSave);
-      $scope.showDescription = true;
+      alerter.alert('Your graph has been saved! :)');
     };
 
     $scope.createGroup = function() {

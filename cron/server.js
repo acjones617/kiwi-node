@@ -41,10 +41,10 @@ var warnUser = function(email, url, name){ //sends email to user
 
 var sendCrawlStats = function(){
   server.send({
-    text: 'Crawl initiated at: ' + startTime + "; " +
-          totalTargets + ' kiwis targetted; ' +
-          warnings + ' targets missed; ' +
-          'Missed targets: ' + missed +
+    text: 'Crawl initiated at: ' + startTime + "; \n" +
+          totalTargets + ' kiwis targetted; \n' +
+          warnings + ' targets missed; \n' +
+          'Missed targets: ' + missed + '\n'+
           'Shut down at ' + new Date(),
     to: 'thekiwioverlord@gmail.com',
     from: 'thekiwioverlord@gmail.com',

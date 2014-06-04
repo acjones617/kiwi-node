@@ -31,9 +31,9 @@ angular.module('KiwiApp', [
         controller: 'GroupCtrl',
         authenticate: true
       })
-      .when('/:user/:name', {
-        templateUrl: 'partials/graph',
-        controller: 'GraphCtrl'
+      .when('/groups/:fbId/:groupRef', {
+        templateUrl: 'partials/public_group',
+        controller: 'PublicGroupCtrl'
       })
       .when('/special', {
         templateUrl: 'partials/special',

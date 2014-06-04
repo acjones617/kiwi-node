@@ -23,13 +23,13 @@ angular.module('KiwiApp')
     };
     
     $scope.getCreds = function(userData){
-        $http({
-          method: 'POST',
-          url: '/api/createUser',
-          data: userData
-        }).success(function(){
-          console.log('sent to server');
-        });
+      $http({
+        method: 'POST',
+        url: '/api/createUser',
+        data: userData
+      }).success(function(){
+        console.log('sent to server');
+      });
     };
 
     $scope.isActive = function(route) {

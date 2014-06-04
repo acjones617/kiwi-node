@@ -23,7 +23,8 @@
     "open": "~0.0.4",
     "firebase": "^1.0.15-3",
     "phantom": "^0.6.3",
-    "jsdm": "^0.4.9"
+    "jsdm": "^0.4.9",
+    "moment": "~2.6.0"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

@@ -133,6 +133,7 @@ angular.module('KiwiApp')
             .append('svg:g')
             .attr('transform', 'translate(' + m[3] + ',' + m[0] + ')');
 
+
           // create x-axis
           var xAxis = d3.svg.axis().scale(x).ticks(xAxisTicks);
           // add the x-axis.
@@ -168,6 +169,11 @@ angular.module('KiwiApp')
             }
           }
 
+        };
+
+        window.onresize = function() {
+          var width = $('.group').width();
+          element.find('svg').attr('width', width);
         };
         
         scope.$watch('group', function(newVal, oldVale) {

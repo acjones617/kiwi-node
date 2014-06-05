@@ -16,13 +16,16 @@ angular.module('KiwiApp')
              document.cookie = 'kiwiUid='+user.uid+'; expires=Fri, 3 Aug 2014 20:47:11 UTC; path=/';
              $scope.message = 'You have been successfully logged in!';
              setTimeout(function(){
-              open(location, '_self').close(); // TODO:Do this in a non-hacky manner.
+              open(location, '_self').close(); 
              }, 5000); 
            }
          }
        }
      });
-       auth.login('facebook');
+    auth.login('facebook', {
+      rememberMe: true
+    });
+    // Firebase.goOffline();
     };
   
   });

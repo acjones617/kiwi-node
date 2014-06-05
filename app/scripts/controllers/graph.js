@@ -5,10 +5,10 @@ angular.module('KiwiApp')
 
   $scope.$on('sessionRestored', function() {
     $scope._db = new Firebase('https://kiwidb.firebaseio.com/users/' + $rootScope.currentUser.uid);
-    getChart();
+    getCharts();
   });
 
-  var getChart = function() {
+  var getCharts = function() {
     var user = 'facebook:' + $routeParams.user;
     var db = new Firebase('https://kiwidb.firebaseio.com/users/'+user+ '/groups')
       .once('value', function(data) {
@@ -25,7 +25,7 @@ angular.module('KiwiApp')
  
   if($cookies.kiwiUid){
     $scope._db = new Firebase('https://kiwidb.firebaseio.com/users/' + $cookies.kiwiUid);
-    getChart();
+    getCharts();
   }
 
 });

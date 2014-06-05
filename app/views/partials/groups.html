@@ -1,5 +1,4 @@
 <div ng-include="'partials/navbar'"></div>
-
 <div class="container" id="groups">
   <div class="row">
     <div class="col-md-12">
@@ -18,17 +17,40 @@
   <div class="row">
     <div class="col-sm-8" >
           
-      <div ng-repeat="group in groups" class="group" droppable='group' ng-update='updateGroup(group, from, to, kiwi)'>
-        <h3>{{ group.name }}</h3>
+      <div class="group" ng-repeat="group in groups | filter:statusFilter track by $index" droppable='group' ng-update='updateGroup(group, from, to, kiwi)'>
+
+        <h3 ng-show="!group.editing" ng-dblclick='editing(group)' class="title"> <strong> {{ group.name }} </strong></h3>
+        <form ng-show="group.editing" ng-submit='edit(group)'>
+          <input ng-blur="changeFocus(group)" input="text" class="form-control editing" ng-model="group.name"/>
+        </form>
+
         <div class="graph-legend">
           <ul class="list-unstyled ul-legend">
             <li ng-repeat="kiwi in group.kiwis" class="data{{$index + 1}}">{{ kiwi.title | limitTo: 20 }} </li>
           </ul>
         </div>
         <multi-yaxis-graph group="group"></multi-yaxis-graph>
+
         <div class="description">
+
           <p>{{ group.description }}</p>
+         <!--  <button class="btn" ng-click="save(group)">Save</button> -->
+
+          <h4>Description</h4>
+          <textarea class="form-control" ng-model="group.description" placeholder="What does your graph say?"></textarea>
+          <div class="radio">
+            <label>
+              <input type="radio" ng-model="group.isPublic" ng-value="false"><h5>Private</h5>
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" ng-model="group.isPublic" ng-value="true"><h5>Public</h5>
+              <a ng-show="group.isPublic" href="/groups/{{currentUser.id}}/{{group.groupHash}}"> localhost:9000/groups/{{currentUser.id}}/{{group.groupHash}}</a>
+            </label>
+          </div>
           <button class="btn" ng-click="save(group)">Save</button>
+
         </div>
         <ul class="list-unstyled">
           <li ng-repeat="kiwi in group.kiwis" class="kiwi-pill">{{ kiwi.title | limitTo: 20 }} <span class="remove" ng-click="removeFromGroup(group, kiwi)"><a href="">x</a></span></li>

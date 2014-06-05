@@ -1,4 +1,5 @@
 $mellow-yellow: #DEE7B1;
+$highlight: rgb(102, 45, 145);
 /**
  * BASE
  */
@@ -66,25 +67,47 @@ body {
   background-color: #eee;
 }
 
+.btn {
+  margin: 10px 0;
+}
+
 #kiwis {
   .kiwis {
     background-color: #eee;
     margin-bottom: 20px;
+    // max-height: 300px;
+    // overflow: scroll;
+    .title strong {
+      &:hover {
+        cursor: pointer;
+        color: $highlight;
+      }
+    }
+  }
+  .editing {
+   margin-top: 13px;
   }
 }
-
 
 #groups {
   .group {
     background-color: #eee;
     margin-bottom: 20px;
     padding: 10px 20px;
+    position: relative;
+    .title strong {
+      &:hover {
+        cursor: pointer;
+        color: $highlight;
+      }
+    }
     ul {
       margin-top: 10px;
       min-height: 30px;
     }
     .description {
     }
+
   }
   .kiwi-pill {
     background-color: $mellow-yellow;
@@ -182,8 +205,6 @@ body {
     background-color: rgb(72, 101, 180);
   }
 }
-
-
 
 .main-right {
   margin-top: 0px;

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('KiwiApp')
-  .controller('KiwisCtrl', function ($scope, $http, $routeParams, $rootScope, Auth, $cookies, alerter) {
+  .controller('KiwisCtrl', function ($scope, $http, $routeParams, $rootScope, Auth, $cookies, alerter, NumberParser, Kiwi, Group) {
     
     $scope.groupToSave = [];
     $scope.groups = [];
@@ -17,13 +17,14 @@ angular.module('KiwiApp')
 
     var main = function() {
       if($cookies.kiwiUid){
-        $scope._db = new Firebase('https://kiwidb.firebaseio.com/users/' + $cookies.kiwiUid);
         getKiwis();
       }
     };
 
     var valuesToArray = function(obj) {
-      return Object.keys(obj).map(function (key) { return obj[key]; });
+      if(obj !== undefined) {
+        return Object.keys(obj).map(function (key) { return obj[key]; });
+      }
     };
 
     $scope.editing = function(kiwi) {
@@ -37,36 +38,39 @@ angular.module('KiwiApp')
       alerter.alert('Your kiwi has been saved! :)');
     };
 
+    $scope.changeFocus = function(kiwi) {
+      kiwi.editing = false;
+    }
+
     $scope.delete = function(kiwi) {
-      $scope._db.child('kiwis').child(kiwi.hash).remove(function() {
-        $scope.$apply(function() {
-          delete $scope.kiwis[kiwi.hash];
-          alerter.alert('Your kiwi has been deleted :(');
+
+      Kiwi.deleteKiwi(kiwi, function() {
+        delete $scope.kiwis[kiwi.hash];
+
+        Group.getAll(function(groups) {
+          _.each(groups, function(group, hash) {
+            if(_.contains(group.kiwiHashes, kiwi.hash)) {
+              Group.deleteHashFromGroup(group, kiwi.hash, function() {
+                alerter.alert('Your kiwi has been deleted :(');
+              })
+            }
+          });
         });
-      });
-      $scope._db.child('groups').once('value', function(snapshot) {
-        var groups = snapshot.val();
-        _.each(groups, function(group, hash) {
-          if(_.contains(group.kiwiHashes, kiwi.hash)) {
-            $scope._db.child('groups').child(hash).child('kiwiHashes').child(group.kiwiHashes.indexOf(kiwi.hash)).remove();
-          }
-        });
+
       });
     };
 
 
     var getKiwis = function() {
-      $scope._db.once('value', function(snapshot) {
-        var kiwis = snapshot.val().kiwis;
+      Kiwi.getAll(function(kiwis) {
         _.each(kiwis, function(kiwi, hash) {
           kiwi.values = washKiwi(kiwi);
           kiwi.hash = hash;
         });
-
-        $scope.$apply(function() {
+        // $scope.$apply(function() {
           $scope.kiwis = kiwis;
           $scope.isLoading = false;
-        });
+        // });
       });
     };
 
@@ -77,13 +81,10 @@ angular.module('KiwiApp')
     };
 
     var washKiwi = function(kiwi) {
-      // Get the value part only
-      // var plucked = _.pluck(kiwi.values, 'value');
-
       kiwi.values = valuesToArray(kiwi.values);
       var original = kiwi.values.shift();
-      var parser = new NumberParser(original, kiwi.values);
-
+      var parser = new NumberParser(original, kiwi.values); 
+    
       if(parser.isNumerical()) {
         return parser.parseAll();
       } else {

@@ -7,7 +7,7 @@
       <h1 class="main-right">My Kiwis</h1>
     </div>
   </div>
-  <div class='row'>
+  <div class="row">
     <p>
       Kiwis are nocturnal and snuffle about the beach at night. When you track an element with a Kiwi, your Kiwi does exactly the same. Well... not exactly. 
     </p>
@@ -19,8 +19,8 @@
 
     <div class="col-sm-12 kiwis" ng-repeat="kiwi in kiwis | filter:statusFilter track by $index">
 
-      <h3 ng-show="!kiwi.editing"  ng-dblclick='editing(kiwi)' class="title"> <strong> {{kiwi.title}} </strong></h3>
-      <form ng-show="kiwi.editing" ng-submit='edit(kiwi)'>
+      <h3 ng-show="!kiwi.editing"  ng-dblclick="editing(kiwi)" class="title"> <strong> {{kiwi.title}} </strong></h3>
+      <form ng-show="kiwi.editing" ng-submit="edit(kiwi)">
           <input ng-blur="changeFocus(kiwi)" input="text" class="form-control editing" ng-model="kiwi.title"/>
       </form>
 
@@ -43,10 +43,10 @@
         </table>
       </div>
       <button
-         class='btn btn-danger'
-         confirm='delete(kiwi)'
-         confirm-title='Are you sure?'
-         confirm-placement='left'>
+         class="btn btn-danger"
+         confirm="delete(kiwi)"
+         confirm-title="Are you sure?"
+         confirm-placement="left">
          Delete
       </button>
       <br/>

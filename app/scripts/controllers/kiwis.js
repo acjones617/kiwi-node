@@ -7,6 +7,11 @@ angular.module('KiwiApp')
       $scope.isLoading = true;
       $scope.predicate = 'date';
       Kiwi.getKiwis(function(kiwis) {
+        _.each(kiwis, function(kiwi) {
+          _.each(kiwi.values, function(item) {
+            item.date = Date.parse(item.date);
+          });
+        });
         $scope.kiwis = kiwis;
         $scope.isLoading = false;
       });

@@ -1,31 +1,15 @@
 'use strict';
 
 angular.module('KiwiApp')
-  .controller('KiwisCtrl', function ($scope, $http, $routeParams, $rootScope, Auth, $cookies, alerter, NumberParser, Kiwi, Group) {
-    
-    $scope.groupToSave = [];
-    $scope.groups = [];
-    $scope.graph = [];
-    $scope.selectedGroup = [];
-    $scope.showDiscription = false;
-    $scope.descriptionText; 
-    $scope.kiwis = {};
-    $scope.isLoading = true;
-    $scope.groupData = [];
-    $scope.kiwiName = true;
-    $scope.predicate = 'date';
-    var sessionRestored = false;
+  .controller('KiwisCtrl', function ($scope, $rootScope, alerter,  Kiwi, Group) {
 
     var main = function() {
-      if($cookies.kiwiUid){
-        getKiwis();
-      }
-    };
-
-    var valuesToArray = function(obj) {
-      if(obj !== undefined) {
-        return Object.keys(obj).map(function (key) { return obj[key]; });
-      }
+      $scope.isLoading = true;
+      $scope.predicate = 'date';
+      Kiwi.getKiwis(function(kiwis) {
+        $scope.kiwis = kiwis;
+        $scope.isLoading = false;
+      });
     };
 
     $scope.editing = function(kiwi) {
@@ -33,7 +17,6 @@ angular.module('KiwiApp')
     };
 
     $scope.edit = function(kiwi) {
-      // $scope._db.child('kiwis').child(kiwi.hash).child('title').set(name);
       Kiwi.editTitle(kiwi, function() {
         kiwi.editing = false;
         alerter.alert('Your kiwi has been saved! :)');
@@ -54,61 +37,11 @@ angular.module('KiwiApp')
             if(_.contains(group.kiwiHashes, kiwi.hash)) {
               Group.deleteHashFromGroup(group, kiwi.hash, function() {
                 alerter.alert('Your kiwi has been deleted :(');
-              })
+              });
             }
           });
         });
 
-      });
-    };
-
-
-    var getKiwis = function() {
-      Kiwi.getAll(function(kiwis) {
-        _.each(kiwis, function(kiwi, hash) {
-          kiwi.values = washKiwi(kiwi);
-          kiwi.hash = hash;
-        });
-        // $scope.$apply(function() {
-          $scope.kiwis = kiwis;
-          $scope.isLoading = false;
-        // });
-      });
-    };
-
-
-    var formatDate = function(date) {
-      return new Date(date[0], date[1]-1, date[2]).getTime();
-    };
-
-    var washKiwi = function(kiwi) {
-      kiwi.values = valuesToArray(kiwi.values);
-      var original = kiwi.values.shift();
-      var parser = new NumberParser(original, kiwi.values); 
-    
-      if(parser.isNumerical()) {
-        return parser.parseAll();
-      } else {
-        // Do sentiment analysis
-        // return parser.parseAll();
-        return _.pluck(kiwi.values, 'value');
-      }
-    };
-
-    var pushKiwiToGraph = function(kiwi, parsedValues) {
-      var count = 0;
-      _.each(kiwi.values, function(item, key) {
-        item.value = parsedValues[count++];
-        if(item.value) {
-          var x = formatDate(item.date.split('-'));
-          var y = item.value;
-          kiwi.graphData[0].values.push({
-            x: x, 
-            y: y
-          });
-        }
-        
-        formatDate(item);
       });
     };
 

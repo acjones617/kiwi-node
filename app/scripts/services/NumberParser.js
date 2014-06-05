@@ -1,5 +1,4 @@
 'use strict';
-var counter = 0;
 
 angular.module('KiwiApp')
   .factory('NumberParser', function() {
@@ -12,7 +11,6 @@ angular.module('KiwiApp')
      * @param {[array]} rest  [the rest of the values]
      */
     var NumberParser = function(original, rest) {
-      console.log(counter++);
       this.initialize = function() {
         this.original = original;
         this.rest = rest;
@@ -42,7 +40,10 @@ angular.module('KiwiApp')
 
     NumberParser.prototype._cleanNumber = function(item) {
       var nonWhiteSpace = item.value.replace(/\s/g, '');
-      var val = nonWhiteSpace.match(/[0-9 , \.]+/g).join(''); // TODO:fix if null
+      var matches = nonWhiteSpace.match(/[0-9 , \.]+/g);
+      if(matches) {
+        var val = matches.join('');
+      }
 
       if(val !== null) {
         item.value = parseFloat(val);

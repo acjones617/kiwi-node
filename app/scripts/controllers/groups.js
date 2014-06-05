@@ -1,124 +1,27 @@
 'use strict';
 
 angular.module('KiwiApp')
-  .controller('GroupCtrl', function ($scope, $http, $routeParams, $rootScope, Auth, $cookies, alerter, NumberParser, Group) {
+  .controller('GroupCtrl', function ($scope, $rootScope, alerter, Group, Kiwi) {
     
-    $scope.groups = [];
-
-    $scope.descriptionText; 
-    $scope.kiwis = {};
-    $scope.isLoading = true;
-    $scope.groupData = [];
-    var sessionRestored = false;
-
-    Array.prototype.clean = function(deleteValue) {
-      for (var i = 0; i < this.length; i++) {
-        if (this[i] == deleteValue) {         
-          this.splice(i, 1);
-          i--;
-        }
-      }
-      return this;
-    };
 
     var main = function() {
-      if($cookies.kiwiUid){
-        $scope._db = new Firebase('https://kiwidb.firebaseio.com/users/' + $cookies.kiwiUid);
-        getKiwis();
-        getGroups();
-      }
-    };
-
-    var valuesToArray = function(obj) {
-      return Object.keys(obj).map(function (key) { return obj[key]; });
-    };
-
-    var getGroups = function(){
-      Group.getAll(function(groups) {
-
-        _.each(groups, function(group, groupHash){
-          var hashes = group.kiwiHashes;
-          getKiwisFromHash(hashes, function(kiwis) {
-            group.kiwiHashes = hashes || [];
-            group.kiwis = kiwis;
-            group.isPublic = group.isPublic || false; //TODO: if undefined, only doing it for existing firbase data without this property
-            group.groupHash = groupHash;
-            $scope.groups.push(group);
-            $scope.isLoading = false;
-          });
+      $scope.isLoading = true;
+      $scope.predicate = 'date';
+      Kiwi.getKiwis(function(kiwis) {
+        $scope.kiwis = kiwis;
+        Group.getGroups($scope.kiwis, function(groups) {
+          $scope.groups = groups;
         });
       });
+      $scope.isLoading = false;
     };
 
     $scope.editing = function(group) {
       group.editing = true;
-    }
+    };
 
     $scope.changeFocus = function(group) {
       group.editing = false;
-    }
-
-    var getKiwisFromHash = function(hashes, callback) {
-      var result = [];
-      if(Array.isArray(hashes)) {
-        hashes.clean(undefined);
-      } else {
-        hashes = _.map(hashes, function(hash) {
-          return hash;
-        }).clean(undefined);
-      }
-      if(hashes) {
-        for(var i = 0; i < hashes.length; i++) {
-          result.push($scope.kiwis[hashes[i]]);
-        }
-      }
-      callback(result);
-    };
-
-    var getKiwis = function() {
-      $scope._db.once('value', function(snapshot) {
-        var kiwis = snapshot.val().kiwis;
-        _.each(kiwis, function(kiwi, hash) {
-          kiwi.values = washKiwi(kiwi);
-          kiwi.hash = hash;
-        });
-
-        $scope.$apply(function() {
-          $scope.kiwis = kiwis;
-          $scope.isLoading = false;
-        });
-      });
-    };
-
-    var getKiwi = function(hash) {
-      return $scope.kiwis[hash];
-    }
-
-    $scope.predicate = 'date';
-
-    var formatDate = function(date) {
-      return new Date(date[0], date[1]-1, date[2]).getTime();
-    };
-
-
-    var washKiwi = function(kiwi) {
-      // Get the value part only
-      // var plucked = _.pluck(kiwi.values, 'value');
-      kiwi.values = valuesToArray(kiwi.values);
-      var original = kiwi.values.shift();
-      var parser = new NumberParser(original, kiwi.values);
-
-      if(parser.isNumerical()) {
-        return parser.parseAll();
-      } else {
-        // Do sentiment analysis
-        // return parser.parseAll();
-        return _.pluck(kiwi.values, 'value');
-      }
-    };
-
-    $scope.selectKiwi = function(kiwi) {
-      $scope.selectedKiwi = kiwi;
     };
 
     $scope.removeFromGroup = function(group, kiwi) {
@@ -163,6 +66,16 @@ angular.module('KiwiApp')
         group.kiwis.push(kiwi);
         $rootScope.$broadcast('updateCustom');
       }
+    };
+
+    Array.prototype.clean = function(deleteValue) {
+      for (var i = 0; i < this.length; i++) {
+        if (this[i] == deleteValue) {         
+          this.splice(i, 1);
+          i--;
+        }
+      }
+      return this;
     };
 
     main();

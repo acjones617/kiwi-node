@@ -44,6 +44,5 @@ angular.module('KiwiApp')
 
       });
     };
-
     main();
   });

@@ -13,6 +13,7 @@ angular.module('KiwiApp')
     $scope.isLoading = true;
     $scope.groupData = [];
     $scope.kiwiName = true;
+    $scope.predicate = 'date';
     var sessionRestored = false;
 
     var main = function() {
@@ -32,15 +33,16 @@ angular.module('KiwiApp')
     };
 
     $scope.edit = function(kiwi) {
-      var name = kiwi.title;
-      $scope._db.child('kiwis').child(kiwi.hash).child('title').set(name);
-      kiwi.editing = false;
-      alerter.alert('Your kiwi has been saved! :)');
+      // $scope._db.child('kiwis').child(kiwi.hash).child('title').set(name);
+      Kiwi.editTitle(kiwi, function() {
+        kiwi.editing = false;
+        alerter.alert('Your kiwi has been saved! :)');
+      });
     };
 
     $scope.changeFocus = function(kiwi) {
       kiwi.editing = false;
-    }
+    };
 
     $scope.delete = function(kiwi) {
 
@@ -74,7 +76,6 @@ angular.module('KiwiApp')
       });
     };
 
-    $scope.predicate = 'date';
 
     var formatDate = function(date) {
       return new Date(date[0], date[1]-1, date[2]).getTime();

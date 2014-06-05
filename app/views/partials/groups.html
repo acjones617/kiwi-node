@@ -20,7 +20,7 @@
       <div class="group" ng-repeat="group in groups | filter:statusFilter track by $index" droppable='group' ng-update='updateGroup(group, from, to, kiwi)'>
 
         <h3 ng-show="!group.editing" ng-dblclick='editing(group)' class="title"> <strong> {{ group.name }} </strong></h3>
-        <form ng-show="group.editing" ng-submit='edit(group)'>
+        <form ng-show="group.editing" ng-submit='save(group)'>
           <input ng-blur="changeFocus(group)" input="text" class="form-control editing" ng-model="group.name"/>
         </form>
 

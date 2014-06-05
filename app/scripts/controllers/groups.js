@@ -58,13 +58,6 @@ angular.module('KiwiApp')
       group.editing = false;
     }
 
-    $scope.edit = function(group) {
-      var name = group.name;
-      $scope._db.child('groups').child(group.groupHash).child('name').set(name);
-      group.editing = false;
-      alerter.alert('Your group name has been changed! :)');
-    };
-
     var getKiwisFromHash = function(hashes, callback) {
       var result = [];
       if(Array.isArray(hashes)) {
@@ -139,8 +132,7 @@ angular.module('KiwiApp')
     };
 
     $scope.save = function(group) {
-      var selected = group;
-      var groupLink = $scope._db.child('groups');
+      // var groupLink = $scope._db.child('groups');
 
       var groupToSave = {};
       groupToSave.name = group.name;
@@ -148,8 +140,10 @@ angular.module('KiwiApp')
       groupToSave.description = group.description || '';
       groupToSave.isPublic = group.isPublic;
 
-      groupLink.child(group.name).set(groupToSave);
-      alerter.alert('Your graph has been saved! :)');
+      // groupLink.child(group.name).set(groupToSave);
+      Group.save(groupToSave, group.groupHash, function() {
+        alerter.alert('Your graph has been saved! :)');
+      });
     };
 
     $scope.createGroup = function() {

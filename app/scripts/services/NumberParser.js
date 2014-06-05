@@ -42,7 +42,7 @@ angular.module('KiwiApp')
 
     NumberParser.prototype._cleanNumber = function(item) {
       var nonWhiteSpace = item.value.replace(/\s/g, '');
-      var val = nonWhiteSpace.match(/[0-9 , \.]+/g).join('');
+      var val = nonWhiteSpace.match(/[0-9 , \.]+/g).join(''); // TODO:fix if null
 
       if(val !== null) {
         item.value = parseFloat(val);

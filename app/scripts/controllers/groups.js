@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('KiwiApp')
-  .controller('GroupCtrl', function ($scope, $http, $routeParams, $rootScope, Auth, $cookies, alerter) {
+  .controller('GroupCtrl', function ($scope, $http, $routeParams, $rootScope, Auth, $cookies, alerter, NumberParser) {
     
     $scope.groups = [];
 

@@ -2,7 +2,6 @@
 
 angular.module('KiwiApp')
   .controller('GroupCtrl', function ($scope, $rootScope, alerter, Group, Kiwi) {
-    
 
     var main = function() {
       $scope.isLoading = true;

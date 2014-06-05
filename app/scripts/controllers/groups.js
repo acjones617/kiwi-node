@@ -41,6 +41,7 @@ angular.module('KiwiApp')
           getKiwisFromHash(hashes, function(kiwis) {
             group.kiwiHashes = hashes || [];
             group.kiwis = kiwis;
+            group.isPublic = group.isPublic || false; //TODO: if undefined, only doing it for existing firbase data without this property
             group.groupHash = groupHash;
             $scope.$apply(function() {
               $scope.groups.push(group);
@@ -142,6 +143,7 @@ angular.module('KiwiApp')
     $scope.createGroup = function() {
       var group = {
         name: $scope.groupName,
+        isPublic: false,
         kiwis: [],
         kiwiHashes: []
       };

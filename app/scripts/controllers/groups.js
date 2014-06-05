@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('KiwiApp')
-  .controller('GroupCtrl', function ($scope, $http, $routeParams, $rootScope, Auth, $cookies, alerter, NumberParser) {
+  .controller('GroupCtrl', function ($scope, $http, $routeParams, $rootScope, Auth, $cookies, alerter, NumberParser, Group) {
     
     $scope.groups = [];
 
@@ -34,8 +34,8 @@ angular.module('KiwiApp')
     };
 
     var getGroups = function(){
-      $scope._db.once('value', function(snapshot){
-        var groups = snapshot.val().groups;
+      Group.getAll(function(groups) {
+
         _.each(groups, function(group, groupHash){
           var hashes = group.kiwiHashes;
           getKiwisFromHash(hashes, function(kiwis) {
@@ -43,10 +43,8 @@ angular.module('KiwiApp')
             group.kiwis = kiwis;
             group.isPublic = group.isPublic || false; //TODO: if undefined, only doing it for existing firbase data without this property
             group.groupHash = groupHash;
-            $scope.$apply(function() {
-              $scope.groups.push(group);
-              $scope.isLoading = false;
-            });
+            $scope.groups.push(group);
+            $scope.isLoading = false;
           });
         });
       });

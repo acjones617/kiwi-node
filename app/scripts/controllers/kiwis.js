@@ -87,12 +87,27 @@ angular.module('KiwiApp')
       if(parser.isNumerical()) {
         return parser.parseAll();
       } else {
-        // Do sentiment analysis
-        // return parser.parseAll();
-        return _.pluck(kiwi.values, 'value');
+        //do sentiment stuff
+        console.log(wordParser(kiwi.values));
+        return wordParser(kiwi.values);
       }
     };
 
+    var wordParser = function(kiwis){
+       return $http({
+          method: 'POST',
+          url: '/api/sentimentalise',
+          data: JSON.stringify(kiwis)
+        }).then(function(response){
+          var kiwis = response.data;
+          for(var i=0; i<kiwis.length; i++){
+            kiwis[i].value = kiwis[i].score;
+            delete kiwis[i].score;
+          }
+          console.log(kiwis);
+          return kiwis;
+        });
+    };
 
     var pushKiwiToGraph = function(kiwi, parsedValues) {
       var count = 0;

@@ -129,7 +129,7 @@ angular.module('KiwiApp')
             .attr('width', svgWidth)
             .attr('height', svgHeight)
             .attr('viewBox', '0 0 '+ svgWidth + ' ' + svgHeight)
-            .attr('perserveAspectRatio', 'xMinYMid') // for resizing
+            .attr('perserveAspectRatio', 'xMinYMin meet') // for resizing
             .append('svg:g')
             .attr('transform', 'translate(' + m[3] + ',' + m[0] + ')');
 

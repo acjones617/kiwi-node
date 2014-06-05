@@ -41,6 +41,7 @@ angular.module('KiwiApp')
           getKiwisFromHash(hashes, function(kiwis) {
             group.kiwiHashes = hashes || [];
             group.kiwis = kiwis;
+            group.isPublic = group.isPublic || false; //TODO: if undefined, only doing it for existing firbase data without this property
             group.groupHash = groupHash;
             $scope.$apply(function() {
               $scope.groups.push(group);
@@ -147,6 +148,7 @@ angular.module('KiwiApp')
       groupToSave.name = group.name;
       groupToSave.kiwiHashes = group.kiwiHashes || [];
       groupToSave.description = group.description || '';
+      groupToSave.isPublic = group.isPublic;
 
       groupLink.child(group.name).set(groupToSave);
       alerter.alert('Your graph has been saved! :)');
@@ -155,6 +157,7 @@ angular.module('KiwiApp')
     $scope.createGroup = function() {
       var group = {
         name: $scope.groupName,
+        isPublic: false,
         kiwis: [],
         kiwiHashes: []
       };

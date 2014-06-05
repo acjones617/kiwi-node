@@ -1,25 +1,21 @@
 'use strict';
 
 angular.module('KiwiApp')
-  .controller('ProfileCtrl', function ($scope, $rootScope, Auth, $cookies) {
+  .controller('ProfileCtrl', function ($scope, $rootScope, Profile) {
     
     // var uId = $rootScope.auth.user.uid;
     // var firebaseAuthToken = $rootScope.auth.user.firebaseAuthToken;
 
-    if($cookies.kiwiUid){
-      $scope._db = new Firebase('https://kiwidb.firebaseio.com/users/' + $cookies.kiwiUid + '/settings');
-      $scope._db.once('value', function(settings) {
-// <<<<<<< HEAD
-//         // bower 
-// =======
-// >>>>>>> a27c36756eca013809d5ade3c4d77e996bda35bc
+    var main = function() {
+
+      Profile.getSettings(function(settings) {
         var email = $rootScope.currentUser.thirdPartyUserData.email;
-        $scope.$apply(function() {
-          $scope.settings = settings.val() || {};
-          $scope.settings.email = email;
-        });
+        $scope.settings = settings || {};
+        $scope.settings.email = email;
+
       });
-    }
+
+    };
 
     $scope.msg = '';
 
@@ -47,4 +43,6 @@ angular.module('KiwiApp')
         });
       } 
     };
+
+    main();
   });

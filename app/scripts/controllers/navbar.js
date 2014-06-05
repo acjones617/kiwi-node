@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('KiwiApp')
-  .controller('NavbarCtrl', function ($scope, $rootScope, $location, Auth, $q, $http) {
+  .controller('NavbarCtrl', function ($scope, $rootScope, $location, Auth, $q, $http, $firebase) {
     $scope.menu = [{
       'title': 'Home',
       'link': '/'
@@ -11,10 +11,15 @@ angular.module('KiwiApp')
     }];
     
     $scope.login = function() {
-      Auth.login(function(user) {
-        $rootScope.currentUser = user;
-        $scope.getCreds(user);
+      $rootScope.auth.login('facebook', {
+        rememberMe: true,
+        scope: 'email'
       });
+      // Auth.login(function(user) {
+      //   $rootScope.currentUser = user;
+      //   $scope.getCreds(user);
+      //   $rootScope.Firebase.goOffline();
+      // });
     };
 
     $scope.logout = function() {

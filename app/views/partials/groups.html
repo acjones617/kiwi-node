@@ -5,6 +5,15 @@
       <h1 class="main-right">My Groups</h1>
     </div>
   </div>
+  <div class='row'>
+    <p>
+      In the course of your data-detecting endeavours, you'll probably find tons of cool information. Kiwi runner comes with a light-weight analysis platform for you to view your kiwis and plot them against each other. 
+    </p>
+    <p>
+      You'll see all your kiwis in a list to the right. To create a chart, just drag'n'drop a kiwi into the empty space of a chart. Type in a group name, give it a description and hit save. Your chart will continue to update in the background while your kiwis are off tracking, and will be available whenever you come back to this page. 
+    </p>
+  </div>
+  <div class="row">
   <div class="row">
     <div class="col-sm-12">
       <div class="groups">
@@ -20,7 +29,7 @@
       <div class="group" ng-repeat="group in groups | filter:statusFilter track by $index" droppable='group' ng-update='updateGroup(group, from, to, kiwi)'>
 
         <h3 ng-show="!group.editing" ng-dblclick='editing(group)' class="title"> <strong> {{ group.name }} </strong></h3>
-        <form ng-show="group.editing" ng-submit='edit(group)'>
+        <form ng-show="group.editing" ng-submit='save(group)'>
           <input ng-blur="changeFocus(group)" input="text" class="form-control editing" ng-model="group.name"/>
         </form>
 

@@ -60,32 +60,22 @@ angular.module('KiwiApp', [
       };
     }]);
   })
-  .run(function ($rootScope, $location, Auth, $cookies, $firebase, $firebaseSimpleLogin) {
+  .run(function ($rootScope, $location, Auth, $cookies) {
     // needed to check cookie to see if user already logged in
-    // var ref = new Firebase('https://kiwidb.firebaseio.com/');
+    $rootScope.Firebase = Firebase;
     if($cookies.kiwiSpecial !== 'null') {
-      var ref = new Firebase('https://kiwidb.firebaseio.com/');
-      var auth = new FirebaseSimpleLogin(ref, function(err, user) {
-        if (err) {
-          console.log('Error with login. Error:, ', err);
-        } else {
-          if (user) {
-            $rootScope.$apply(function() {
-              $rootScope.currentUser = user;
-              $rootScope.auth = auth;
-              $rootScope.$broadcast('sessionRestored');
-            });
-          }
-        }
+      Auth.login(function(user) {
+        $rootScope.$apply(function() {
+          $rootScope.currentUser = user;
+        });
+
       });
     }
 
     // Redirect to login if route requires auth and you're not logged in
     $rootScope.$on('$routeChangeStart', function (event, next) {
-      if (next.authenticate) {
-        if(!Auth.isLoggedIn()) {
-          $location.path('/');
-        }
+      if (next.authenticate && !Auth.isLoggedIn()) {
+        $location.path('/');
       }
     });
   });
@@ -106,5 +96,3 @@ function CarouselCtrl($scope) {
   };
   $scope.addSlide();
 }
-
-var Utils = {};

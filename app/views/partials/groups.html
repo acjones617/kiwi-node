@@ -18,26 +18,21 @@
   <div class="row">
     <div class="col-sm-8" >
           
+      <div class="group" ng-repeat="group in groups | filter:statusFilter track by $index" droppable='group' ng-update='updateGroup(group, from, to, kiwi)'>
 
-<!--       <div ng-repeat="group in groups" class="group">
-        <div class="description">
-        <h3 ng-show="showDescriptionTitle"  class="hoverColor" ng-dblclick="testSave(group)" >{{ group.name }}</h3>
-        <form ng-submit="save(group)">
-          <input ng-show="!showDescriptionTitle" ng-model="group.name"></input>
+
+
+
+
+        <h3 class="title" ng-show="!group.editing" ng-dblclick='editing(group)'> <strong> {{ group.name }} </strong></h3>
+        <form ng-show="group.editing" ng-submit='edit(group)'>
+          <input ng-blur="changeFocus(group)" input="text" class="form-control editing" ng-model="group.name"/>
         </form>
-      </div> -->
 
-      <div ng-repeat="group in groups" class="group" droppable='group' ng-update='updateGroup(group, from, to, kiwi)'>
 
-<!--         <h3 ng-show="changeNameShow" class="hoverColor" ng-dblclick="changeFocus()" >{{ group.name }}</h3>
-        <form ng-submit="changeGroupName(group, changedGroupName)">
-        <input ng-blur="changeFocusBlur()"ng-show="!changeNameShow" type="text" class="input form-control" placeholder="Update your group name." ng-model="changedGroupName">
-      </form>
 
-        <multi-yaxis-graph group='group'></multi-yaxis-graph>
 
- -->
-        <h3>{{ group.name }}</h3>
+
         <div class="graph-legend">
           <ul class="list-unstyled ul-legend">
             <li ng-repeat="kiwi in group.kiwis" class="data{{$index + 1}}">{{ kiwi.title | limitTo: 20 }} </li>
@@ -47,13 +42,8 @@
 
         <div class="description">
 
-<!--           <h4 class="hoverColor" ng-show="showDescription" ng-dblclick="testSave()">{{ group.description }}</h4>
-          <form ng-submit="save(group)">
-            <input ng-blur="looseFocus()" ng-show="!showDescription" ng-model="group.description"></input>
-          </form>
- -->
           <p>{{ group.description }}</p>
-          <button class="btn" ng-click="save(group)">Save</button>
+         <!--  <button class="btn" ng-click="save(group)">Save</button> -->
 
           <h4>Description</h4>
           <textarea class="form-control" ng-model="group.description" placeholder="What does your graph say?"></textarea>

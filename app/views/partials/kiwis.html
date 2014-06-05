@@ -18,20 +18,22 @@
 
       <a href="{{ kiwi.url}}">{{kiwi.url}}</a>
       
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th><a href="" ng-click="predicate = 'date'; reverse=!reverse">Time</a></th>
-            <th><a href="" ng-click="predicate = 'value'; reverse=!reverse">Value</a></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="pair in kiwi.values | orderBy:'predicate':'reverse'">
-            <td>{{ pair.date }}</td>
-            <td>{{ pair.value }}</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="kiwi-table">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th><a href="" ng-click="predicate = 'date'; reverse=!reverse">Time</a></th>
+              <th><a href="" ng-click="predicate = 'value'; reverse=!reverse">Value</a></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="pair in kiwi.values | orderBy:predicate:reverse">
+              <td>{{ pair.date | date:'MM/dd/yyyy @ h:mma' }}</td>
+              <td>{{ pair.value }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <button
          class='btn btn-danger'
          confirm='delete(kiwi)'
@@ -40,6 +42,7 @@
          Delete
       </button>
       <br/>
+
     </div>
   </div>
 </div> 

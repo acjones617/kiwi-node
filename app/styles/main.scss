@@ -75,13 +75,15 @@ body {
   .kiwis {
     background-color: #eee;
     margin-bottom: 20px;
-    // max-height: 300px;
-    // overflow: scroll;
     .title strong {
       &:hover {
         cursor: pointer;
         color: $highlight;
       }
+    }
+    .kiwi-table {
+      max-height: 215px;
+      overflow: scroll;
     }
   }
   .editing {

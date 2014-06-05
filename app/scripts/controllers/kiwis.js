@@ -64,6 +64,9 @@ angular.module('KiwiApp')
     var getKiwis = function() {
       Kiwi.getAll(function(kiwis) {
         _.each(kiwis, function(kiwi, hash) {
+          _.each(kiwi.values, function(item) {
+            item.date = Date.parse(item.date);
+          });
           kiwi.values = washKiwi(kiwi);
           kiwi.hash = hash;
         });

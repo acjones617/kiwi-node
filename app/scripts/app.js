@@ -62,7 +62,6 @@ angular.module('KiwiApp', [
   })
   .run(function ($rootScope, $location, Auth, $cookies, $firebase, $firebaseSimpleLogin) {
     // needed to check cookie to see if user already logged in
-    // var ref = new Firebase('https://kiwidb.firebaseio.com/');
     if($cookies.kiwiSpecial !== 'null') {
       var ref = new Firebase('https://kiwidb.firebaseio.com/');
       var auth = new FirebaseSimpleLogin(ref, function(err, user) {
@@ -74,6 +73,7 @@ angular.module('KiwiApp', [
               $rootScope.currentUser = user;
               $rootScope.auth = auth;
               $rootScope.$broadcast('sessionRestored');
+              Firebase.goOffline();
             });
           }
         }

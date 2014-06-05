@@ -23,7 +23,10 @@ angular.module('KiwiApp')
     };
 
     var valuesToArray = function(obj) {
-      return Object.keys(obj).map(function (key) { return obj[key]; });
+      if(obj !== undefined) {
+        return Object.keys(obj).map(function (key) { return obj[key]; });
+      }
+      
     };
 
     $scope.editing = function(kiwi) {
@@ -36,6 +39,10 @@ angular.module('KiwiApp')
       kiwi.editing = false;
       alerter.alert('Your kiwi has been saved! :)');
     };
+
+    $scope.changeFocus = function(kiwi) {
+      kiwi.editing = false;
+    }
 
     $scope.delete = function(kiwi) {
       $scope._db.child('kiwis').child(kiwi.hash).remove(function() {
@@ -79,11 +86,10 @@ angular.module('KiwiApp')
     var washKiwi = function(kiwi) {
       // Get the value part only
       // var plucked = _.pluck(kiwi.values, 'value');
-
       kiwi.values = valuesToArray(kiwi.values);
       var original = kiwi.values.shift();
       var parser = new NumberParser(original, kiwi.values); 
-
+    
       if(parser.isNumerical()) {
         return parser.parseAll();
       } else {

@@ -41,6 +41,7 @@ angular.module('KiwiApp')
           getKiwisFromHash(hashes, function(kiwis) {
             group.kiwiHashes = hashes || [];
             group.kiwis = kiwis;
+            group.isPublic = group.isPublic || false; //TODO: if undefined, only doing it for existing firbase data without this property
             group.groupHash = groupHash;
             $scope.$apply(function() {
               $scope.groups.push(group);
@@ -49,6 +50,21 @@ angular.module('KiwiApp')
           });
         });
       });
+    };
+
+    $scope.editing = function(group) {
+      group.editing = true;
+    }
+
+    $scope.changeFocus = function(group) {
+      group.editing = false;
+    }
+
+    $scope.edit = function(group) {
+      var name = group.name;
+      $scope._db.child('groups').child(group.groupHash).child('name').set(name);
+      group.editing = false;
+      alerter.alert('Your group name has been changed! :)');
     };
 
     var getKiwisFromHash = function(hashes, callback) {
@@ -97,7 +113,6 @@ angular.module('KiwiApp')
     var washKiwi = function(kiwi) {
       // Get the value part only
       // var plucked = _.pluck(kiwi.values, 'value');
-
       kiwi.values = valuesToArray(kiwi.values);
       var original = kiwi.values.shift();
       var parser = new NumberParser(original, kiwi.values);
@@ -133,6 +148,7 @@ angular.module('KiwiApp')
       groupToSave.name = group.name;
       groupToSave.kiwiHashes = group.kiwiHashes || [];
       groupToSave.description = group.description || '';
+      groupToSave.isPublic = group.isPublic;
 
       groupLink.child(group.name).set(groupToSave);
       alerter.alert('Your graph has been saved! :)');
@@ -141,6 +157,7 @@ angular.module('KiwiApp')
     $scope.createGroup = function() {
       var group = {
         name: $scope.groupName,
+        isPublic: false,
         kiwis: [],
         kiwiHashes: []
       };

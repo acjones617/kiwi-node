@@ -20,18 +20,10 @@
           
       <div class="group" ng-repeat="group in groups | filter:statusFilter track by $index" droppable='group' ng-update='updateGroup(group, from, to, kiwi)'>
 
-
-
-
-
-        <h3 class="title" ng-show="!group.editing" ng-dblclick='editing(group)'> <strong> {{ group.name }} </strong></h3>
+        <h3 ng-show="!group.editing" ng-dblclick='editing(group)' class="title"> <strong> {{ group.name }} </strong></h3>
         <form ng-show="group.editing" ng-submit='edit(group)'>
           <input ng-blur="changeFocus(group)" input="text" class="form-control editing" ng-model="group.name"/>
         </form>
-
-
-
-
 
         <div class="graph-legend">
           <ul class="list-unstyled ul-legend">

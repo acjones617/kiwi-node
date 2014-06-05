@@ -93,12 +93,19 @@ body {
     margin-bottom: 20px;
     padding: 10px 20px;
     position: relative;
+    .title strong {
+      &:hover {
+        cursor: pointer;
+        color: $highlight;
+      }
+    }
     ul {
       margin-top: 10px;
       min-height: 30px;
     }
     .description {
     }
+
   }
   .kiwi-pill {
     background-color: $mellow-yellow;

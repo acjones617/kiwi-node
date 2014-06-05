@@ -51,6 +51,21 @@ angular.module('KiwiApp')
       });
     };
 
+    $scope.editing = function(group) {
+      group.editing = true;
+    }
+
+    $scope.changeFocus = function(group) {
+      group.editing = false;
+    }
+
+    $scope.edit = function(group) {
+      var name = group.name;
+      $scope._db.child('groups').child(group.groupHash).child('name').set(name);
+      group.editing = false;
+      alerter.alert('Your group name has been changed! :)');
+    };
+
     var getKiwisFromHash = function(hashes, callback) {
       var result = [];
       if(Array.isArray(hashes)) {
@@ -97,7 +112,6 @@ angular.module('KiwiApp')
     var washKiwi = function(kiwi) {
       // Get the value part only
       // var plucked = _.pluck(kiwi.values, 'value');
-
       kiwi.values = valuesToArray(kiwi.values);
       var original = kiwi.values.shift();
       var parser = new NumberParser(original, kiwi.values);

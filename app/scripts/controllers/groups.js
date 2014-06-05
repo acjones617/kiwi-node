@@ -133,6 +133,7 @@ angular.module('KiwiApp')
       groupToSave.name = group.name;
       groupToSave.kiwiHashes = group.kiwiHashes || [];
       groupToSave.description = group.description || '';
+      groupToSave.isPublic = group.isPublic;
 
       groupLink.child(group.name).set(groupToSave);
       alerter.alert('Your graph has been saved! :)');

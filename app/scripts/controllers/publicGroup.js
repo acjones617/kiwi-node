@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('KiwiApp')
-.controller('PublicGroupCtrl', function ($scope, $http, $routeParams, $location) {
+.controller('PublicGroupCtrl', function ($scope, $http, $routeParams, $location, $rootScope) {
   $scope.isLoading = true;
   $scope.group = {};
+  $scope.user = $rootScope.currentUser;
 
   var valuesToArray = function(obj) {
     return Object.keys(obj).map(function (key) { return obj[key]; });
@@ -40,7 +41,6 @@ angular.module('KiwiApp')
       });
       $scope.group = group;
       $scope.isLoading = false;
-      console.log($scope.group);
     })
     .error(function() {
       $location.path( '/');

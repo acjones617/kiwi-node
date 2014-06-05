@@ -59,6 +59,9 @@ angular.module('KiwiApp')
       $scope._db.once('value', function(snapshot) {
         var kiwis = snapshot.val().kiwis;
         _.each(kiwis, function(kiwi, hash) {
+          _.each(kiwi.values, function(item) {
+            item.date = Date.parse(item.date);
+          });
           kiwi.values = washKiwi(kiwi);
           kiwi.hash = hash;
         });

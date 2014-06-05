@@ -8,6 +8,7 @@
     </div>
   </div>
   <div class="row">
+
     <div class="col-sm-12 kiwis" ng-repeat="kiwi in kiwis | filter:statusFilter track by $index">
       <h3 ng-show="!kiwi.editing"  ng-dblclick='editing(kiwi)' class="title"> <strong> {{kiwi.title}} </strong></h3>
       <form ng-show="kiwi.editing" ng-submit='edit(kiwi)'>
@@ -15,20 +16,22 @@
       </form>
       <a href="{{ kiwi.url}}">{{kiwi.url}}</a>
       
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th><a href="" ng-click="predicate = 'date'; reverse=!reverse">Time</a></th>
-            <th><a href="" ng-click="predicate = 'value'; reverse=!reverse">Value</a></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="pair in kiwi.values | orderBy:'predicate':'reverse'">
-            <td>{{ pair.date }}</td>
-            <td>{{ pair.value }}</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="kiwi-table">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th><a href="" ng-click="predicate = 'date'; reverse=!reverse">Time</a></th>
+              <th><a href="" ng-click="predicate = 'value'; reverse=!reverse">Value</a></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="pair in kiwi.values | orderBy:predicate:reverse">
+              <td>{{ pair.date | date:'MM/dd/yyyy @ h:mma' }}</td>
+              <td>{{ pair.value }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <button
          class='btn btn-danger'
          confirm='delete(kiwi)'
@@ -38,7 +41,6 @@
       </button>
       <br/>
       
-<!--       <custom-map kiwi='kiwi'></custom-map> -->
     </div>
   </div>
 </div> 

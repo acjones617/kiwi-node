@@ -3,6 +3,8 @@
 angular.module('KiwiApp')
   .factory('Auth', function Auth($location, $rootScope, $firebase, $cookies, alerter) {
 
+    $rootScope.currentUser = $cookies.kiwiSpecial || null;
+    
     return {
       /**
        * Login the user

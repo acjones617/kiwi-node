@@ -91,19 +91,25 @@ body {
   }
 }
 
-
 #groups {
   .group {
     background-color: #eee;
     margin-bottom: 20px;
     padding: 10px 20px;
     position: relative;
+    .title strong {
+      &:hover {
+        cursor: pointer;
+        color: $highlight;
+      }
+    }
     ul {
       margin-top: 10px;
       min-height: 30px;
     }
     .description {
     }
+
   }
   .kiwi-pill {
     background-color: $mellow-yellow;
@@ -201,8 +207,6 @@ body {
     background-color: rgb(72, 101, 180);
   }
 }
-
-
 
 .main-right {
   margin-top: 0px;

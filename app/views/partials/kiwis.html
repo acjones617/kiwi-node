@@ -10,10 +10,12 @@
   <div class="row">
 
     <div class="col-sm-12 kiwis" ng-repeat="kiwi in kiwis | filter:statusFilter track by $index">
+
       <h3 ng-show="!kiwi.editing"  ng-dblclick='editing(kiwi)' class="title"> <strong> {{kiwi.title}} </strong></h3>
       <form ng-show="kiwi.editing" ng-submit='edit(kiwi)'>
-          <input input="text" class="form-control editing" ng-model="kiwi.title"/>
+          <input ng-blur="changeFocus(kiwi)" input="text" class="form-control editing" ng-model="kiwi.title"/>
       </form>
+
       <a href="{{ kiwi.url}}">{{kiwi.url}}</a>
       
       <div class="kiwi-table">
@@ -40,7 +42,7 @@
          Delete
       </button>
       <br/>
-      
+
     </div>
   </div>
 </div> 

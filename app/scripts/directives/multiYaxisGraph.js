@@ -126,8 +126,8 @@ angular.module('KiwiApp')
           var svgWidth = w + m[1] + m[3];
           var svgHeight = h + m[0] + m[2];
           var graph = d3.select(div[0]).append('svg:svg')
-            .attr('width', svgWidth)
-            .attr('height', svgHeight)
+            // .attr('width', svgWidth)
+            // .attr('height', svgHeight)
             .attr('viewBox', '0 0 '+ svgWidth + ' ' + svgHeight)
             .attr('perserveAspectRatio', 'xMinYMin meet') // for resizing
             .append('svg:g')

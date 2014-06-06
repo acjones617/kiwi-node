@@ -85,12 +85,14 @@ angular.module('KiwiApp')
           var kiwiValArrays = _.pluck(group.kiwis, 'values');
           var numYAxes = kiwiValArrays.length;
 
+          // 1 character = 6px
+
           // given the number formatting (i.e. 999 or 1.00k or 8.45M), this is how much
           // room to give each new y-axis (also given the fonts, etc.)
-          var newYAxisWidth = 55;
+          var newYAxisWidth = 25;
           
           // define dimensions of graph
-          var m = [10, 5, 20, numYAxes * newYAxisWidth - 10]; // top, right, bottom, left
+          var m = [10, 5, 20, numYAxes * newYAxisWidth]; // top, right, bottom, left
           var w = 615 - m[1] - m[3];  // width - right - left
           var h = 300 - m[0] - m[2]; // height - top - bottom
 
@@ -118,6 +120,7 @@ angular.module('KiwiApp')
               return tuple[0];
             });
           });
+          // debugger;
 
           // don't start and stop exactly at min and max
           var xAxisBuffer = 0.05 * (xMax - xMin);
@@ -168,10 +171,13 @@ angular.module('KiwiApp')
               .attr('class', 'data' + (j+1));
             for (var k = 0; k < datasets[j].length; k++) {
               graph.append('svg:circle')
+                .transition()
+                .duration(500)
                 .attr('cx', x(datasets[j][k][0]))
                 .attr('cy', yScalers[j](datasets[j][k][1]))
                 .attr('class', 'data' + (j+1) + '-point')
-                .attr('r', 2);
+                .attr('style', 'stroke: rgb(255, 255, 255); stroke-width: 2px;')
+                .attr('r', 3);
             }
           }
 

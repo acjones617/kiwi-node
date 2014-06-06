@@ -47,24 +47,15 @@
                 ngCreate: '&'
             },
             link: function(scope, element, attrs){
-                element.sortable();
+                element.droppable();
                 element.disableSelection();
-                element.on("sortdeactivate", function(event, ui) {
-                    var from = angular.element(ui.item).scope().$index;
-                    var to = element.children().index(ui.item);
-
-                    if (to >= 0 ){
-                        scope.$apply(function(){
-                            if (from >= 0) {
-                                DragDropHandler.moveObject(scope.droppable, DragDropHandler.dragObject, from, to);
-                                scope.ngUpdate({
-                                    kiwi: DragDropHandler.dragObject,
-                                    from: from,
-                                    to: to
-                                });
-                            } 
+                element.on("dropdeactivate", function(event, ui) {
+                    scope.$apply(function(){
+                        // DragDropHandler.moveObject(scope.droppable, DragDropHandler.dragObject);
+                        scope.ngUpdate({
+                            kiwi: DragDropHandler.dragObject,
                         });
-                    }
+                    });
                     element.find('li.ui-draggable').remove();
 
                 });

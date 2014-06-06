@@ -63,14 +63,24 @@ angular.module('KiwiApp', [
   .run(function ($rootScope, $location, Auth, $cookies) {
     // needed to check cookie to see if user already logged in
     $rootScope.Firebase = Firebase;
-    if($cookies.kiwiSpecial !== 'null') {
-      Auth.login(function(user) {
-        $rootScope.$apply(function() {
-          $rootScope.currentUser = user;
-        });
 
-      });
-    }
+    var ref = new $rootScope.Firebase('https://kiwidb.firebaseio.com/');
+    $rootScope.auth = new FirebaseSimpleLogin(ref, function(err, user) {
+      if (err) {
+        console.log('Error with login. Error:, ', err);
+      } else {
+        if (user) {
+          $rootScope.$apply(function() {
+
+            $rootScope.currentUser = user;
+            $cookies.kiwiSpecial = user.firebaseAuthToken;
+            $cookies.kiwiUid = user.uid;
+            $rootScope.Firebase.goOffline();
+          });
+          // callback(user);
+        }
+      }
+    });
 
     // Redirect to login if route requires auth and you're not logged in
     $rootScope.$on('$routeChangeStart', function (event, next) {

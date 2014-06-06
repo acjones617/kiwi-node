@@ -1,5 +1,6 @@
 $mellow-yellow: #DEE7B1;
 $highlight: rgb(102, 45, 145);
+$darkblue: #2a6496;
 /**
  * BASE
  */
@@ -56,7 +57,7 @@ body {
   font-size: 15px;
   top: -20px;
   position: relative;
-  color: blue;
+  color: $darkblue;
 }
 
 .front-slice {
@@ -348,12 +349,12 @@ body {
  */
 // The lines
 .data1 {
-  color: blue;
+  color: $darkblue;
 }
 
 .data2 {
   stroke: white;
-  color: orange;
+  color: $highlight;
 }
 
 .data3 {
@@ -382,16 +383,17 @@ body {
 .multi-graph {
 
   path {
-    stroke-width: 1;
+    stroke-width: 1px;
+    shape-rendering: crispEdges;
     fill: none;
   }
 
   .data1-point {
-    fill: blue;
+    fill: $darkblue;
   }
 
   .data2-point {
-    fill: orange;
+    fill: $highlight;
   }
 
   .data3-point {
@@ -399,11 +401,11 @@ body {
   }
    
   .data1 {
-    stroke: blue;
+    stroke: $darkblue;
   }
 
   .data2 {
-    stroke: orange;
+    stroke: $highlight;
   }
 
   .data3 {
@@ -424,11 +426,11 @@ body {
     }
     path {
       stroke-width: 1;
-      stroke: grey;
+      stroke: black;
       // display: none;
     }
     text {
-      font-size: 12px;
+      font-size: 11px;
     }
   }
 
@@ -440,12 +442,12 @@ body {
     }
     &.axis1 {
       line, path {
-        stroke: blue;
+        stroke: $darkblue;
       }
     }
     &.axis2 {
       line, path {
-        stroke: orange;
+        stroke: $highlight;
       }
     }
     &.axis3 {
@@ -454,13 +456,13 @@ body {
       }
     }
     &.axis text {
-      font-size: 14px;
+      font-size: 11px;
     }
     &.axis1 text {
-      fill: blue;
+      fill: $darkblue;
     }
     &.axis2 text {
-      fill: orange;
+      fill: $highlight;
     }
     &.axis3 text {
       fill: red;

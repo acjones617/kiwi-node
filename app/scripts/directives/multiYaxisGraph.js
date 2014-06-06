@@ -73,6 +73,12 @@ angular.module('KiwiApp')
         };
 
         var makeMultiYAxisGraph = function(group) {
+          _.each(group.kiwis, function(kiwi) {
+            kiwi.values.sort(function(a, b) {
+              return Date.parse(a.date) > Date.parse(b.date);
+            });
+          });
+
           // first pluck out the values property of each kiwi
           // the values property of each kiwi will be an array of 
           // objects like this {date: "Sat Feb 01 2014 00:00:00 GMT-0800 (PST)", value: 500}
@@ -129,8 +135,8 @@ angular.module('KiwiApp')
           var svgWidth = w + m[1] + m[3];
           var svgHeight = h + m[0] + m[2];
           var graph = d3.select(div[0]).append('svg:svg')
-            .attr('width', svgWidth)
-            .attr('height', svgHeight)
+            // .attr('width', svgWidth)
+            // .attr('height', svgHeight)
             .attr('viewBox', '0 0 '+ svgWidth + ' ' + svgHeight)
             .attr('perserveAspectRatio', 'xMinYMin meet') // for resizing
             .append('svg:g')

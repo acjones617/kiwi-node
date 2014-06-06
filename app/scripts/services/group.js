@@ -8,13 +8,12 @@ angular.module('KiwiApp')
 
       getGroups: function(kiwis, callback){
         var that = this;
-        this.getAll(kiwis, function(kiwis, groups) {
+        this.getAll(kiwis, function(allKiwis, groups) {
           var result = [];
           for(var groupHash in groups) {
             var group = groups[groupHash];
-
             var hashes = group.kiwiHashes;
-            var kiwis = that.getKiwisFromHash(kiwis, hashes);
+            var kiwis = that.getKiwisFromHash(allKiwis, hashes);
             group.kiwiHashes = hashes || [];
             group.kiwis = kiwis;
             group.isPublic = group.isPublic || false; //TODO: if undefined, only doing it for existing firbase data without this property
@@ -55,7 +54,6 @@ angular.module('KiwiApp')
         if(hashes) {
           for(var i = 0; i < hashes.length; i++) {
             result.push(kiwis[hashes[i]]);
-
           }
           return result;
         }

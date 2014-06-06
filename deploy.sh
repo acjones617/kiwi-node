@@ -35,34 +35,34 @@ if [[ ! -n "$DEPLOYMENT_SOURCE" ]]; then
   DEPLOYMENT_SOURCE=$SCRIPT_DIR
 fi
 
-if [[ ! -n "$NEXT_MANIFEST_PATH" ]]; then
-  NEXT_MANIFEST_PATH=$ARTIFACTS/manifest
+# if [[ ! -n "$NEXT_MANIFEST_PATH" ]]; then
+#   NEXT_MANIFEST_PATH=$ARTIFACTS/manifest
 
-  if [[ ! -n "$PREVIOUS_MANIFEST_PATH" ]]; then
-    PREVIOUS_MANIFEST_PATH=$NEXT_MANIFEST_PATH
-  fi
-fi
+#   if [[ ! -n "$PREVIOUS_MANIFEST_PATH" ]]; then
+#     PREVIOUS_MANIFEST_PATH=$NEXT_MANIFEST_PATH
+#   fi
+# fi
 
-if [[ ! -n "$DEPLOYMENT_TARGET" ]]; then
-  DEPLOYMENT_TARGET=$ARTIFACTS/wwwroot
-else
-  KUDU_SERVICE=true
-fi
+# if [[ ! -n "$DEPLOYMENT_TARGET" ]]; then
+#   DEPLOYMENT_TARGET=$ARTIFACTS/wwwroot
+# else
+#   KUDU_SERVICE=true
+# fi
 
-if [[ ! -n "$KUDU_SYNC_CMD" ]]; then
-  # Install kudu sync
-  echo Installing Kudu Sync
-  npm install kudusync -g --silent
-  exitWithMessageOnError "npm failed"
+# if [[ ! -n "$KUDU_SYNC_CMD" ]]; then
+#   # Install kudu sync
+#   echo Installing Kudu Sync
+#   npm install kudusync -g --silent
+#   exitWithMessageOnError "npm failed"
 
-  if [[ ! -n "$KUDU_SERVICE" ]]; then
-    # In case we are running locally this is the correct location of kuduSync
-    KUDU_SYNC_CMD=kuduSync
-  else
-    # In case we are running on kudu service this is the correct location of kuduSync
-    KUDU_SYNC_CMD=$APPDATA/npm/node_modules/kuduSync/bin/kuduSync
-  fi
-fi
+#   if [[ ! -n "$KUDU_SERVICE" ]]; then
+#     # In case we are running locally this is the correct location of kuduSync
+#     KUDU_SYNC_CMD=kuduSync
+#   else
+#     # In case we are running on kudu service this is the correct location of kuduSync
+#     KUDU_SYNC_CMD=$APPDATA/npm/node_modules/kuduSync/bin/kuduSync
+#   fi
+# fi
 
 # Node Helpers
 # ------------
@@ -142,12 +142,12 @@ fi
 echo "Finished running grunt"
 ##################################################################################################################################
 
-# Post deployment stub
-if [[ -n "$POST_DEPLOYMENT_ACTION" ]]; then
-  POST_DEPLOYMENT_ACTION=${POST_DEPLOYMENT_ACTION//\"}
-  cd "${POST_DEPLOYMENT_ACTION_DIR%\\*}"
-  "$POST_DEPLOYMENT_ACTION"
-  exitWithMessageOnError "post deployment action failed"
-fi
+# # Post deployment stub
+# if [[ -n "$POST_DEPLOYMENT_ACTION" ]]; then
+#   POST_DEPLOYMENT_ACTION=${POST_DEPLOYMENT_ACTION//\"}
+#   cd "${POST_DEPLOYMENT_ACTION_DIR%\\*}"
+#   "$POST_DEPLOYMENT_ACTION"
+#   exitWithMessageOnError "post deployment action failed"
+# fi
 
 echo "Finished successfully."

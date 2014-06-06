@@ -73,6 +73,12 @@ angular.module('KiwiApp')
         };
 
         var makeMultiYAxisGraph = function(group) {
+          _.each(group.kiwis, function(kiwi) {
+            kiwi.values.sort(function(a, b) {
+              return Date.parse(a.date) > Date.parse(b.date);
+            });
+          });
+
           // first pluck out the values property of each kiwi
           // the values property of each kiwi will be an array of 
           // objects like this {date: "Sat Feb 01 2014 00:00:00 GMT-0800 (PST)", value: 500}

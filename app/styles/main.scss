@@ -362,6 +362,11 @@ body {
   color: red;
 }
 
+.data4 {
+  stroke: white;
+  color: green;
+}
+
 // the legend
 #groups {
   .group {
@@ -399,7 +404,11 @@ body {
   .data3-point {
     fill: red;
   }
-   
+  
+  .data4-point {
+    fill: green;
+  } 
+
   .data1 {
     stroke: $darkblue;
   }
@@ -410,6 +419,10 @@ body {
 
   .data3 {
     stroke: red;
+  }
+
+  .data4 {
+    stroke: green;
   }
 
   .axis {
@@ -455,6 +468,11 @@ body {
         stroke: red;
       }
     }
+    &.axis4 {
+      line, path {
+        stroke: green;
+      }
+    }
     &.axis text {
       font-size: 11px;
     }
@@ -467,11 +485,14 @@ body {
     &.axis3 text {
       fill: red;
     }
+    &.axis4 text {
+      fill: green;
+    }
   }
 
-  .legend rect {
-    fill: white;
-    // stroke: black;
-    opacity: 0;
-  }
+  // .legend rect {
+  //   fill: white;
+  //   // stroke: black;
+  //   opacity: 0;
+  // }
 }

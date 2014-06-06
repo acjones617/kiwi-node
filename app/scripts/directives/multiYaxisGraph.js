@@ -99,7 +99,7 @@ angular.module('KiwiApp')
           // number of ticks
           var xAxisTicks = 6;
           var yAxisTicks = 4;
-          
+           
           var yAxisBuffer = 0.05;
 
           // convert these into the desired format [1391241600000, 500]

@@ -24,7 +24,7 @@
           <input ng-blur="changeFocus(kiwi)" input="text" class="form-control editing" ng-model="kiwi.title"/>
       </form>
 
-      <a href="{{ kiwi.url}}">{{kiwi.url}}</a>
+      <a href="{{ kiwi.url}}">{{kiwi.url | limitTo: 100}}</a>
       
       <div class="kiwi-table">
         <table class="table table-striped">

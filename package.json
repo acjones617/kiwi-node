@@ -1,6 +1,10 @@
 {
   "name": "Kiwi",
   "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Dokko1230/kiwi-node"
+  },
   "dependencies": {
     "bluebird": "^1.2.4",
     "body-parser": "~1.0.0",

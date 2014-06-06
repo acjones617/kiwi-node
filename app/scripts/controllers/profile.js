@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('KiwiApp')
-  .controller('ProfileCtrl', function ($scope, $rootScope, Profile) {
+  .controller('ProfileCtrl', ['$scope', '$rootScope', 'Profile', function ($scope, $rootScope, Profile) {
     
     // var uId = $rootScope.auth.user.uid;
     // var firebaseAuthToken = $rootScope.auth.user.firebaseAuthToken;
@@ -45,4 +45,4 @@ angular.module('KiwiApp')
     };
 
     main();
-  });
+  }]);

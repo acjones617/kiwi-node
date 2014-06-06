@@ -1,15 +1,13 @@
 <div ng-include="'partials/navbar'"></div>
 <div class='jumbotron'>
-  <div ng-controller="CarouselCtrl">
-    <carousel interval="10000">
-      <slide ng-repeat="slide in slides" active="slide.active">
-        <img ng-src="{{slide.image}}" style="margin:auto;">
-        <div class="carousel-caption">
-          <!-- <p>{{slide.text}}</p> -->
-        </div>
-      </slide>
-    </carousel>
-  </div>
+  <carousel interval="10000">
+    <slide ng-repeat="slide in slides" active="slide.active">
+      <img ng-src="{{slide.image}}" style="margin:auto;">
+      <div class="carousel-caption">
+        <!-- <p>{{slide.text}}</p> -->
+      </div>
+    </slide>
+  </carousel>
 </div>
 
 <div class='container'>

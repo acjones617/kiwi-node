@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('KiwiApp')
-  .controller('GroupCtrl', function ($scope, $rootScope, alerter, Group, Kiwi) {
+  .controller('GroupCtrl', ['$scope', '$rootScope', 'alerter', 'Group', 'Kiwi', function ($scope, $rootScope, alerter, Group, Kiwi) {
 
     var maxKiwisPerGroup = 4;
     var main = function() {
@@ -86,4 +86,4 @@ angular.module('KiwiApp')
 
     main();
 
-  });
+  }]);

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('KiwiApp')
-  .controller('KiwisCtrl', function ($scope, $rootScope, alerter,  Kiwi, Group) {
+  .controller('KiwisCtrl', ['$scope', '$rootScope', 'alerter', 'Kiwi', 'Group', function ($scope, $rootScope, alerter,  Kiwi, Group) {
 
     var main = function() {
       $scope.isLoading = true;
@@ -50,4 +50,4 @@ angular.module('KiwiApp')
       });
     };
     main();
-  });
+  }]);

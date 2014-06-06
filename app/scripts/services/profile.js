@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('KiwiApp')
-  .service('Profile', function Profile($http, $cookies, $rootScope) {
+  .service('Profile', ['$http', '$cookies', '$rootScope', function Profile($http, $cookies, $rootScope) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     return {
       getSettings: function(callback) {
@@ -21,4 +21,4 @@ angular.module('KiwiApp')
  
       }
     };
-  });
+  }]);

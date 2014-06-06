@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('KiwiApp')
-  .factory('Auth', function Auth($location, $rootScope, $firebase, $cookies, alerter) {
+  .factory('Auth', ['$location', '$rootScope', '$firebase', '$cookies', 'alerter', function Auth($location, $rootScope, $firebase, $cookies, alerter) {
 
     return {
       /**
@@ -42,4 +42,4 @@ angular.module('KiwiApp')
         return !!user || $cookies.kiwiSpecial;
       },
     };
-  });
+  }]);

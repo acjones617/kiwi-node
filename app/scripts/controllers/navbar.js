@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('KiwiApp')
-  .controller('NavbarCtrl', function ($scope, $rootScope, $location, Auth, $q, $http, $firebase) {
+  .controller('NavbarCtrl', ['$scope', '$rootScope', '$location', 'Auth', '$q', '$http', '$firebase', function ($scope, $rootScope, $location, Auth, $q, $http, $firebase) {
     $scope.menu = [{
       'title': 'Home',
       'link': '/'
@@ -41,4 +41,4 @@ angular.module('KiwiApp')
     $scope.isActive = function(route) {
       return route === $location.path();
     };
-  });
+  }]);

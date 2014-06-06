@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('KiwiApp')
-  .controller('SpecialCtrl', function ($scope, $cookies, $firebase, $firebaseSimpleLogin) {
+  .controller('SpecialCtrl', ['$scope', '$cookies', '$firebase', '$firebaseSimpleLogin', function ($scope, $cookies, $firebase, $firebaseSimpleLogin) {
     
     var ref = new Firebase('https://kiwidb.firebaseio.com/');
 
@@ -28,4 +28,4 @@ angular.module('KiwiApp')
     // Firebase.goOffline();
     };
   
-  });
+  }]);

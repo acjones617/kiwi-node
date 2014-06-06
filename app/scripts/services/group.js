@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('KiwiApp')
-  .service('Group', function Group($http, $rootScope, Auth, $cookies) {
+  .service('Group', ['$http', '$rootScope', 'Auth', '$cookies', function Group($http, $rootScope, Auth, $cookies) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     return {
 
@@ -88,4 +88,4 @@ angular.module('KiwiApp')
 
       };
       
-  });
+  }]);

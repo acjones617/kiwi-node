@@ -10,7 +10,7 @@ angular.module('KiwiApp', [
   'common.confirm',
   'firebase'
 ])
-  .config(function ($routeProvider, $locationProvider, $httpProvider) {
+  .config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'partials/main',
@@ -59,8 +59,8 @@ angular.module('KiwiApp', [
         }
       };
     }]);
-  })
-  .run(function ($rootScope, $location, Auth, $cookies) {
+  }])
+  .run(['$rootScope', '$location', 'Auth', '$cookies', function ($rootScope, $location, Auth, $cookies) {
     // needed to check cookie to see if user already logged in
     $rootScope.Firebase = Firebase;
 
@@ -88,21 +88,4 @@ angular.module('KiwiApp', [
         $location.path('/');
       }
     });
-  });
-
-function CarouselCtrl($scope) {
-  $scope.myInterval = 5000;
-  var slides = $scope.slides = [];
-  $scope.addSlide = function() {
-    slides.push({
-      image: 'images/carousel-01.png'
-    });
-    slides.push({
-      image: 'images/carousel-02.png'
-    });
-    slides.push({
-      image: 'images/carousel-03.png'
-    });
-  };
-  $scope.addSlide();
-}
+  }]);

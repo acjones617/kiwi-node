@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('KiwiApp')
-  .controller('SpecialCtrl', function ($scope, $cookies, $firebase, $firebaseSimpleLogin) {
+  .controller('SpecialCtrl', function ($scope, $http, $cookies, $firebase, $firebaseSimpleLogin) {
     
     var ref = new Firebase('https://kiwidb.firebaseio.com/');
 
@@ -15,6 +15,15 @@ angular.module('KiwiApp')
              document.cookie = 'kiwiSpecial='+user.firebaseAuthToken+'; expires=Fri, 3 Aug 2014 20:47:11 UTC; path=/';
              document.cookie = 'kiwiUid='+user.uid+'; expires=Fri, 3 Aug 2014 20:47:11 UTC; path=/';
              $scope.message = 'You have been successfully logged in!';
+             
+              $http({
+                method: 'POST',
+                url: '/api/createUser',
+                data: user
+              }).success(function(){
+                console.log('sent to server');
+              });
+             
              setTimeout(function(){
               open(location, '_self').close(); 
              }, 5000); 

@@ -3,6 +3,7 @@
 angular.module('KiwiApp')
   .controller('GroupCtrl', function ($scope, $rootScope, alerter, Group, Kiwi) {
 
+    var maxKiwisPerGroup = 4;
     var main = function() {
       $scope.isLoading = true;
       $scope.predicate = 'date';
@@ -60,10 +61,16 @@ angular.module('KiwiApp')
     };
 
     $scope.updateGroup = function(group, from, to, kiwi) {
-      if(!_.contains(group.kiwiHashes, kiwi.hash)) {
-        group.kiwiHashes.push(kiwi.hash);
-        group.kiwis.push(kiwi);
-        $rootScope.$broadcast('updateCustom');
+      if (group.kiwiHashes.length === maxKiwisPerGroup) {
+        alerter.alert('Maximum ' + maxKiwisPerGroup + ' Kiwis per group.');
+      } else {
+        if (!_.contains(group.kiwiHashes, kiwi.hash)) {
+          group.kiwiHashes.push(kiwi.hash);
+          group.kiwis.push(kiwi);
+          $rootScope.$broadcast('updateCustom');
+        } else {
+          alerter.alert('That Kiwi is already part of that group.');
+        }
       }
     };
 

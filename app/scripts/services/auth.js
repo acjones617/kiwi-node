@@ -3,8 +3,6 @@
 angular.module('KiwiApp')
   .factory('Auth', function Auth($location, $rootScope, $firebase, $cookies, alerter) {
 
-    $rootScope.currentUser = $cookies.kiwiSpecial || null;
-    
     return {
       /**
        * Login the user
@@ -13,18 +11,10 @@ angular.module('KiwiApp')
        */
       login: function(callback) {
         var cb = callback || angular.noop;
-        var ref = new $rootScope.Firebase('https://kiwidb.firebaseio.com/');
-        $rootScope.auth = new FirebaseSimpleLogin(ref, function(err, user) {
-          if (err) {
-            console.log('Error with login. Error:, ', err);
-          } else {
-            if (user) {
-              $rootScope.currentUser = user;
-              $cookies.kiwiSpecial = user.firebaseAuthToken;
-              $cookies.kiwiUid = user.uid;
-              callback(user);
-            }
-          }
+
+        $rootScope.auth.login('facebook', {
+          rememberMe: true,
+          scope: 'email'
         });
       },
 
@@ -49,7 +39,7 @@ angular.module('KiwiApp')
        */
       isLoggedIn: function() {
         var user = $rootScope.currentUser;
-        return !!user;
+        return !!user || $cookies.kiwiSpecial;
       },
     };
   });

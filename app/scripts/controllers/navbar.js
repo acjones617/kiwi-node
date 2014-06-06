@@ -11,15 +11,16 @@ angular.module('KiwiApp')
     }];
     
     $scope.login = function() {
-      $rootScope.auth.login('facebook', {
-        rememberMe: true,
-        scope: 'email'
-      });
       // Auth.login(function(user) {
       //   $rootScope.currentUser = user;
-      //   $scope.getCreds(user);
       //   $rootScope.Firebase.goOffline();
       // });
+      Auth.login(function(user) {
+        $rootScope.currentUser = user;
+        $scope.getCreds(user);
+        $cookies.kiwiSpecial = user.firebaseAuthToken;
+        $cookies.kiwiUid = user.uid;
+      });
     };
 
     $scope.logout = function() {

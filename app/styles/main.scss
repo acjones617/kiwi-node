@@ -369,8 +369,8 @@ body {
       border: 1px solid grey;
       padding: 2px 4px;
       position: absolute;
-      top: 35px;
-      right: 30px;
+      top: 12px;
+      right: 20px;
     }
     .ul-legend {
       margin: 0 0;
@@ -381,10 +381,10 @@ body {
 
 
 .multi-graph {
+  border: 1px solid gray;
 
   path {
     stroke-width: 1px;
-    shape-rendering: crispEdges;
     fill: none;
   }
 

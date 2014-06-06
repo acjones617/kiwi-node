@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('KiwiApp')
-.controller('PublicGroupCtrl', function ($scope, $http, $routeParams, $location, $rootScope) {
+.controller('PublicGroupCtrl', function ($scope, $http, $routeParams, $location, $rootScope, NumberParser) {
   $scope.isLoading = true;
   $scope.group = {};
   $scope.user = $rootScope.currentUser;

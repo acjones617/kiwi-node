@@ -2,7 +2,7 @@
 
 # ----------------------
 # KUDU Deployment Script
-# Version: 0.1.7
+# Version: 0.1.10
 # ----------------------
 
 # Helpers
@@ -35,41 +35,41 @@ if [[ ! -n "$DEPLOYMENT_SOURCE" ]]; then
   DEPLOYMENT_SOURCE=$SCRIPT_DIR
 fi
 
-# if [[ ! -n "$NEXT_MANIFEST_PATH" ]]; then
-#   NEXT_MANIFEST_PATH=$ARTIFACTS/manifest
+if [[ ! -n "$NEXT_MANIFEST_PATH" ]]; then
+  NEXT_MANIFEST_PATH=$ARTIFACTS/manifest
 
-#   if [[ ! -n "$PREVIOUS_MANIFEST_PATH" ]]; then
-#     PREVIOUS_MANIFEST_PATH=$NEXT_MANIFEST_PATH
-#   fi
-# fi
+  if [[ ! -n "$PREVIOUS_MANIFEST_PATH" ]]; then
+    PREVIOUS_MANIFEST_PATH=$NEXT_MANIFEST_PATH
+  fi
+fi
 
-# if [[ ! -n "$DEPLOYMENT_TARGET" ]]; then
-#   DEPLOYMENT_TARGET=$ARTIFACTS/wwwroot
-# else
-#   KUDU_SERVICE=true
-# fi
+if [[ ! -n "$DEPLOYMENT_TARGET" ]]; then
+  DEPLOYMENT_TARGET=$ARTIFACTS/wwwroot
+else
+  KUDU_SERVICE=true
+fi
 
-# if [[ ! -n "$KUDU_SYNC_CMD" ]]; then
-#   # Install kudu sync
-#   echo Installing Kudu Sync
-#   npm install kudusync -g --silent
-#   exitWithMessageOnError "npm failed"
+if [[ ! -n "$KUDU_SYNC_CMD" ]]; then
+  # Install kudu sync
+  echo Installing Kudu Sync
+  npm install kudusync -g --silent
+  exitWithMessageOnError "npm failed"
 
-#   if [[ ! -n "$KUDU_SERVICE" ]]; then
-#     # In case we are running locally this is the correct location of kuduSync
-#     KUDU_SYNC_CMD=kuduSync
-#   else
-#     # In case we are running on kudu service this is the correct location of kuduSync
-#     KUDU_SYNC_CMD=$APPDATA/npm/node_modules/kuduSync/bin/kuduSync
-#   fi
-# fi
+  if [[ ! -n "$KUDU_SERVICE" ]]; then
+    # In case we are running locally this is the correct location of kuduSync
+    KUDU_SYNC_CMD=kuduSync
+  else
+    # In case we are running on kudu service this is the correct location of kuduSync
+    KUDU_SYNC_CMD=$APPDATA/npm/node_modules/kuduSync/bin/kuduSync
+  fi
+fi
 
 # Node Helpers
 # ------------
 
 selectNodeVersion () {
   if [[ -n "$KUDU_SELECT_NODE_VERSION_CMD" ]]; then
-    SELECT_NODE_VERSION="$KUDU_SELECT_NODE_VERSION_CMD \"$DEPLOYMENT_SOURCE\" \"$DEPLOYMENT_TARGET\" \"$DEPLOYMENT_TEMP\""
+    SELECT_NODE_VERSION="$KUDU_SELECT_NODE_VERSION_CMD \"$DEPLOYMENT_SOURCE/nodejs\" \"$DEPLOYMENT_TARGET\" \"$DEPLOYMENT_TEMP\""
     eval $SELECT_NODE_VERSION
     exitWithMessageOnError "select node version failed"
 
@@ -77,7 +77,7 @@ selectNodeVersion () {
       NODE_EXE=`cat "$DEPLOYMENT_TEMP/__nodeVersion.tmp"`
       exitWithMessageOnError "getting node version failed"
     fi
-
+    
     if [[ -e "$DEPLOYMENT_TEMP/.tmp" ]]; then
       NPM_JS_PATH=`cat "$DEPLOYMENT_TEMP/__npmVersion.tmp"`
       exitWithMessageOnError "getting npm version failed"
@@ -100,13 +100,12 @@ selectNodeVersion () {
 
 echo Handling node.js deployment.
 
-# # 1. KuduSync
-# if [[ "$IN_PLACE_DEPLOYMENT" -ne "1" ]]; then
-#   "$KUDU_SYNC_CMD" -v 50 -f "$DEPLOYMENT_SOURCE" -t "$DEPLOYMENT_TARGET" -n "$NEXT_MANIFEST_PATH" -p "$PREVIOUS_MANIFEST_PATH" -i ".git;.hg;.deployment;deploy.sh"
-#   exitWithMessageOnError "Kudu Sync failed"
-# fi
+# 1. KuduSync
+if [[ "$IN_PLACE_DEPLOYMENT" -ne "1" ]]; then
+  "$KUDU_SYNC_CMD" -v 50 -f "$DEPLOYMENT_SOURCE/nodejs" -t "$DEPLOYMENT_TARGET" -n "$NEXT_MANIFEST_PATH" -p "$PREVIOUS_MANIFEST_PATH" -i ".git;.hg;.deployment;deploy.sh"
+  exitWithMessageOnError "Kudu Sync failed"
+fi
 
-echo "Finished KuduSync #1"
 # 2. Select node version
 selectNodeVersion
 
@@ -117,37 +116,15 @@ if [ -e "$DEPLOYMENT_TARGET/package.json" ]; then
   exitWithMessageOnError "npm failed"
   cd - > /dev/null
 fi
-echo "Finished installing npm packages"
 
-# 4. Install bower packages
-if [ -e "$DEPLOYMENT_TARGET/bower.json" ]; then
-  cd "$DEPLOYMENT_TARGET"
-  eval $NPM_CMD install bower
-  exitWithMessageOnError "installing bower failed"
-  ./node_modules/.bin/bower install
-  exitWithMessageOnError "bower failed"
-  cd - > /dev/null
-fi
-
-echo "Finished installing bower packages"
-# 5. Run grunt
-if [ -e "$DEPLOYMENT_TARGET/Gruntfile.js" ]; then
-  cd "$DEPLOYMENT_TARGET"
-  eval $NPM_CMD install grunt-cli -g
-  exitWithMessageOnError "installing grunt failed"
-  ./node_modules/.bin/grunt --no-color build
-  exitWithMessageOnError "grunt failed"
-  cd - > /dev/null
-fi
-echo "Finished running grunt"
 ##################################################################################################################################
 
-# # Post deployment stub
-# if [[ -n "$POST_DEPLOYMENT_ACTION" ]]; then
-#   POST_DEPLOYMENT_ACTION=${POST_DEPLOYMENT_ACTION//\"}
-#   cd "${POST_DEPLOYMENT_ACTION_DIR%\\*}"
-#   "$POST_DEPLOYMENT_ACTION"
-#   exitWithMessageOnError "post deployment action failed"
-# fi
+# Post deployment stub
+if [[ -n "$POST_DEPLOYMENT_ACTION" ]]; then
+  POST_DEPLOYMENT_ACTION=${POST_DEPLOYMENT_ACTION//\"}
+  cd "${POST_DEPLOYMENT_ACTION_DIR%\\*}"
+  "$POST_DEPLOYMENT_ACTION"
+  exitWithMessageOnError "post deployment action failed"
+fi
 
 echo "Finished successfully."

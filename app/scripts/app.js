@@ -75,7 +75,7 @@ angular.module('KiwiApp', [
             $rootScope.currentUser = user;
             $cookies.kiwiSpecial = user.firebaseAuthToken;
             $cookies.kiwiUid = user.uid;
-            $rootScope.Firebase.goOffline();
+            // $rootScope.Firebase.goOffline();
           });
           // callback(user);
         }

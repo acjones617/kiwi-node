@@ -89,7 +89,7 @@ angular.module('KiwiApp')
 
           // given the number formatting (i.e. 999 or 1.00k or 8.45M), this is how much
           // room to give each new y-axis (also given the fonts, etc.)
-          var newYAxisWidth = 25;
+          var newYAxisWidth = 40;
           
           // define dimensions of graph
           var m = [10, 5, 20, numYAxes * newYAxisWidth]; // top, right, bottom, left

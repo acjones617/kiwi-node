@@ -5,6 +5,7 @@ angular.module('KiwiApp')
 
     var maxKiwisPerGroup = 4;
     var main = function() {
+      $scope.fixed = "";
       $scope.isLoading = true;
       $scope.predicate = 'date';
       Kiwi.getKiwis(function(kiwis) {
@@ -13,6 +14,17 @@ angular.module('KiwiApp')
           $scope.groups = groups;
           $scope.isLoading = false;
         });
+      });
+      jQuery(document).scroll(function() {
+        if(jQuery('body').scrollTop() > 470) {
+          $scope.$apply(function() {
+            $scope.fixed = 'sidebar-fixed';
+          });
+        } else {
+          $scope.$apply(function() {
+            $scope.fixed = '';
+          });
+        }
       });
     };
 

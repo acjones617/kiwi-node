@@ -47,16 +47,26 @@
                 ngCreate: '&'
             },
             link: function(scope, element, attrs){
-                element.droppable();
+                // debugger;
+                element.droppable({
+                    greedy: false
+                });
                 element.disableSelection();
                 element.on("dropdeactivate", function(event, ui) {
+                  var height = element.height();
+                  var width = element.width();
+                  var elementTop = element.offset().top;
+                  var elementLeft = element.offset().left;
+                  var itemTop = ui.offset.top;
+                  var itemLeft = ui.offset.left;
+                  if (itemTop > elementTop && itemTop < elementTop + height && itemLeft > elementLeft && itemLeft < elementLeft + width){
                     scope.$apply(function(){
-                        // DragDropHandler.moveObject(scope.droppable, DragDropHandler.dragObject);
-                        scope.ngUpdate({
-                            kiwi: DragDropHandler.dragObject,
-                        });
+                      scope.ngUpdate({
+                          kiwi: DragDropHandler.dragObject,
+                      });
                     });
                     element.find('li.ui-draggable').remove();
+                  }
 
                 });
             }

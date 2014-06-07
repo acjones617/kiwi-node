@@ -11,9 +11,9 @@ angular.module('KiwiApp')
         $scope.kiwis = kiwis;
         Group.getGroups($scope.kiwis, function(groups) {
           $scope.groups = groups;
+          $scope.isLoading = false;
         });
       });
-      $scope.isLoading = false;
     };
 
     $scope.editing = function(group) {

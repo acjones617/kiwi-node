@@ -9,7 +9,6 @@ angular.module('KiwiApp')
         group: '='
       },
       link: function(scope, element, attrs) {
-        
         var ranges = [
           {divider: 1e18 , suffix: 'P'},
           {divider: 1e15 , suffix: 'E'},
@@ -73,11 +72,18 @@ angular.module('KiwiApp')
         };
 
         var makeMultiYAxisGraph = function(group) {
-          _.each(group.kiwis, function(kiwi) {
+          _.each(group.kiwis, function(kiwi) {          
             kiwi.values.sort(function(a, b) {
-              return Date.parse(a.date) > Date.parse(b.date);
+              if(Date.parse(a.date) > Date.parse(b.date)) {
+                return 1;
+              } else if (Date.parse(a.date) < Date.parse(b.date)) {
+                return -1;
+              } else {
+                return 0;
+              }
             });
           });
+
 
           // first pluck out the values property of each kiwi
           // the values property of each kiwi will be an array of 

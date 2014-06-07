@@ -71,6 +71,14 @@ module.exports = function (grunt) {
         }
       }
     },
+    watch: {
+      files: ['app/*/*'],
+      tasks: ['concat',
+              'ngmin',
+              'uglify',
+              'clean:dist',
+              'sass']
+    },
 
     uglify: {
       dist: {

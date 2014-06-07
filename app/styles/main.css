@@ -129,6 +129,9 @@ body {
   background-color: #dee7b1;
   width: inherit !important;
   transform: rotate(-8deg); }
+#groups .sidebar-fixed {
+  position: fixed;
+  top: 20px; }
 
 #custom {
   min-height: 600px; }

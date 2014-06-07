@@ -181,6 +181,10 @@ body {
     width: inherit !important;
     transform: rotate(-8deg);
   }
+  .sidebar-fixed {
+    position: fixed;
+    top: 20px;
+  }
 }
 
 #custom {
